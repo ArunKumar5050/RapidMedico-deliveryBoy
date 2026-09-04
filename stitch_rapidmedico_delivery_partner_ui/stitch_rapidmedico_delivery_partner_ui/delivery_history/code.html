@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>RapidMedico - Delivery History</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container-high": "#252a38",
+                        "surface-tint": "#adc6ff",
+                        "secondary": "#4fdbc8",
+                        "primary-fixed-dim": "#adc6ff",
+                        "primary": "#adc6ff",
+                        "on-secondary-fixed": "#00201c",
+                        "on-tertiary": "#003915",
+                        "background": "#0e1320",
+                        "surface-dim": "#0e1320",
+                        "secondary-fixed": "#71f8e4",
+                        "outline-variant": "#424754",
+                        "on-surface": "#dee2f5",
+                        "inverse-surface": "#dee2f5",
+                        "tertiary-fixed-dim": "#4ae176",
+                        "surface-container-highest": "#303443",
+                        "on-secondary-fixed-variant": "#005048",
+                        "on-primary-fixed-variant": "#004395",
+                        "on-tertiary-fixed-variant": "#005321",
+                        "on-tertiary-container": "#003111",
+                        "on-background": "#dee2f5",
+                        "error-container": "#93000a",
+                        "outline": "#8c909f",
+                        "error": "#ffb4ab",
+                        "on-primary": "#002e6a",
+                        "surface-container-low": "#161b29",
+                        "on-error-container": "#ffdad6",
+                        "secondary-fixed-dim": "#4fdbc8",
+                        "primary-fixed": "#d8e2ff",
+                        "surface-bright": "#343948",
+                        "inverse-on-surface": "#2b303e",
+                        "surface-variant": "#303443",
+                        "on-secondary": "#003731",
+                        "tertiary-container": "#00a74b",
+                        "on-surface-variant": "#c2c6d6",
+                        "on-primary-fixed": "#001a42",
+                        "secondary-container": "#04b4a2",
+                        "on-tertiary-fixed": "#002109",
+                        "on-secondary-container": "#003f38",
+                        "on-error": "#690005",
+                        "on-primary-container": "#00285d",
+                        "tertiary": "#4ae176",
+                        "inverse-primary": "#005ac2",
+                        "surface-container": "#1a1f2d",
+                        "primary-container": "#4d8eff",
+                        "surface": "#0e1320",
+                        "tertiary-fixed": "#6bff8f",
+                        "surface-container-lowest": "#090e1b"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "stack-gap": "1.25rem",
+                        "inline-gap": "0.75rem",
+                        "section-padding": "1.5rem",
+                        "container-margin": "1rem"
+                    },
+                    "fontFamily": {
+                        "body-md": ["Inter"],
+                        "display-stat": ["Inter"],
+                        "label-bold": ["Inter"],
+                        "label-sm": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "body-lg": ["Inter"]
+                    },
+                    "fontSize": {
+                        "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "display-stat": ["36px", { "lineHeight": "44px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "label-bold": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600" }],
+                        "label-sm": ["11px", { "lineHeight": "14px", "fontWeight": "500" }],
+                        "headline-md": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+                        "headline-lg": ["24px", { "lineHeight": "32px", "fontWeight": "700" }],
+                        "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .pull-refresh-spinner {
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background min-h-screen pb-24 font-body-md selection:bg-primary-container selection:text-on-primary-container">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-surface-dim dark:bg-surface-dim border-b border-white/10 shadow-[0px_8px_24px_rgba(59,130,246,0.15)] flex justify-between items-center px-container-margin py-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full overflow-hidden border border-white/10">
+<img alt="Delivery partner profile picture" class="w-full h-full object-cover" data-alt="A detailed portrait of a medical delivery partner in India, wearing a dark high-tech jacket with subtle glowing neon accents, looking determined in a futuristic urban setting. The lighting is cinematic with blue and teal tones, emphasizing a Premium Dark Tech aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDIJaF-m0G16gujXgjhXlD7SUb2W_A80XHJ1835OHFnrg2iGqk6k3SSV14q0F4JhofY-zQ55IbkjeuZWdmr-hr0KvxUBFjvvuzyXRfVRDGAAx3DbUIb5rJGNkWkgOT7khwW85ZQlv0x1qrizMbKVLNb_PPA_i24TUvgAk-pCHkHA2V878y-fMujDw4t8MgImNqLHJODQYTM4iXESXL93G5CffJ-gC_MairevxwelhyyRYaY0dGHhKP2"/>
+</div>
+<h1 class="text-headline-lg font-headline-lg font-bold text-primary dark:text-primary">RapidMedico</h1>
+</div>
+<button aria-label="Sensors" class="w-10 h-10 rounded-full flex items-center justify-center bg-surface-container/50 hover:bg-surface-container-high dark:hover:bg-surface-container-high transition-colors scale-95 active:brightness-125 duration-200 text-primary dark:text-primary border border-white/10">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">sensors</span>
+</button>
+</header>
+<!-- Main Content Canvas -->
+<main class="pt-24 px-container-margin max-w-3xl mx-auto space-y-stack-gap">
+<!-- Pull to refresh indicator (hidden by default, simulating UI state) -->
+<div aria-hidden="true" class="flex justify-center -mt-4 mb-4 opacity-50">
+<div class="bg-surface-container-high rounded-full px-4 py-2 flex items-center gap-2 border border-white/10 shadow-lg">
+<span class="material-symbols-outlined text-primary pull-refresh-spinner text-[18px]">refresh</span>
+<span class="text-label-sm font-label-sm text-on-surface-variant">Updating...</span>
+</div>
+</div>
+<div class="flex items-center gap-2 mb-2">
+<span class="material-symbols-outlined text-primary text-[24px]">history</span>
+<h2 class="text-headline-md font-headline-md text-on-surface">Delivery History</h2>
+</div>
+<!-- Filter Row -->
+<div class="bg-surface-container-low p-1 rounded-lg border border-white/10 flex relative mb-6">
+<!-- Active slider background (simulated) -->
+<div class="absolute left-1 top-1 bottom-1 w-[33%] bg-surface-container-high rounded border border-white/5 shadow-sm transition-all duration-300 z-0"></div>
+<button class="flex-1 py-2 relative z-10 text-label-bold font-label-bold text-primary text-center">All</button>
+<button class="flex-1 py-2 relative z-10 text-label-bold font-label-bold text-on-surface-variant text-center hover:text-on-surface transition-colors">This Week</button>
+<button class="flex-1 py-2 relative z-10 text-label-bold font-label-bold text-on-surface-variant text-center hover:text-on-surface transition-colors">This Month</button>
+</div>
+<!-- History Cards List -->
+<div class="space-y-4">
+<!-- Card 1 (Delivered) -->
+<div class="bg-surface-container rounded-xl border border-white/10 p-4 shadow-[0px_4px_12px_rgba(0,0,0,0.2)] flex flex-col gap-3 relative overflow-hidden group hover:border-primary/30 transition-colors">
+<!-- Subtle gradient grounded bg -->
+<div class="absolute inset-0 bg-gradient-to-b from-[#111827] to-[#0A0F1C] opacity-50 z-0 pointer-events-none"></div>
+<div class="relative z-10 flex justify-between items-start">
+<div>
+<div class="text-label-sm font-label-sm text-on-surface-variant mb-1">#RM-8842-A</div>
+<div class="text-body-md font-body-md text-on-surface">Oct 24, 14:30</div>
+</div>
+<div class="bg-tertiary-container/20 border border-tertiary/30 px-2 py-1 rounded-full flex items-center gap-1">
+<span class="material-symbols-outlined text-tertiary text-[14px]">check_circle</span>
+<span class="text-label-sm font-label-sm text-tertiary">Delivered</span>
+</div>
+</div>
+<div class="relative z-10 flex gap-3 my-2">
+<div class="flex flex-col items-center pt-1">
+<div class="w-2 h-2 rounded-full bg-primary"></div>
+<div class="w-0.5 h-6 bg-outline-variant my-1"></div>
+<div class="w-2 h-2 rounded-full bg-error"></div>
+</div>
+<div class="flex flex-col justify-between flex-1">
+<div class="text-body-md font-body-md text-on-surface truncate">Apollo Pharmacy, Koramangala</div>
+<div class="text-body-md font-body-md text-on-surface-variant truncate">Manipal Hospital, Old Airport Rd</div>
+</div>
+</div>
+<div class="relative z-10 flex justify-between items-end border-t border-white/5 pt-3 mt-1">
+<div class="flex items-center gap-1 text-on-surface-variant">
+<span class="material-symbols-outlined text-[16px]">schedule</span>
+<span class="text-label-sm font-label-sm">45 min</span>
+</div>
+<div class="text-headline-md font-headline-md text-primary font-bold">₹120</div>
+</div>
+</div>
+<!-- Card 2 (Delivered) -->
+<div class="bg-surface-container rounded-xl border border-white/10 p-4 shadow-[0px_4px_12px_rgba(0,0,0,0.2)] flex flex-col gap-3 relative overflow-hidden group hover:border-primary/30 transition-colors">
+<div class="absolute inset-0 bg-gradient-to-b from-[#111827] to-[#0A0F1C] opacity-50 z-0 pointer-events-none"></div>
+<div class="relative z-10 flex justify-between items-start">
+<div>
+<div class="text-label-sm font-label-sm text-on-surface-variant mb-1">#RM-8839-B</div>
+<div class="text-body-md font-body-md text-on-surface">Oct 24, 11:15</div>
+</div>
+<div class="bg-tertiary-container/20 border border-tertiary/30 px-2 py-1 rounded-full flex items-center gap-1">
+<span class="material-symbols-outlined text-tertiary text-[14px]">check_circle</span>
+<span class="text-label-sm font-label-sm text-tertiary">Delivered</span>
+</div>
+</div>
+<div class="relative z-10 flex gap-3 my-2">
+<div class="flex flex-col items-center pt-1">
+<div class="w-2 h-2 rounded-full bg-primary"></div>
+<div class="w-0.5 h-6 bg-outline-variant my-1"></div>
+<div class="w-2 h-2 rounded-full bg-error"></div>
+</div>
+<div class="flex flex-col justify-between flex-1">
+<div class="text-body-md font-body-md text-on-surface truncate">MedPlus, Indiranagar</div>
+<div class="text-body-md font-body-md text-on-surface-variant truncate">Private Residence, Domlur</div>
+</div>
+</div>
+<div class="relative z-10 flex justify-between items-end border-t border-white/5 pt-3 mt-1">
+<div class="flex items-center gap-1 text-on-surface-variant">
+<span class="material-symbols-outlined text-[16px]">schedule</span>
+<span class="text-label-sm font-label-sm">22 min</span>
+</div>
+<div class="text-headline-md font-headline-md text-primary font-bold">₹85</div>
+</div>
+</div>
+<!-- Card 3 (Cancelled - to show variant) -->
+<div class="bg-surface-container rounded-xl border border-white/10 p-4 shadow-[0px_4px_12px_rgba(0,0,0,0.2)] flex flex-col gap-3 relative overflow-hidden group opacity-75">
+<div class="absolute inset-0 bg-gradient-to-b from-[#111827] to-[#0A0F1C] opacity-50 z-0 pointer-events-none"></div>
+<div class="relative z-10 flex justify-between items-start">
+<div>
+<div class="text-label-sm font-label-sm text-on-surface-variant mb-1">#RM-8812-C</div>
+<div class="text-body-md font-body-md text-on-surface-variant">Oct 23, 19:40</div>
+</div>
+<div class="bg-surface-container-high border border-outline-variant px-2 py-1 rounded-full flex items-center gap-1">
+<span class="material-symbols-outlined text-on-surface-variant text-[14px]">cancel</span>
+<span class="text-label-sm font-label-sm text-on-surface-variant">Cancelled</span>
+</div>
+</div>
+<div class="relative z-10 flex justify-between items-end border-t border-white/5 pt-3 mt-1">
+<div class="text-label-sm font-label-sm text-on-surface-variant">Partner Cancelled - Vehicle Issue</div>
+<div class="text-headline-md font-headline-md text-on-surface-variant font-bold">₹0</div>
+</div>
+</div>
+</div>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 w-full z-50 rounded-t-xl bg-surface-container/80 dark:bg-surface-container/80 backdrop-blur-xl border-t border-white/10 shadow-[0px_-4px_16px_rgba(0,0,0,0.4)] md:hidden">
+<ul class="flex justify-around items-center w-full px-2 py-3">
+<li>
+<a class="flex flex-col items-center justify-center text-on-surface-variant opacity-70 hover:opacity-100 scale-95 active:scale-90 transition-transform" href="#">
+<span class="material-symbols-outlined mb-1">dashboard</span>
+<span class="text-label-sm font-label-sm">Home</span>
+</a>
+</li>
+<li>
+<a class="flex flex-col items-center justify-center text-on-surface-variant opacity-70 hover:opacity-100 scale-95 active:scale-90 transition-transform" href="#">
+<span class="material-symbols-outlined mb-1">payments</span>
+<span class="text-label-sm font-label-sm">Earnings</span>
+</a>
+</li>
+<!-- Active State: History -->
+<li>
+<a aria-current="page" class="flex flex-col items-center justify-center bg-secondary-container text-on-secondary-container rounded-full px-4 py-1.5 transition-all duration-300 scale-95 active:scale-90" href="#">
+<span class="material-symbols-outlined mb-1">history</span>
+<span class="text-label-sm font-label-sm">History</span>
+</a>
+</li>
+<li>
+<a class="flex flex-col items-center justify-center text-on-surface-variant opacity-70 hover:opacity-100 scale-95 active:scale-90 transition-transform" href="#">
+<span class="material-symbols-outlined mb-1">person</span>
+<span class="text-label-sm font-label-sm">Profile</span>
+</a>
+</li>
+</ul>
+</nav>
+<!-- Desktop Sidebar (Hidden on mobile) - Conceptual implementation to satisfy requirements -->
+<aside class="hidden md:flex flex-col fixed left-0 top-24 bottom-0 w-64 bg-surface-container/50 border-r border-white/10 p-4 space-y-2">
+<a class="flex items-center gap-3 p-3 rounded-lg text-on-surface-variant hover:bg-surface-container-high transition-colors" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="text-body-md font-body-md">Home</span>
+</a>
+<a class="flex items-center gap-3 p-3 rounded-lg text-on-surface-variant hover:bg-surface-container-high transition-colors" href="#">
+<span class="material-symbols-outlined">payments</span>
+<span class="text-body-md font-body-md">Earnings</span>
+</a>
+<a class="flex items-center gap-3 p-3 rounded-lg bg-secondary-container/20 text-secondary border border-secondary/30 transition-colors" href="#">
+<span class="material-symbols-outlined">history</span>
+<span class="text-body-md font-body-md font-bold">History</span>
+</a>
+<a class="flex items-center gap-3 p-3 rounded-lg text-on-surface-variant hover:bg-surface-container-high transition-colors" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="text-body-md font-body-md">Profile</span>
+</a>
+</aside>
+</body></html>

@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Delivery Failure</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container-high": "#252a38",
+                        "surface-tint": "#adc6ff",
+                        "secondary": "#4fdbc8",
+                        "primary-fixed-dim": "#adc6ff",
+                        "primary": "#adc6ff",
+                        "on-secondary-fixed": "#00201c",
+                        "on-tertiary": "#003915",
+                        "background": "#0e1320",
+                        "surface-dim": "#0e1320",
+                        "secondary-fixed": "#71f8e4",
+                        "outline-variant": "#424754",
+                        "on-surface": "#dee2f5",
+                        "inverse-surface": "#dee2f5",
+                        "tertiary-fixed-dim": "#4ae176",
+                        "surface-container-highest": "#303443",
+                        "on-secondary-fixed-variant": "#005048",
+                        "on-primary-fixed-variant": "#004395",
+                        "on-tertiary-fixed-variant": "#005321",
+                        "on-tertiary-container": "#003111",
+                        "on-background": "#dee2f5",
+                        "error-container": "#93000a",
+                        "outline": "#8c909f",
+                        "error": "#ffb4ab",
+                        "on-primary": "#002e6a",
+                        "surface-container-low": "#161b29",
+                        "on-error-container": "#ffdad6",
+                        "secondary-fixed-dim": "#4fdbc8",
+                        "primary-fixed": "#d8e2ff",
+                        "surface-bright": "#343948",
+                        "inverse-on-surface": "#2b303e",
+                        "surface-variant": "#303443",
+                        "on-secondary": "#003731",
+                        "tertiary-container": "#00a74b",
+                        "on-surface-variant": "#c2c6d6",
+                        "on-primary-fixed": "#001a42",
+                        "secondary-container": "#04b4a2",
+                        "on-tertiary-fixed": "#002109",
+                        "on-secondary-container": "#003f38",
+                        "on-error": "#690005",
+                        "on-primary-container": "#00285d",
+                        "tertiary": "#4ae176",
+                        "inverse-primary": "#005ac2",
+                        "surface-container": "#1a1f2d",
+                        "primary-container": "#4d8eff",
+                        "surface": "#0e1320",
+                        "tertiary-fixed": "#6bff8f",
+                        "surface-container-lowest": "#090e1b"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "stack-gap": "1.25rem",
+                        "inline-gap": "0.75rem",
+                        "section-padding": "1.5rem",
+                        "container-margin": "1rem"
+                    },
+                    "fontFamily": {
+                        "body-md": ["Inter"],
+                        "display-stat": ["Inter"],
+                        "label-bold": ["Inter"],
+                        "label-sm": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "body-lg": ["Inter"]
+                    },
+                    "fontSize": {
+                        "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "display-stat": ["36px", { "lineHeight": "44px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "label-bold": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600" }],
+                        "label-sm": ["11px", { "lineHeight": "14px", "fontWeight": "500" }],
+                        "headline-md": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+                        "headline-lg": ["24px", { "lineHeight": "32px", "fontWeight": "700" }],
+                        "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .animate-pulse-glow {
+            animation: pulse-glow 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+        @keyframes pulse-glow {
+            0%, 100% { opacity: 1; transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 180, 171, 0.4); }
+            50% { opacity: .8; transform: scale(1.05); box-shadow: 0 0 20px 10px rgba(255, 180, 171, 0); }
+        }
+        .btn-gradient {
+            background: linear-gradient(135deg, #4d8eff 0%, #04b4a2 100%);
+        }
+        .glass-card {
+            background: rgba(17, 24, 39, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-md min-h-screen flex flex-col items-center justify-center p-container-margin selection:bg-primary-container selection:text-on-primary-container">
+<!-- Main Content Canvas - Suppressing nav for transactional/dead-end screen -->
+<main class="w-full max-w-md mx-auto flex flex-col items-center text-center space-y-stack-gap">
+<!-- Error Icon Container -->
+<div class="relative flex items-center justify-center w-24 h-24 mb-4">
+<!-- Pulsing outer rings -->
+<div class="absolute inset-0 rounded-full bg-error/20 animate-pulse-glow"></div>
+<div class="absolute inset-2 rounded-full bg-error/30 animate-pulse-glow" style="animation-delay: 0.2s"></div>
+<!-- Central Icon -->
+<div class="relative z-10 w-16 h-16 rounded-full bg-error-container flex items-center justify-center border-2 border-error/50 shadow-[0_0_30px_rgba(255,180,171,0.2)]">
+<span class="material-symbols-outlined text-error" style="font-size: 32px; font-variation-settings: 'FILL' 1;">
+                    warning
+                </span>
+</div>
+</div>
+<!-- Text Content -->
+<div class="space-y-2 mb-2">
+<h1 class="font-headline-lg text-headline-lg text-error">Delivery Issue Reported</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant">We've logged the problem. Support will review this shortly.</p>
+</div>
+<!-- Issue Details Card -->
+<div class="w-full glass-card rounded-xl p-section-padding flex flex-col items-start text-left mb-6 relative overflow-hidden">
+<!-- Subtle red glow in the corner of the card -->
+<div class="absolute -top-10 -right-10 w-32 h-32 bg-error/10 rounded-full blur-3xl pointer-events-none"></div>
+<div class="flex items-center space-x-inline-gap mb-4 w-full border-b border-white/5 pb-4">
+<span class="material-symbols-outlined text-outline" style="font-variation-settings: 'FILL' 0;">
+                    receipt_long
+                </span>
+<div>
+<span class="font-label-sm text-label-sm text-outline uppercase tracking-wider block">Order ID</span>
+<span class="font-body-md text-body-md text-on-surface font-medium">#MED-88492-X</span>
+</div>
+</div>
+<div class="flex items-start space-x-inline-gap w-full">
+<span class="material-symbols-outlined text-error mt-0.5" style="font-variation-settings: 'FILL' 1;">
+                    info
+                </span>
+<div>
+<span class="font-label-sm text-label-sm text-outline uppercase tracking-wider block mb-1">Reason Recorded</span>
+<span class="font-body-md text-body-md text-on-surface">Customer unavailable / Incorrect address</span>
+</div>
+</div>
+</div>
+<!-- Actions -->
+<div class="w-full flex flex-col space-y-4 mt-auto pt-8">
+<button class="w-full h-12 rounded-lg font-label-bold text-label-bold flex items-center justify-center space-x-2 border border-outline-variant text-on-surface bg-surface-container-low hover:bg-surface-container transition-all duration-200 active:scale-[0.98]">
+<span class="material-symbols-outlined" style="font-size: 18px;">support_agent</span>
+<span>Report to Support</span>
+</button>
+<button class="w-full h-12 rounded-lg font-label-bold text-label-bold flex items-center justify-center space-x-2 btn-gradient text-on-primary hover:brightness-110 transition-all duration-200 active:scale-[0.97] shadow-[0_4px_16px_rgba(77,142,255,0.2)]">
+<span>Return to Dashboard</span>
+<span class="material-symbols-outlined" style="font-size: 18px;">arrow_forward</span>
+</button>
+</div>
+</main>
+</body></html>

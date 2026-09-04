@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>RapidMedico - OTP Verification</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container-high": "#252a38",
+                        "surface-tint": "#adc6ff",
+                        "secondary": "#4fdbc8",
+                        "primary-fixed-dim": "#adc6ff",
+                        "primary": "#adc6ff",
+                        "on-secondary-fixed": "#00201c",
+                        "on-tertiary": "#003915",
+                        "background": "#0e1320",
+                        "surface-dim": "#0e1320",
+                        "secondary-fixed": "#71f8e4",
+                        "outline-variant": "#424754",
+                        "on-surface": "#dee2f5",
+                        "inverse-surface": "#dee2f5",
+                        "tertiary-fixed-dim": "#4ae176",
+                        "surface-container-highest": "#303443",
+                        "on-secondary-fixed-variant": "#005048",
+                        "on-primary-fixed-variant": "#004395",
+                        "on-tertiary-fixed-variant": "#005321",
+                        "on-tertiary-container": "#003111",
+                        "on-background": "#dee2f5",
+                        "error-container": "#93000a",
+                        "outline": "#8c909f",
+                        "error": "#ffb4ab",
+                        "on-primary": "#002e6a",
+                        "surface-container-low": "#161b29",
+                        "on-error-container": "#ffdad6",
+                        "secondary-fixed-dim": "#4fdbc8",
+                        "primary-fixed": "#d8e2ff",
+                        "surface-bright": "#343948",
+                        "inverse-on-surface": "#2b303e",
+                        "surface-variant": "#303443",
+                        "on-secondary": "#003731",
+                        "tertiary-container": "#00a74b",
+                        "on-surface-variant": "#c2c6d6",
+                        "on-primary-fixed": "#001a42",
+                        "secondary-container": "#04b4a2",
+                        "on-tertiary-fixed": "#002109",
+                        "on-secondary-container": "#003f38",
+                        "on-error": "#690005",
+                        "on-primary-container": "#00285d",
+                        "tertiary": "#4ae176",
+                        "inverse-primary": "#005ac2",
+                        "surface-container": "#1a1f2d",
+                        "primary-container": "#4d8eff",
+                        "surface": "#0e1320",
+                        "tertiary-fixed": "#6bff8f",
+                        "surface-container-lowest": "#090e1b"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "stack-gap": "1.25rem",
+                        "inline-gap": "0.75rem",
+                        "section-padding": "1.5rem",
+                        "container-margin": "1rem"
+                    },
+                    "fontFamily": {
+                        "body-md": ["Inter"],
+                        "display-stat": ["Inter"],
+                        "label-bold": ["Inter"],
+                        "label-sm": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "body-lg": ["Inter"]
+                    },
+                    "fontSize": {
+                        "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "display-stat": ["36px", { "lineHeight": "44px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "label-bold": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600" }],
+                        "label-sm": ["11px", { "lineHeight": "14px", "fontWeight": "500" }],
+                        "headline-md": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+                        "headline-lg": ["24px", { "lineHeight": "32px", "fontWeight": "700" }],
+                        "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .glass-panel {
+            background: linear-gradient(180deg, rgba(17, 24, 39, 0.8) 0%, rgba(10, 15, 28, 0.9) 100%);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .otp-input {
+            width: 48px;
+            height: 56px;
+            background-color: theme('colors.surface-container');
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: theme('colors.on-surface');
+            text-align: center;
+            font-size: 24px;
+            font-weight: 600;
+            border-radius: theme('borderRadius.lg');
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .otp-input:focus {
+            outline: none;
+            border-color: theme('colors.primary');
+            transform: scale(1.05);
+            box-shadow: 0 0 15px rgba(173, 198, 255, 0.3), inset 0 2px 4px rgba(0,0,0,0.1);
+            background-color: theme('colors.surface-container-high');
+        }
+
+        .primary-gradient-btn {
+            background: linear-gradient(135deg, theme('colors.primary-container') 0%, theme('colors.secondary-container') 100%);
+            transition: all 0.2s ease;
+        }
+
+        .primary-gradient-btn:active {
+            transform: scale(0.97);
+            filter: brightness(1.2);
+        }
+        
+        .timer-ring {
+            width: 48px;
+            height: 48px;
+            transform: rotate(-90deg);
+        }
+        
+        .timer-circle {
+            fill: none;
+            stroke: rgba(255, 255, 255, 0.1);
+            stroke-width: 3;
+        }
+        
+        .timer-progress {
+            fill: none;
+            stroke: theme('colors.primary');
+            stroke-width: 3;
+            stroke-dasharray: 125;
+            stroke-dashoffset: 0;
+            transition: stroke-dashoffset 1s linear;
+        }
+
+        /* Verification Animation */
+        .spinner {
+            border: 3px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            border-top: 3px solid white;
+            width: 24px;
+            height: 24px;
+            animation: spin 1s linear infinite;
+            display: none;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .checkmark {
+            display: none;
+            color: white;
+            font-size: 24px;
+        }
+
+        .btn-text {
+            transition: opacity 0.2s;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background min-h-screen flex flex-col font-body-md antialiased selection:bg-primary-container selection:text-on-primary-container relative overflow-hidden">
+<!-- Background Accents -->
+<div class="absolute top-[-20%] left-[-10%] w-[60%] h-[50%] rounded-full bg-primary-container/10 blur-[120px] pointer-events-none"></div>
+<div class="absolute bottom-[-20%] right-[-10%] w-[50%] h-[60%] rounded-full bg-secondary-container/10 blur-[100px] pointer-events-none"></div>
+<!-- No Navigation as per Shell Visibility Rules for Transactional screens -->
+<!-- Main Content Canvas -->
+<main class="flex-grow flex flex-col items-center justify-center p-section-padding z-10 w-full max-w-md mx-auto relative">
+<!-- Back Button Area (Contextual departure, but visually top-left if needed, though this is a focused flow) -->
+<div class="w-full flex justify-start mb-8 absolute top-8 left-6">
+<button class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center text-on-surface-variant hover:bg-surface-container-high transition-colors border border-white/5" onclick="history.back()">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">arrow_back</span>
+</button>
+</div>
+<!-- Auth Card -->
+<div class="glass-panel w-full rounded-2xl p-8 flex flex-col relative overflow-hidden shadow-[0_8px_32px_rgba(0,0,0,0.5)]">
+<!-- Header -->
+<div class="text-center mb-10">
+<div class="w-16 h-16 bg-surface-container-highest rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-inner border border-white/5 relative">
+<span class="material-symbols-outlined text-3xl text-primary" style="font-variation-settings: 'FILL' 1;">security</span>
+<div class="absolute -bottom-1 -right-1 w-4 h-4 bg-tertiary rounded-full animate-pulse shadow-[0_0_8px_rgba(74,225,118,0.6)]"></div>
+</div>
+<h1 class="text-headline-lg font-headline-lg text-on-surface mb-2">Verify OTP</h1>
+<p class="text-body-md font-body-md text-on-surface-variant">Code sent to <span class="text-on-surface font-medium">+91 98***1234</span></p>
+</div>
+<!-- OTP Inputs -->
+<div class="flex justify-between w-full mb-10 gap-2">
+<input autocomplete="one-time-code" autofocus="" class="otp-input" inputmode="numeric" maxlength="1" pattern="[0-9]*" type="text"/>
+<input class="otp-input" inputmode="numeric" maxlength="1" pattern="[0-9]*" type="text"/>
+<input class="otp-input" inputmode="numeric" maxlength="1" pattern="[0-9]*" type="text"/>
+<input class="otp-input" inputmode="numeric" maxlength="1" pattern="[0-9]*" type="text"/>
+<input class="otp-input" inputmode="numeric" maxlength="1" pattern="[0-9]*" type="text"/>
+<input class="otp-input" inputmode="numeric" maxlength="1" pattern="[0-9]*" type="text"/>
+</div>
+<!-- Resend Timer -->
+<div class="flex items-center justify-center gap-4 mb-10 text-body-md font-body-md">
+<div class="relative flex items-center justify-center">
+<svg class="timer-ring">
+<circle class="timer-circle" cx="24" cy="24" r="20"></circle>
+<circle class="timer-progress" cx="24" cy="24" id="progressRing" r="20"></circle>
+</svg>
+<span class="absolute text-label-sm font-label-sm font-medium text-primary" id="timerText">30</span>
+</div>
+<span class="text-on-surface-variant">Didn't receive? <button class="text-primary font-medium hover:text-primary-fixed transition-colors opacity-50 cursor-not-allowed" disabled="" id="resendBtn">Resend</button></span>
+</div>
+<!-- Action Button -->
+<button class="primary-gradient-btn w-full h-14 rounded-xl text-on-primary-container text-body-lg font-headline-md shadow-[0_4px_16px_rgba(77,142,255,0.2)] flex items-center justify-center gap-2 relative overflow-hidden group" id="verifyBtn">
+<span class="btn-text">Verify Securely</span>
+<div class="spinner" id="btnSpinner"></div>
+<span class="material-symbols-outlined checkmark" id="btnCheck">check_circle</span>
+<!-- Hover shimmer effect -->
+<div class="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/20 to-transparent group-hover:animate-[shimmer_1.5s_infinite] pointer-events-none"></div>
+</button>
+<!-- Security Badge -->
+<div class="mt-6 flex items-center justify-center gap-1.5 text-label-sm font-label-sm text-outline-variant">
+<span class="material-symbols-outlined text-[14px]">lock</span>
+<span>End-to-end encrypted channel</span>
+</div>
+</div>
+</main>
+<script>
+        // OTP Input Logic
+        const inputs = document.querySelectorAll('.otp-input');
+        
+        inputs.forEach((input, index) => {
+            input.addEventListener('input', (e) => {
+                // Ensure only numbers
+                e.target.value = e.target.value.replace(/[^0-9]/g, '');
+                
+                if (e.target.value !== '') {
+                    // Move to next input
+                    if (index < inputs.length - 1) {
+                        inputs[index + 1].focus();
+                    }
+                }
+            });
+
+            input.addEventListener('keydown', (e) => {
+                if (e.key === 'Backspace' && e.target.value === '') {
+                    // Move to previous input on backspace if empty
+                    if (index > 0) {
+                        inputs[index - 1].focus();
+                        inputs[index - 1].value = '';
+                    }
+                }
+            });
+
+            // Handle paste
+            input.addEventListener('paste', (e) => {
+                e.preventDefault();
+                const pastedData = e.clipboardData.getData('text').slice(0, 6).replace(/[^0-9]/g, '');
+                
+                if(pastedData) {
+                    for(let i=0; i < pastedData.length; i++) {
+                        if(inputs[i]) {
+                            inputs[i].value = pastedData[i];
+                            if(i < inputs.length - 1) {
+                                inputs[i+1].focus();
+                            } else {
+                                inputs[i].blur();
+                            }
+                        }
+                    }
+                }
+            });
+        });
+
+        // Timer Logic
+        let timeLeft = 30;
+        const timerText = document.getElementById('timerText');
+        const progressRing = document.getElementById('progressRing');
+        const resendBtn = document.getElementById('resendBtn');
+        const totalDuration = 30;
+        const circleCircumference = 2 * Math.PI * 20; // r=20
+
+        progressRing.style.strokeDasharray = `${circleCircumference} ${circleCircumference}`;
+        
+        const timerInterval = setInterval(() => {
+            timeLeft--;
+            timerText.textContent = timeLeft;
+            
+            // Calculate offset
+            const offset = circleCircumference - (timeLeft / totalDuration) * circleCircumference;
+            progressRing.style.strokeDashoffset = offset;
+
+            if (timeLeft <= 0) {
+                clearInterval(timerInterval);
+                timerText.textContent = '0';
+                resendBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+                resendBtn.disabled = false;
+                progressRing.style.stroke = 'rgba(255,255,255,0.1)';
+            }
+        }, 1000);
+
+        // Verification Button Logic
+        const verifyBtn = document.getElementById('verifyBtn');
+        const btnText = document.querySelector('.btn-text');
+        const btnSpinner = document.getElementById('btnSpinner');
+        const btnCheck = document.getElementById('btnCheck');
+
+        verifyBtn.addEventListener('click', () => {
+            // Check if all inputs are filled (mock validation)
+            const isFilled = Array.from(inputs).every(input => input.value !== '');
+            
+            if(!isFilled) {
+                // Shake effect if not filled
+                verifyBtn.animate([
+                    { transform: 'translateX(0)' },
+                    { transform: 'translateX(-5px)' },
+                    { transform: 'translateX(5px)' },
+                    { transform: 'translateX(-5px)' },
+                    { transform: 'translateX(5px)' },
+                    { transform: 'translateX(0)' }
+                ], { duration: 400, easing: 'ease-in-out' });
+                return;
+            }
+
+            // Start Loading State
+            btnText.style.display = 'none';
+            btnSpinner.style.display = 'block';
+            verifyBtn.classList.add('opacity-90');
+            
+            // Mock API Call Delay
+            setTimeout(() => {
+                // Success State
+                btnSpinner.style.display = 'none';
+                btnCheck.style.display = 'block';
+                verifyBtn.style.background = 'theme("colors.tertiary-container")'; // Greenish success
+                verifyBtn.style.boxShadow = '0 4px 16px rgba(74,225,118,0.3)';
+                
+                // Redirect mock
+                setTimeout(() => {
+                    alert("OTP Verified. Proceeding to Dashboard.");
+                }, 1000);
+            }, 2000);
+        });
+    </script>
+</body></html>

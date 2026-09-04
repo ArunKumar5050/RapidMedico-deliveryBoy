@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>RapidMedico - OTP Verification</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "surface-container-high": "#252a38",
+                      "surface-tint": "#adc6ff",
+                      "secondary": "#4fdbc8",
+                      "primary-fixed-dim": "#adc6ff",
+                      "primary": "#adc6ff",
+                      "on-secondary-fixed": "#00201c",
+                      "on-tertiary": "#003915",
+                      "background": "#0e1320",
+                      "surface-dim": "#0e1320",
+                      "secondary-fixed": "#71f8e4",
+                      "outline-variant": "#424754",
+                      "on-surface": "#dee2f5",
+                      "inverse-surface": "#dee2f5",
+                      "tertiary-fixed-dim": "#4ae176",
+                      "surface-container-highest": "#303443",
+                      "on-secondary-fixed-variant": "#005048",
+                      "on-primary-fixed-variant": "#004395",
+                      "on-tertiary-fixed-variant": "#005321",
+                      "on-tertiary-container": "#003111",
+                      "on-background": "#dee2f5",
+                      "error-container": "#93000a",
+                      "outline": "#8c909f",
+                      "error": "#ffb4ab",
+                      "on-primary": "#002e6a",
+                      "surface-container-low": "#161b29",
+                      "on-error-container": "#ffdad6",
+                      "secondary-fixed-dim": "#4fdbc8",
+                      "primary-fixed": "#d8e2ff",
+                      "surface-bright": "#343948",
+                      "inverse-on-surface": "#2b303e",
+                      "surface-variant": "#303443",
+                      "on-secondary": "#003731",
+                      "tertiary-container": "#00a74b",
+                      "on-surface-variant": "#c2c6d6",
+                      "on-primary-fixed": "#001a42",
+                      "secondary-container": "#04b4a2",
+                      "on-tertiary-fixed": "#002109",
+                      "on-secondary-container": "#003f38",
+                      "on-error": "#690005",
+                      "on-primary-container": "#00285d",
+                      "tertiary": "#4ae176",
+                      "inverse-primary": "#005ac2",
+                      "surface-container": "#1a1f2d",
+                      "primary-container": "#4d8eff",
+                      "surface": "#0e1320",
+                      "tertiary-fixed": "#6bff8f",
+                      "surface-container-lowest": "#090e1b"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "stack-gap": "1.25rem",
+                      "inline-gap": "0.75rem",
+                      "section-padding": "1.5rem",
+                      "container-margin": "1rem"
+              },
+              "fontFamily": {
+                      "body-md": [
+                              "Inter"
+                      ],
+                      "display-stat": [
+                              "Inter"
+                      ],
+                      "label-bold": [
+                              "Inter"
+                      ],
+                      "label-sm": [
+                              "Inter"
+                      ],
+                      "headline-md": [
+                              "Inter"
+                      ],
+                      "headline-lg": [
+                              "Inter"
+                      ],
+                      "body-lg": [
+                              "Inter"
+                      ]
+              },
+              "fontSize": {
+                      "body-md": [
+                              "14px",
+                              {
+                                      "lineHeight": "20px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "display-stat": [
+                              "36px",
+                              {
+                                      "lineHeight": "44px",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "label-bold": [
+                              "12px",
+                              {
+                                      "lineHeight": "16px",
+                                      "letterSpacing": "0.05em",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "label-sm": [
+                              "11px",
+                              {
+                                      "lineHeight": "14px",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "headline-md": [
+                              "20px",
+                              {
+                                      "lineHeight": "28px",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "headline-lg": [
+                              "24px",
+                              {
+                                      "lineHeight": "32px",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "body-lg": [
+                              "16px",
+                              {
+                                      "lineHeight": "24px",
+                                      "fontWeight": "400"
+                              }
+                      ]
+              }
+      },
+          },
+        }
+      </script>
+<style>
+        body {
+            background-color: #0A0F1C;
+        }
+        
+        .glow-input:focus {
+            box-shadow: 0 0 15px rgba(59, 130, 246, 0.4), inset 0 0 5px rgba(59, 130, 246, 0.2);
+            border-color: rgba(59, 130, 246, 1);
+        }
+
+        .btn-green-gradient {
+            background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+            box-shadow: 0 8px 24px rgba(34, 197, 94, 0.2);
+        }
+        
+        .btn-green-gradient:hover {
+            box-shadow: 0 12px 28px rgba(34, 197, 94, 0.3);
+            transform: scale(0.98);
+        }
+        
+        .btn-green-gradient:active {
+            transform: scale(0.95);
+            filter: brightness(1.2);
+        }
+
+        .card-bg {
+            background: linear-gradient(180deg, #111827 0%, #0A0F1C 100%);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+    </style>
+</head>
+<body class="text-on-background min-h-screen flex flex-col font-body-md antialiased selection:bg-primary selection:text-on-primary">
+<!-- Top Navigation Shell (Contextually Suppressed for Transactional flow, but kept minimal 'Back' action) -->
+<header class="w-full px-container-margin py-4 flex items-center justify-between z-50 bg-surface-dim/80 backdrop-blur-md sticky top-0">
+<button class="flex items-center text-on-surface-variant hover:text-primary transition-colors p-2 -ml-2 rounded-full hover:bg-surface-container-high active:scale-95">
+<span class="material-symbols-outlined text-2xl">arrow_back</span>
+</button>
+<span class="text-headline-md font-headline-md text-primary tracking-tight font-bold">RapidMedico</span>
+<div class="w-10"></div> <!-- Spacer for balance -->
+</header>
+<!-- Main Canvas -->
+<main class="flex-grow flex flex-col items-center justify-center px-container-margin py-section-padding w-full max-w-md mx-auto">
+<!-- Header Section -->
+<div class="text-center mb-10 w-full">
+<div class="inline-flex items-center justify-center w-20 h-20 rounded-full bg-secondary-container/20 mb-6 mx-auto relative overflow-hidden">
+<span class="material-symbols-outlined text-4xl text-secondary z-10" style="font-variation-settings: 'FILL' 1;">security</span>
+<div class="absolute inset-0 bg-secondary/10 blur-xl rounded-full animate-pulse"></div>
+</div>
+<h1 class="text-display-stat font-display-stat text-on-background mb-3">Delivery OTP</h1>
+<p class="text-body-lg font-body-lg text-on-surface-variant">Ask the customer for the 4-digit verification code to complete order <strong class="text-on-surface">#RM-8492</strong></p>
+</div>
+<!-- Verification Card -->
+<div class="card-bg w-full rounded-2xl p-6 shadow-2xl relative overflow-hidden group">
+<!-- Subtle accent glow -->
+<div class="absolute -top-20 -right-20 w-40 h-40 bg-primary/10 rounded-full blur-3xl group-hover:bg-primary/20 transition-all duration-700"></div>
+<div class="flex flex-col items-center gap-8 relative z-10">
+<!-- Security Badge -->
+<div class="inline-flex items-center gap-2 bg-error-container/20 border border-error/20 rounded-full px-4 py-2">
+<span class="material-symbols-outlined text-[16px] text-error" style="font-variation-settings: 'FILL' 1;">lock</span>
+<span class="text-label-bold font-label-bold text-error">3 attempts remaining</span>
+</div>
+<!-- OTP Inputs -->
+<div class="flex gap-4 justify-center w-full" id="otp-container">
+<input autofocus="" class="w-16 h-20 bg-surface text-display-stat font-display-stat text-center rounded-xl border border-white/10 text-on-background focus:outline-none transition-all duration-300 glow-input" maxlength="1" onkeyup="moveToNext(this, event)" type="text"/>
+<input class="w-16 h-20 bg-surface text-display-stat font-display-stat text-center rounded-xl border border-white/10 text-on-background focus:outline-none transition-all duration-300 glow-input" maxlength="1" onkeyup="moveToNext(this, event)" type="text"/>
+<input class="w-16 h-20 bg-surface text-display-stat font-display-stat text-center rounded-xl border border-white/10 text-on-background focus:outline-none transition-all duration-300 glow-input" maxlength="1" onkeyup="moveToNext(this, event)" type="text"/>
+<input class="w-16 h-20 bg-surface text-display-stat font-display-stat text-center rounded-xl border border-white/10 text-on-background focus:outline-none transition-all duration-300 glow-input" maxlength="1" onkeyup="moveToNext(this, event)" type="text"/>
+</div>
+<div class="w-full h-px bg-gradient-to-r from-transparent via-white/10 to-transparent my-2"></div>
+<!-- Action Button -->
+<button class="w-full py-4 rounded-xl btn-green-gradient text-on-primary-fixed font-headline-md text-headline-md flex justify-center items-center gap-3 transition-all duration-300 relative overflow-hidden group">
+<div class="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out"></div>
+<span class="relative z-10 tracking-wide text-white font-bold">VERIFY &amp; COMPLETE</span>
+<span class="material-symbols-outlined relative z-10 text-white font-bold" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</button>
+</div>
+</div>
+<!-- Resend Action -->
+<button class="mt-8 text-label-bold font-label-bold text-primary hover:text-primary-fixed transition-colors underline-offset-4 hover:underline py-2 px-4 rounded-lg hover:bg-primary/5 active:scale-95">
+            Didn't receive code? Resend SMS
+        </button>
+</main>
+<script>
+        function moveToNext(current, event) {
+            // Allow backspace to move focus to previous input
+            if (event.key === 'Backspace') {
+                if (current.value.length === 0) {
+                    const prev = current.previousElementSibling;
+                    if (prev) {
+                        prev.focus();
+                        prev.select();
+                    }
+                }
+                return;
+            }
+
+            // Move to next input if max length is reached
+            if (current.value.length >= current.maxLength) {
+                const next = current.nextElementSibling;
+                if (next) {
+                    next.focus();
+                } else {
+                    // Blur if it's the last input to hide keyboard on mobile
+                    current.blur();
+                }
+            }
+        }
+    </script>
+</body></html>

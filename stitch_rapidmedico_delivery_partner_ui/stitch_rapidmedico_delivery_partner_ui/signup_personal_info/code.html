@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Signup - RapidMedico</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        "colors": {
+                "surface-container-high": "#252a38",
+                "surface-tint": "#adc6ff",
+                "secondary": "#4fdbc8",
+                "primary-fixed-dim": "#adc6ff",
+                "primary": "#adc6ff",
+                "on-secondary-fixed": "#00201c",
+                "on-tertiary": "#003915",
+                "background": "#0e1320",
+                "surface-dim": "#0e1320",
+                "secondary-fixed": "#71f8e4",
+                "outline-variant": "#424754",
+                "on-surface": "#dee2f5",
+                "inverse-surface": "#dee2f5",
+                "tertiary-fixed-dim": "#4ae176",
+                "surface-container-highest": "#303443",
+                "on-secondary-fixed-variant": "#005048",
+                "on-primary-fixed-variant": "#004395",
+                "on-tertiary-fixed-variant": "#005321",
+                "on-tertiary-container": "#003111",
+                "on-background": "#dee2f5",
+                "error-container": "#93000a",
+                "outline": "#8c909f",
+                "error": "#ffb4ab",
+                "on-primary": "#002e6a",
+                "surface-container-low": "#161b29",
+                "on-error-container": "#ffdad6",
+                "secondary-fixed-dim": "#4fdbc8",
+                "primary-fixed": "#d8e2ff",
+                "surface-bright": "#343948",
+                "inverse-on-surface": "#2b303e",
+                "surface-variant": "#303443",
+                "on-secondary": "#003731",
+                "tertiary-container": "#00a74b",
+                "on-surface-variant": "#c2c6d6",
+                "on-primary-fixed": "#001a42",
+                "secondary-container": "#04b4a2",
+                "on-tertiary-fixed": "#002109",
+                "on-secondary-container": "#003f38",
+                "on-error": "#690005",
+                "on-primary-container": "#00285d",
+                "tertiary": "#4ae176",
+                "inverse-primary": "#005ac2",
+                "surface-container": "#1a1f2d",
+                "primary-container": "#4d8eff",
+                "surface": "#0e1320",
+                "tertiary-fixed": "#6bff8f",
+                "surface-container-lowest": "#090e1b"
+        },
+        "borderRadius": {
+                "DEFAULT": "0.25rem",
+                "lg": "0.5rem",
+                "xl": "0.75rem",
+                "full": "9999px"
+        },
+        "spacing": {
+                "stack-gap": "1.25rem",
+                "inline-gap": "0.75rem",
+                "section-padding": "1.5rem",
+                "container-margin": "1rem"
+        },
+        "fontFamily": {
+                "body-md": [
+                        "Inter"
+                ],
+                "display-stat": [
+                        "Inter"
+                ],
+                "label-bold": [
+                        "Inter"
+                ],
+                "label-sm": [
+                        "Inter"
+                ],
+                "headline-md": [
+                        "Inter"
+                ],
+                "headline-lg": [
+                        "Inter"
+                ],
+                "body-lg": [
+                        "Inter"
+                ]
+        },
+        "fontSize": {
+                "body-md": [
+                        "14px",
+                        {
+                                "lineHeight": "20px",
+                                "fontWeight": "400"
+                        }
+                ],
+                "display-stat": [
+                        "36px",
+                        {
+                                "lineHeight": "44px",
+                                "letterSpacing": "-0.02em",
+                                "fontWeight": "700"
+                        }
+                ],
+                "label-bold": [
+                        "12px",
+                        {
+                                "lineHeight": "16px",
+                                "letterSpacing": "0.05em",
+                                "fontWeight": "600"
+                        }
+                ],
+                "label-sm": [
+                        "11px",
+                        {
+                                "lineHeight": "14px",
+                                "fontWeight": "500"
+                        }
+                ],
+                "headline-md": [
+                        "20px",
+                        {
+                                "lineHeight": "28px",
+                                "fontWeight": "600"
+                        }
+                ],
+                "headline-lg": [
+                        "24px",
+                        {
+                                "lineHeight": "32px",
+                                "fontWeight": "700"
+                        }
+                ],
+                "body-lg": [
+                        "16px",
+                        {
+                                "lineHeight": "24px",
+                                "fontWeight": "400"
+                        }
+                ]
+        }
+},
+    },
+  }
+</script>
+<style>
+  body {
+    background-color: #0A0F1C;
+    color: theme('colors.on-surface');
+  }
+  .input-field {
+    @apply w-full bg-[#0A0F1C] border border-white/10 rounded-xl px-4 py-3 text-body-md font-body-md text-on-surface focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary shadow-[0_0_15px_rgba(77,142,255,0)] focus:shadow-[0_0_15px_rgba(77,142,255,0.15)] transition-all duration-300;
+  }
+  .input-label {
+    @apply block text-label-bold font-label-bold text-on-surface-variant mb-2 ml-1;
+  }
+  .btn-primary {
+    @apply w-full bg-gradient-to-r from-primary to-secondary text-background font-label-bold text-label-bold py-4 rounded-xl flex items-center justify-center gap-2 active:scale-95 active:brightness-125 transition-all duration-200;
+  }
+  .gender-pill {
+    @apply flex-1 py-3 border border-white/10 rounded-xl text-center text-body-md font-body-md text-on-surface-variant cursor-pointer transition-all duration-300;
+  }
+  .gender-pill.selected {
+    @apply border-primary/50 bg-primary/10 text-primary shadow-[0_0_15px_rgba(77,142,255,0.15)];
+  }
+  
+  /* Slide transition for content */
+  .slide-in-right {
+    animation: slideInRight 0.4s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+  }
+  @keyframes slideInRight {
+    from { opacity: 0; transform: translateX(20px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+</style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="min-h-screen flex flex-col items-center justify-start pb-safe overflow-x-hidden antialiased selection:bg-primary/30">
+<!-- Top App Bar (Modified for transactional view - back button only) -->
+<header class="w-full flex justify-between items-center px-container-margin py-4 bg-surface-dim z-50">
+<button class="w-10 h-10 flex items-center justify-center rounded-full bg-surface-container hover:bg-surface-container-high transition-colors text-on-surface">
+<span class="material-symbols-outlined">arrow_back</span>
+</button>
+<div class="text-headline-lg font-headline-lg font-bold text-primary">RapidMedico</div>
+<div class="w-10 h-10"></div> <!-- Spacer for centering -->
+</header>
+<main class="w-full max-w-md mx-auto px-container-margin flex flex-col flex-1 slide-in-right">
+<!-- Progress Indicator -->
+<div class="w-full mt-6 mb-8">
+<div class="flex justify-between items-center mb-2">
+<span class="text-label-bold font-label-bold text-primary">Step 1 of 4</span>
+<span class="text-label-sm font-label-sm text-on-surface-variant">Personal Info</span>
+</div>
+<div class="flex gap-2 w-full h-1.5 rounded-full overflow-hidden">
+<div class="flex-1 bg-primary shadow-[0_0_8px_rgba(77,142,255,0.5)] rounded-full"></div>
+<div class="flex-1 bg-white/10 rounded-full"></div>
+<div class="flex-1 bg-white/10 rounded-full"></div>
+<div class="flex-1 bg-white/10 rounded-full"></div>
+</div>
+</div>
+<!-- Header -->
+<div class="mb-8">
+<h1 class="text-display-stat font-display-stat text-on-surface mb-2">Create Account</h1>
+<p class="text-body-lg font-body-lg text-on-surface-variant">Join the medical logistics network.</p>
+</div>
+<!-- Form Card -->
+<div class="bg-[#111827] border border-white/10 rounded-[20px] p-6 shadow-xl relative overflow-hidden group">
+<!-- Subtle background glow -->
+<div class="absolute -top-24 -right-24 w-48 h-48 bg-primary/5 rounded-full blur-3xl opacity-50 pointer-events-none"></div>
+<form class="space-y-stack-gap relative z-10" onsubmit="event.preventDefault();">
+<!-- Full Name -->
+<div>
+<label class="input-label" for="fullName">Full Name</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant pointer-events-none">person</span>
+<input class="input-field pl-12" id="fullName" placeholder="Enter your full name" required="" type="text"/>
+</div>
+</div>
+<!-- Email -->
+<div>
+<label class="input-label" for="email">Email Address</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant pointer-events-none">mail</span>
+<input class="input-field pl-12" id="email" placeholder="name@example.com" required="" type="email"/>
+</div>
+</div>
+<!-- Mobile -->
+<div>
+<label class="input-label" for="mobile">Mobile Number</label>
+<div class="flex gap-2">
+<div class="bg-[#0A0F1C] border border-white/10 rounded-xl px-3 flex items-center justify-center text-body-md font-body-md text-on-surface shadow-sm shrink-0">
+                        🇮🇳 +91
+                    </div>
+<div class="relative flex-1">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant pointer-events-none">smartphone</span>
+<input class="input-field pl-12" id="mobile" pattern="[0-9]{10}" placeholder="00000 00000" required="" type="tel"/>
+</div>
+</div>
+</div>
+<!-- DOB -->
+<div>
+<label class="input-label" for="dob">Date of Birth</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant pointer-events-none">calendar_month</span>
+<input class="input-field pl-12 [&amp;::-webkit-calendar-picker-indicator]:invert" id="dob" required="" type="date"/>
+</div>
+</div>
+<!-- Gender -->
+<div>
+<label class="input-label">Gender</label>
+<div class="flex gap-3">
+<div class="gender-pill selected" onclick="selectGender(this)">Male</div>
+<div class="gender-pill" onclick="selectGender(this)">Female</div>
+<div class="gender-pill" onclick="selectGender(this)">Other</div>
+</div>
+</div>
+</form>
+</div>
+<!-- Spacer to push button to bottom if needed, though form is long -->
+<div class="flex-1 min-h-[2rem]"></div>
+<!-- Next Button Area -->
+<div class="mt-8 pb-8">
+<button class="btn-primary group relative overflow-hidden">
+<div class="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
+<span class="relative z-10 flex items-center gap-2">
+                Continue to Verification
+                <span class="material-symbols-outlined text-sm">arrow_forward</span>
+</span>
+</button>
+<p class="text-center text-label-sm font-label-sm text-on-surface-variant mt-4">
+            By continuing, you agree to our <a class="text-primary hover:underline" href="#">Terms of Service</a>
+</p>
+</div>
+</main>
+<script>
+    function selectGender(element) {
+        // Remove selected class from all siblings
+        const siblings = element.parentElement.children;
+        for (let i = 0; i < siblings.length; i++) {
+            siblings[i].classList.remove('selected');
+        }
+        // Add selected class to clicked element
+        element.classList.add('selected');
+    }
+</script>
+</body></html>

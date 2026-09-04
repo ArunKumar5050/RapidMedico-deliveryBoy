@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>RapidMedico - Delivery Navigation</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "surface-container-high": "#252a38",
+                        "surface-tint": "#adc6ff",
+                        "secondary": "#4fdbc8",
+                        "primary-fixed-dim": "#adc6ff",
+                        "primary": "#adc6ff",
+                        "on-secondary-fixed": "#00201c",
+                        "on-tertiary": "#003915",
+                        "background": "#0e1320",
+                        "surface-dim": "#0e1320",
+                        "secondary-fixed": "#71f8e4",
+                        "outline-variant": "#424754",
+                        "on-surface": "#dee2f5",
+                        "inverse-surface": "#dee2f5",
+                        "tertiary-fixed-dim": "#4ae176",
+                        "surface-container-highest": "#303443",
+                        "on-secondary-fixed-variant": "#005048",
+                        "on-primary-fixed-variant": "#004395",
+                        "on-tertiary-fixed-variant": "#005321",
+                        "on-tertiary-container": "#003111",
+                        "on-background": "#dee2f5",
+                        "error-container": "#93000a",
+                        "outline": "#8c909f",
+                        "error": "#ffb4ab",
+                        "on-primary": "#002e6a",
+                        "surface-container-low": "#161b29",
+                        "on-error-container": "#ffdad6",
+                        "secondary-fixed-dim": "#4fdbc8",
+                        "primary-fixed": "#d8e2ff",
+                        "surface-bright": "#343948",
+                        "inverse-on-surface": "#2b303e",
+                        "surface-variant": "#303443",
+                        "on-secondary": "#003731",
+                        "tertiary-container": "#00a74b",
+                        "on-surface-variant": "#c2c6d6",
+                        "on-primary-fixed": "#001a42",
+                        "secondary-container": "#04b4a2",
+                        "on-tertiary-fixed": "#002109",
+                        "on-secondary-container": "#003f38",
+                        "on-error": "#690005",
+                        "on-primary-container": "#00285d",
+                        "tertiary": "#4ae176",
+                        "inverse-primary": "#005ac2",
+                        "surface-container": "#1a1f2d",
+                        "primary-container": "#4d8eff",
+                        "surface": "#0e1320",
+                        "tertiary-fixed": "#6bff8f",
+                        "surface-container-lowest": "#090e1b"
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    spacing: {
+                        "stack-gap": "1.25rem",
+                        "inline-gap": "0.75rem",
+                        "section-padding": "1.5rem",
+                        "container-margin": "1rem"
+                    },
+                    fontFamily: {
+                        "body-md": ["Inter"],
+                        "display-stat": ["Inter"],
+                        "label-bold": ["Inter"],
+                        "label-sm": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "body-lg": ["Inter"]
+                    },
+                    fontSize: {
+                        "body-md": ["14px", { lineHeight: "20px", fontWeight: "400" }],
+                        "display-stat": ["36px", { lineHeight: "44px", letterSpacing: "-0.02em", fontWeight: "700" }],
+                        "label-bold": ["12px", { lineHeight: "16px", letterSpacing: "0.05em", fontWeight: "600" }],
+                        "label-sm": ["11px", { lineHeight: "14px", fontWeight: "500" }],
+                        "headline-md": ["20px", { lineHeight: "28px", fontWeight: "600" }],
+                        "headline-lg": ["24px", { lineHeight: "32px", fontWeight: "700" }],
+                        "body-lg": ["16px", { lineHeight: "24px", fontWeight: "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .glow-border {
+            box-shadow: 0 0 15px rgba(74, 225, 118, 0.3);
+        }
+        .pulse-btn {
+            animation: pulse-border 2s infinite;
+        }
+        @keyframes pulse-border {
+            0% { box-shadow: 0 0 0 0 rgba(173, 198, 255, 0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(173, 198, 255, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(173, 198, 255, 0); }
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background min-h-screen flex flex-col font-body-md overflow-x-hidden relative">
+<!-- Ambient Background Glow -->
+<div class="fixed inset-0 pointer-events-none z-0">
+<div class="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/10 rounded-full blur-[100px]"></div>
+<div class="absolute bottom-1/4 right-1/4 w-64 h-64 bg-tertiary/10 rounded-full blur-[80px]"></div>
+</div>
+<!-- Top Navigation (Hidden on mobile, flex on md per logic, but this is a transactional screen so shell is suppressed) -->
+<!-- Navigation Shell suppressed because this is a transitional/transactional task screen. -->
+<!-- Canvas -->
+<main class="flex-1 flex flex-col px-container-margin py-section-padding z-10 max-w-md mx-auto w-full relative">
+<!-- Success Header -->
+<div class="flex flex-col items-center justify-center py-8 mb-6 relative">
+<div class="absolute inset-0 bg-gradient-to-b from-tertiary/10 to-transparent rounded-3xl -z-10 blur-xl"></div>
+<div class="w-20 h-20 rounded-full bg-surface-container-high border border-tertiary/30 glow-border flex items-center justify-center mb-4">
+<span class="material-symbols-outlined text-4xl text-tertiary" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+<h1 class="font-headline-lg text-headline-lg text-on-background text-center">Parcel Collected</h1>
+<p class="font-body-md text-body-md text-on-surface-variant text-center mt-2">Ready for customer delivery</p>
+</div>
+<!-- Order Details Card (Bento Style) -->
+<div class="bg-surface-container/80 backdrop-blur-xl border border-white/10 rounded-xl p-5 mb-stack-gap relative overflow-hidden shadow-[0px_8px_24px_rgba(0,0,0,0.2)]">
+<!-- Subtle internal gradient -->
+<div class="absolute inset-0 bg-gradient-to-b from-surface-container-high/50 to-transparent pointer-events-none"></div>
+<div class="relative z-10 flex flex-col gap-inline-gap">
+<div class="flex items-center justify-between border-b border-white/5 pb-3">
+<span class="font-label-bold text-label-bold text-on-surface-variant uppercase tracking-wider">Order ID</span>
+<span class="font-body-md text-body-md text-primary font-medium">#RM-9482X</span>
+</div>
+<div class="flex items-start gap-4 pt-2">
+<div class="w-10 h-10 rounded-full bg-surface-container-high flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-on-surface-variant">person</span>
+</div>
+<div class="flex-1">
+<h2 class="font-headline-md text-headline-md text-on-background">Anuj Kumar</h2>
+<div class="flex items-center gap-1 text-on-surface-variant mt-1">
+<span class="material-symbols-outlined text-[16px]">call</span>
+<span class="font-body-md text-body-md">+91 98765 43210</span>
+</div>
+</div>
+<button class="w-10 h-10 rounded-full bg-secondary-container/20 border border-secondary/30 flex items-center justify-center shrink-0 hover:bg-secondary-container/40 transition-colors">
+<span class="material-symbols-outlined text-secondary" style="font-variation-settings: 'FILL' 1;">call</span>
+</button>
+</div>
+<div class="flex items-start gap-4 pt-3">
+<div class="w-10 h-10 rounded-full bg-surface-container-high flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-on-surface-variant">location_on</span>
+</div>
+<div>
+<span class="font-label-bold text-label-bold text-on-surface-variant uppercase tracking-wider block mb-1">Delivery Address</span>
+<p class="font-body-md text-body-md text-on-background">
+                            Apt 4B, Silver Heights,<br/>
+                            Koramangala 4th Block,<br/>
+                            Bengaluru, 560034
+                        </p>
+</div>
+</div>
+</div>
+</div>
+<!-- Distance & Time Estimate -->
+<div class="bg-surface-container-low border border-white/5 rounded-xl p-4 mb-stack-gap flex justify-around items-center">
+<div class="text-center">
+<span class="font-label-sm text-label-sm text-on-surface-variant block mb-1">Est. Distance</span>
+<span class="font-headline-md text-headline-md text-on-background">4.2 km</span>
+</div>
+<div class="w-px h-8 bg-white/10"></div>
+<div class="text-center">
+<span class="font-label-sm text-label-sm text-on-surface-variant block mb-1">Est. Time</span>
+<span class="font-headline-md text-headline-md text-on-background">15 min</span>
+</div>
+</div>
+<!-- Spacer to push button to bottom on mobile -->
+<div class="flex-1"></div>
+<!-- Action Button -->
+<div class="mt-8 pb-4">
+<button class="w-full bg-gradient-to-r from-primary-container to-primary text-on-primary-container font-headline-md text-headline-md py-4 rounded-xl flex items-center justify-center gap-2 pulse-btn shadow-[0px_8px_24px_rgba(77,142,255,0.25)] hover:scale-[0.98] active:scale-95 transition-all duration-200">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">navigation</span>
+                Start Delivery Navigation
+            </button>
+</div>
+</main>
+</body></html>

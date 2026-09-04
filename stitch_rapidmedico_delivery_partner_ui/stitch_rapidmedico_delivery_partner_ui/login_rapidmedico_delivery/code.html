@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>RapidMedico - Delivery Partner Login</title>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Design System Configuration -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-container-high": "#252a38",
+                    "surface-tint": "#adc6ff",
+                    "secondary": "#4fdbc8",
+                    "primary-fixed-dim": "#adc6ff",
+                    "primary": "#adc6ff",
+                    "on-secondary-fixed": "#00201c",
+                    "on-tertiary": "#003915",
+                    "background": "#0e1320",
+                    "surface-dim": "#0e1320",
+                    "secondary-fixed": "#71f8e4",
+                    "outline-variant": "#424754",
+                    "on-surface": "#dee2f5",
+                    "inverse-surface": "#dee2f5",
+                    "tertiary-fixed-dim": "#4ae176",
+                    "surface-container-highest": "#303443",
+                    "on-secondary-fixed-variant": "#005048",
+                    "on-primary-fixed-variant": "#004395",
+                    "on-tertiary-fixed-variant": "#005321",
+                    "on-tertiary-container": "#003111",
+                    "on-background": "#dee2f5",
+                    "error-container": "#93000a",
+                    "outline": "#8c909f",
+                    "error": "#ffb4ab",
+                    "on-primary": "#002e6a",
+                    "surface-container-low": "#161b29",
+                    "on-error-container": "#ffdad6",
+                    "secondary-fixed-dim": "#4fdbc8",
+                    "primary-fixed": "#d8e2ff",
+                    "surface-bright": "#343948",
+                    "inverse-on-surface": "#2b303e",
+                    "surface-variant": "#303443",
+                    "on-secondary": "#003731",
+                    "tertiary-container": "#00a74b",
+                    "on-surface-variant": "#c2c6d6",
+                    "on-primary-fixed": "#001a42",
+                    "secondary-container": "#04b4a2",
+                    "on-tertiary-fixed": "#002109",
+                    "on-secondary-container": "#003f38",
+                    "on-error": "#690005",
+                    "on-primary-container": "#00285d",
+                    "tertiary": "#4ae176",
+                    "inverse-primary": "#005ac2",
+                    "surface-container": "#1a1f2d",
+                    "primary-container": "#4d8eff",
+                    "surface": "#0e1320",
+                    "tertiary-fixed": "#6bff8f",
+                    "surface-container-lowest": "#090e1b"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "stack-gap": "1.25rem",
+                    "inline-gap": "0.75rem",
+                    "section-padding": "1.5rem",
+                    "container-margin": "1rem"
+            },
+            "fontFamily": {
+                    "body-md": ["Inter"],
+                    "display-stat": ["Inter"],
+                    "label-bold": ["Inter"],
+                    "label-sm": ["Inter"],
+                    "headline-md": ["Inter"],
+                    "headline-lg": ["Inter"],
+                    "body-lg": ["Inter"]
+            },
+            "fontSize": {
+                    "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "display-stat": ["36px", {"lineHeight": "44px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "label-bold": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "label-sm": ["11px", {"lineHeight": "14px", "fontWeight": "500"}],
+                    "headline-md": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "headline-lg": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                    "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}]
+            }
+          }
+        }
+      }
+    </script>
+<style>
+        /* Custom Keyframes and Utility Styles not covered by arbitrary Tailwind */
+        @keyframes pulse-glow {
+            0%, 100% { opacity: 0.5; transform: scale(1); }
+            50% { opacity: 0.8; transform: scale(1.1); }
+        }
+        .animate-radial-glow {
+            animation: pulse-glow 4s ease-in-out infinite;
+        }
+        
+        .bg-grid-pattern {
+            background-image: 
+                linear-gradient(to right, rgba(255,255,255,0.03) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255,255,255,0.03) 1px, transparent 1px);
+            background-size: 24px 24px;
+        }
+
+        /* Material Symbols Outline Base Class injection support */
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        
+        /* Glass/Glow utilities */
+        .focus-glow:focus-within {
+            box-shadow: 0 0 15px rgba(77, 142, 255, 0.3);
+            border-color: #4d8eff !important;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background min-h-screen font-body-md relative overflow-hidden flex flex-col justify-center px-container-margin">
+<!-- Atmospheric Background Effects -->
+<div class="absolute inset-0 bg-grid-pattern pointer-events-none z-0"></div>
+<div class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] bg-primary-container rounded-full blur-[100px] opacity-10 pointer-events-none z-0 animate-radial-glow"></div>
+<div class="absolute bottom-0 right-0 w-[200px] h-[200px] bg-secondary-container rounded-full blur-[80px] opacity-10 pointer-events-none z-0"></div>
+<!-- Main Content Canvas -->
+<main class="relative z-10 w-full max-w-md mx-auto">
+<!-- Branding Header -->
+<header class="text-center mb-10 flex flex-col items-center">
+<div class="relative w-20 h-20 mb-4 flex items-center justify-center bg-surface-container-low rounded-2xl shadow-[0px_8px_24px_rgba(59,130,246,0.15)] border border-white/10">
+<!-- Icon Motif -->
+<span class="material-symbols-outlined text-[40px] text-primary" data-icon="medication" data-weight="fill" style="font-variation-settings: 'FILL' 1;">
+                    medication
+                </span>
+<!-- Glowing Ring -->
+<div class="absolute inset-0 rounded-2xl border border-primary/30 shadow-[0_0_15px_rgba(77,142,255,0.2)]"></div>
+</div>
+<h1 class="text-headline-lg font-headline-lg text-primary tracking-tight">RapidMedico</h1>
+<p class="text-label-sm font-label-sm text-on-surface-variant uppercase tracking-widest mt-1">Medical Logistics</p>
+</header>
+<!-- Login Card Container -->
+<section class="bg-[#111827] rounded-xl border border-white/10 p-section-padding shadow-2xl relative overflow-hidden">
+<!-- Subtle Card Gradient Overlay -->
+<div class="absolute inset-0 bg-gradient-to-b from-[#111827] to-[#0A0F1C] opacity-50 pointer-events-none"></div>
+<div class="relative z-10">
+<h2 class="text-headline-md font-headline-md text-on-surface mb-stack-gap text-center">Delivery Partner Login</h2>
+<form class="flex flex-col gap-stack-gap" id="loginForm">
+<!-- Phone Input Group -->
+<div class="flex flex-col gap-2">
+<label class="text-label-bold font-label-bold text-on-surface-variant" for="phone">Mobile Number</label>
+<div class="relative flex items-center bg-surface rounded-lg border border-white/10 transition-all duration-200 focus-glow group h-12">
+<!-- +91 Prefix Chip -->
+<div class="flex items-center px-3 bg-surface-container-low h-full border-r border-white/10 rounded-l-lg text-on-surface font-label-bold">
+                                +91
+                            </div>
+<!-- Input Field -->
+<input autocomplete="tel" class="flex-1 bg-transparent border-none text-body-lg text-on-surface placeholder:text-on-surface-variant/50 focus:ring-0 px-4 py-0 h-full w-full" id="phone" maxlength="10" pattern="[0-9]{10}" placeholder="Enter 10-digit number" type="tel"/>
+<!-- Validation Icon (Hidden by default) -->
+<div class="px-3 hidden items-center justify-center text-tertiary" id="validIcon">
+<span class="material-symbols-outlined text-lg" data-icon="check_circle">check_circle</span>
+</div>
+</div>
+</div>
+<!-- Submit CTA -->
+<button class="w-full h-12 bg-gradient-to-r from-primary-container to-secondary-container rounded-lg text-on-primary-container text-body-md font-label-bold shadow-[0px_8px_24px_rgba(59,130,246,0.2)] disabled:opacity-50 disabled:grayscale disabled:cursor-not-allowed hover:brightness-110 active:scale-95 active:brightness-125 transition-all duration-200 flex items-center justify-center gap-2 mt-2" disabled="" id="submitBtn" type="submit">
+                        Send OTP
+                        <span class="material-symbols-outlined text-sm" data-icon="arrow_forward">arrow_forward</span>
+</button>
+</form>
+<!-- Footer Links -->
+<div class="mt-6 text-center">
+<p class="text-body-md font-body-md text-on-surface-variant">
+                        First time? 
+                        <a class="text-primary hover:text-primary-fixed transition-colors underline-offset-4 hover:underline" href="#">Register below</a>
+</p>
+</div>
+</div>
+</section>
+</main>
+<!-- Navigation Shell (SUPPRESSED) -->
+<!-- As per instructions: Automatic Suppression for Linear/Transactional: Login screens. -->
+<script>
+        // Simple client-side interaction script
+        document.addEventListener('DOMContentLoaded', () => {
+            const phoneInput = document.getElementById('phone');
+            const submitBtn = document.getElementById('submitBtn');
+            const validIcon = document.getElementById('validIcon');
+
+            phoneInput.addEventListener('input', (e) => {
+                // Allow only numbers
+                e.target.value = e.target.value.replace(/[^0-9]/g, '');
+                
+                const isValid = e.target.value.length === 10;
+                
+                if (isValid) {
+                    submitBtn.disabled = false;
+                    validIcon.classList.remove('hidden');
+                    validIcon.classList.add('flex');
+                    // Add a subtle success flash to the border
+                    e.target.parentElement.classList.add('border-tertiary');
+                } else {
+                    submitBtn.disabled = true;
+                    validIcon.classList.add('hidden');
+                    validIcon.classList.remove('flex');
+                    e.target.parentElement.classList.remove('border-tertiary');
+                }
+            });
+
+            // Prevent default form submission for demo purposes
+            document.getElementById('loginForm').addEventListener('submit', (e) => {
+                e.preventDefault();
+                if(phoneInput.value.length === 10) {
+                     submitBtn.innerHTML = `<span class="material-symbols-outlined animate-spin" data-icon="progress_activity">progress_activity</span> Sending...`;
+                     // Simulate network request
+                     setTimeout(() => {
+                         submitBtn.innerHTML = `OTP Sent <span class="material-symbols-outlined" data-icon="check">check</span>`;
+                     }, 1500);
+                }
+            });
+        });
+    </script>
+</body></html>

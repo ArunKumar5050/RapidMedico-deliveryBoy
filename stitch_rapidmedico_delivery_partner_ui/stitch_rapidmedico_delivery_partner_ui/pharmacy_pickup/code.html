@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>RapidMedico - Pharmacy Pickup</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container-high": "#252a38",
+                        "surface-tint": "#adc6ff",
+                        "secondary": "#4fdbc8",
+                        "primary-fixed-dim": "#adc6ff",
+                        "primary": "#adc6ff",
+                        "on-secondary-fixed": "#00201c",
+                        "on-tertiary": "#003915",
+                        "background": "#0e1320",
+                        "surface-dim": "#0e1320",
+                        "secondary-fixed": "#71f8e4",
+                        "outline-variant": "#424754",
+                        "on-surface": "#dee2f5",
+                        "inverse-surface": "#dee2f5",
+                        "tertiary-fixed-dim": "#4ae176",
+                        "surface-container-highest": "#303443",
+                        "on-secondary-fixed-variant": "#005048",
+                        "on-primary-fixed-variant": "#004395",
+                        "on-tertiary-fixed-variant": "#005321",
+                        "on-tertiary-container": "#003111",
+                        "on-background": "#dee2f5",
+                        "error-container": "#93000a",
+                        "outline": "#8c909f",
+                        "error": "#ffb4ab",
+                        "on-primary": "#002e6a",
+                        "surface-container-low": "#161b29",
+                        "on-error-container": "#ffdad6",
+                        "secondary-fixed-dim": "#4fdbc8",
+                        "primary-fixed": "#d8e2ff",
+                        "surface-bright": "#343948",
+                        "inverse-on-surface": "#2b303e",
+                        "surface-variant": "#303443",
+                        "on-secondary": "#003731",
+                        "tertiary-container": "#00a74b",
+                        "on-surface-variant": "#c2c6d6",
+                        "on-primary-fixed": "#001a42",
+                        "secondary-container": "#04b4a2",
+                        "on-tertiary-fixed": "#002109",
+                        "on-secondary-container": "#003f38",
+                        "on-error": "#690005",
+                        "on-primary-container": "#00285d",
+                        "tertiary": "#4ae176",
+                        "inverse-primary": "#005ac2",
+                        "surface-container": "#1a1f2d",
+                        "primary-container": "#4d8eff",
+                        "surface": "#0e1320",
+                        "tertiary-fixed": "#6bff8f",
+                        "surface-container-lowest": "#090e1b"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "stack-gap": "1.25rem",
+                        "inline-gap": "0.75rem",
+                        "section-padding": "1.5rem",
+                        "container-margin": "1rem"
+                    },
+                    "fontFamily": {
+                        "body-md": ["Inter"],
+                        "display-stat": ["Inter"],
+                        "label-bold": ["Inter"],
+                        "label-sm": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "body-lg": ["Inter"]
+                    },
+                    "fontSize": {
+                        "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "display-stat": ["36px", { "lineHeight": "44px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "label-bold": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600" }],
+                        "label-sm": ["11px", { "lineHeight": "14px", "fontWeight": "500" }],
+                        "headline-md": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+                        "headline-lg": ["24px", { "lineHeight": "32px", "fontWeight": "700" }],
+                        "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .glow-border {
+            box-shadow: 0 0 15px rgba(173, 198, 255, 0.3);
+        }
+        @keyframes radar-pulse {
+            0% { transform: scale(1); opacity: 0.8; }
+            100% { transform: scale(3); opacity: 0; }
+        }
+        .radar-dot::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background-color: #4ae176;
+            animation: radar-pulse 2s infinite ease-out;
+            z-index: -1;
+        }
+        @keyframes sonar-sweep {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+        .sonar-banner {
+            background: linear-gradient(90deg, rgba(77, 142, 255, 0.1) 0%, rgba(77, 142, 255, 0.4) 50%, rgba(77, 142, 255, 0.1) 100%);
+            background-size: 200% 100%;
+            animation: sonar-sweep 3s infinite linear;
+        }
+        @keyframes otp-pulse {
+            0%, 100% { border-color: rgba(173, 198, 255, 0.5); box-shadow: 0 0 10px rgba(173, 198, 255, 0.2); }
+            50% { border-color: rgba(173, 198, 255, 1); box-shadow: 0 0 20px rgba(173, 198, 255, 0.6); }
+        }
+        .otp-box {
+            animation: otp-pulse 2s infinite ease-in-out;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background min-h-screen flex flex-col font-body-md overflow-x-hidden selection:bg-primary-container selection:text-on-primary-container">
+<!-- TopAppBar -->
+<header class="bg-surface-dim dark:bg-surface-dim border-b border-white/10 shadow-[0px_8px_24px_rgba(59,130,246,0.15)] flex justify-between items-center w-full px-container-margin py-4 docked full-width top-0 z-50 sticky">
+<div class="flex items-center gap-3">
+<button class="w-10 h-10 rounded-full flex items-center justify-center bg-surface-container hover:bg-surface-container-high transition-colors text-on-surface-variant">
+<span class="material-symbols-outlined">arrow_back</span>
+</button>
+<h1 class="text-headline-md font-headline-md font-bold text-primary dark:text-primary">Pickup from Store</h1>
+</div>
+<div class="flex items-center gap-2">
+<div class="relative w-3 h-3 rounded-full bg-tertiary radar-dot"></div>
+<span class="text-label-sm font-label-sm text-tertiary">GPS Active</span>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-1 flex flex-col p-container-margin gap-stack-gap md:px-6 lg:px-8 max-w-3xl mx-auto w-full">
+<!-- Map/Header Area -->
+<section class="relative w-full h-48 rounded-xl overflow-hidden shadow-lg border border-white/10 shrink-0">
+<img class="w-full h-full object-cover opacity-80 mix-blend-screen" data-alt="A detailed map view of a modern Indian city at night, showing a neon blue navigation route highlighting the path to a pharmacy. The map style is dark, sleek, and high-contrast, fitting a premium tech logistics app." data-location="Mumbai" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDBn9ZMuC5tshwomSuEwJTjBODl04i9Xy9ylZBJg3ydO0f_094-AbJWI14RLs3KkFdIgijQuAigebaD2SD_hnBNSfxPGYFQZ80-NsjE8W3QpiaQOM18rEu0DYEbGBf-2jEwZ4fjdhYzoAmKf1FrQHp9cjQpkYb94O-TTw54CufWAAQwVWZg6Sjsux-sApmNYE_dZeT32cMiC154lX08F4QMU1cX2izgu7v56Iu34nX2xScNctRNrz5W"/>
+<div class="absolute inset-0 bg-gradient-to-t from-background to-transparent pointer-events-none"></div>
+<!-- Store Info Overlay -->
+<div class="absolute bottom-4 left-4 right-4 bg-surface-container-high/90 backdrop-blur-md border border-white/10 rounded-lg p-4 flex justify-between items-center shadow-lg">
+<div class="flex flex-col gap-1">
+<span class="text-label-bold font-label-bold text-on-surface-variant uppercase tracking-wider">Pickup Location</span>
+<h2 class="text-headline-md font-headline-md text-on-surface">Apollo Pharmacy</h2>
+<p class="text-body-md font-body-md text-on-surface-variant flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">location_on</span>
+                        1.2 km away • 5 mins
+                    </p>
+</div>
+<div class="flex flex-col gap-2">
+<button class="bg-primary-container text-on-primary-container w-12 h-12 rounded-full flex items-center justify-center shadow-lg hover:brightness-110 active:scale-95 transition-all">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">navigation</span>
+</button>
+<button class="bg-surface-container-low border border-outline-variant text-on-surface w-12 h-12 rounded-full flex items-center justify-center hover:bg-surface-container transition-all active:scale-95">
+<span class="material-symbols-outlined">call</span>
+</button>
+</div>
+</div>
+</section>
+<!-- Verification Banner -->
+<div class="w-full rounded-lg overflow-hidden border border-primary/30 sonar-banner flex items-center justify-center py-3 px-4 shadow-[0_0_15px_rgba(77,142,255,0.1)] shrink-0">
+<span class="text-label-bold font-label-bold text-primary flex items-center gap-2">
+<span class="material-symbols-outlined animate-spin-slow">sync</span>
+                 Waiting for store owner to verify...
+             </span>
+</div>
+<!-- HERO: OTP Card -->
+<section class="flex-1 flex flex-col items-center justify-center min-h-[300px] w-full bg-gradient-to-b from-[#111827] to-background rounded-xl border border-white/5 p-8 relative overflow-hidden group">
+<!-- Atmospheric Glow Background -->
+<div class="absolute inset-0 bg-primary/5 blur-[80px] rounded-full mix-blend-screen pointer-events-none opacity-50 group-hover:opacity-80 transition-opacity duration-700"></div>
+<div class="relative z-10 flex flex-col items-center w-full max-w-sm mx-auto">
+<span class="text-label-bold font-label-bold text-on-surface-variant mb-6 tracking-widest uppercase text-center bg-surface-container-low px-4 py-1.5 rounded-full border border-white/5">
+                    Your Store Pickup OTP
+                </span>
+<div class="flex gap-4 justify-center w-full">
+<!-- OTP Digits -->
+<div class="w-16 h-20 bg-surface-dim rounded-lg border border-primary/50 flex items-center justify-center text-display-stat font-display-stat text-on-surface otp-box shadow-lg backdrop-blur-sm">
+                        4
+                    </div>
+<div class="w-16 h-20 bg-surface-dim rounded-lg border border-primary/50 flex items-center justify-center text-display-stat font-display-stat text-on-surface otp-box shadow-lg backdrop-blur-sm" style="animation-delay: 0.1s;">
+                        2
+                    </div>
+<div class="w-16 h-20 bg-surface-dim rounded-lg border border-primary/50 flex items-center justify-center text-display-stat font-display-stat text-on-surface otp-box shadow-lg backdrop-blur-sm" style="animation-delay: 0.2s;">
+                        9
+                    </div>
+<div class="w-16 h-20 bg-surface-dim rounded-lg border border-primary/50 flex items-center justify-center text-display-stat font-display-stat text-on-surface otp-box shadow-lg backdrop-blur-sm" style="animation-delay: 0.3s;">
+                        1
+                    </div>
+</div>
+<p class="text-body-md font-body-md text-on-surface-variant mt-8 text-center max-w-xs opacity-70">
+                    Show this code to the pharmacist to confirm pickup and receive the medical package.
+                </p>
+</div>
+</section>
+</main>
+<!-- BottomNavBar suppressed as this is a transactional 'task-focused' screen (Pickup) -->
+</body></html>

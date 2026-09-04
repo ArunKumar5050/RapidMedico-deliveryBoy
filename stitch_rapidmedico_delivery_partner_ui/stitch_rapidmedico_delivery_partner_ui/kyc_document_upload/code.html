@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>RapidMedico - KYC Upload</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container-high": "#252a38",
+                        "surface-tint": "#adc6ff",
+                        "secondary": "#4fdbc8",
+                        "primary-fixed-dim": "#adc6ff",
+                        "primary": "#adc6ff",
+                        "on-secondary-fixed": "#00201c",
+                        "on-tertiary": "#003915",
+                        "background": "#0e1320",
+                        "surface-dim": "#0e1320",
+                        "secondary-fixed": "#71f8e4",
+                        "outline-variant": "#424754",
+                        "on-surface": "#dee2f5",
+                        "inverse-surface": "#dee2f5",
+                        "tertiary-fixed-dim": "#4ae176",
+                        "surface-container-highest": "#303443",
+                        "on-secondary-fixed-variant": "#005048",
+                        "on-primary-fixed-variant": "#004395",
+                        "on-tertiary-fixed-variant": "#005321",
+                        "on-tertiary-container": "#003111",
+                        "on-background": "#dee2f5",
+                        "error-container": "#93000a",
+                        "outline": "#8c909f",
+                        "error": "#ffb4ab",
+                        "on-primary": "#002e6a",
+                        "surface-container-low": "#161b29",
+                        "on-error-container": "#ffdad6",
+                        "secondary-fixed-dim": "#4fdbc8",
+                        "primary-fixed": "#d8e2ff",
+                        "surface-bright": "#343948",
+                        "inverse-on-surface": "#2b303e",
+                        "surface-variant": "#303443",
+                        "on-secondary": "#003731",
+                        "tertiary-container": "#00a74b",
+                        "on-surface-variant": "#c2c6d6",
+                        "on-primary-fixed": "#001a42",
+                        "secondary-container": "#04b4a2",
+                        "on-tertiary-fixed": "#002109",
+                        "on-secondary-container": "#003f38",
+                        "on-error": "#690005",
+                        "on-primary-container": "#00285d",
+                        "tertiary": "#4ae176",
+                        "inverse-primary": "#005ac2",
+                        "surface-container": "#1a1f2d",
+                        "primary-container": "#4d8eff",
+                        "surface": "#0e1320",
+                        "tertiary-fixed": "#6bff8f",
+                        "surface-container-lowest": "#090e1b"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "stack-gap": "1.25rem",
+                        "inline-gap": "0.75rem",
+                        "section-padding": "1.5rem",
+                        "container-margin": "1rem"
+                    },
+                    "fontFamily": {
+                        "body-md": ["Inter"],
+                        "display-stat": ["Inter"],
+                        "label-bold": ["Inter"],
+                        "label-sm": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "body-lg": ["Inter"]
+                    },
+                    "fontSize": {
+                        "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "display-stat": ["36px", { "lineHeight": "44px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "label-bold": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600" }],
+                        "label-sm": ["11px", { "lineHeight": "14px", "fontWeight": "500" }],
+                        "headline-md": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+                        "headline-lg": ["24px", { "lineHeight": "32px", "fontWeight": "700" }],
+                        "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .glass-panel {
+            background: rgba(17, 24, 39, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .upload-dashed {
+            border: 2px dashed rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+        .upload-dashed:hover {
+            border-color: rgba(173, 198, 255, 0.5);
+            background: rgba(173, 198, 255, 0.05);
+        }
+        .active-upload {
+            border: 1px solid rgba(77, 142, 255, 0.3);
+            box-shadow: 0px 8px 24px rgba(59, 130, 246, 0.15);
+        }
+        .btn-gradient {
+            background: linear-gradient(90deg, #4d8eff 0%, #4fdbc8 100%);
+            transition: transform 0.2s ease, filter 0.2s ease;
+        }
+        .btn-gradient:active {
+            transform: scale(0.97);
+            filter: brightness(1.2);
+        }
+        .pulse-ring {
+            animation: pulse-ring 2s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+        }
+        @keyframes pulse-ring {
+            0% { transform: scale(0.8); opacity: 0.5; }
+            100% { transform: scale(2); opacity: 0; }
+        }
+        
+        /* Spinner Animation */
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid rgba(173, 198, 255, 0.2);
+            border-top-color: #adc6ff;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background min-h-screen pb-24 font-body-md">
+<!-- TopAppBar -->
+<header class="bg-surface-dim dark:bg-surface-dim text-primary dark:text-primary docked full-width top-0 z-50 bg-surface-dim dark:bg-surface-dim border-b border-white/10 shadow-[0px_8px_24px_rgba(59,130,246,0.15)] flex justify-between items-center w-full px-container-margin py-4 fixed">
+<div class="flex items-center gap-4">
+<button class="text-on-surface-variant dark:text-on-surface-variant hover:bg-surface-container-high dark:hover:bg-surface-container-high transition-colors scale-95 active:brightness-125 transition-all duration-200 p-2 rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">arrow_back</span>
+</button>
+<h1 class="text-headline-lg font-headline-lg font-bold text-primary dark:text-primary">RapidMedico</h1>
+</div>
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full overflow-hidden border border-white/10">
+<img alt="Profile" class="w-full h-full object-cover" data-alt="A detailed professional headshot of an Indian delivery partner wearing a dark medical logistics uniform. The lighting is modern and high-contrast, set against a dark urban tech background. The mood is confident and efficient." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDDg4IcGvzFZUyY5xyPznZBYpYwoYy_DU8XXouESuhYzuDq3dRkHMOE2FdlXe0CaxMj2SFic85TY7Agsrl497JUML3w4MQEpimgkekXkFfzqGUR9nF47ric51jax3IIK4MejBo1xWEZ5YDw4WCSmuDmjCJS5WL3ouhnyx9JaPrNW_EA4z3LKaEiK2knEvt1ixTwylsJGiXxws1sVPN1EcMv4MXHFgb2Wj7FMsN0GSN-65phE-Tp01Iw"/>
+</div>
+<button class="text-on-surface-variant dark:text-on-surface-variant hover:bg-surface-container-high dark:hover:bg-surface-container-high transition-colors scale-95 active:brightness-125 transition-all duration-200 p-2 rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">sensors</span>
+</button>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="pt-24 px-container-margin max-w-2xl mx-auto space-y-stack-gap">
+<!-- Header Section -->
+<div class="mb-8">
+<h2 class="text-display-stat font-display-stat text-on-surface mb-2">KYC Verification</h2>
+<p class="text-body-lg font-body-lg text-on-surface-variant">Complete your profile to start delivering critical medical supplies.</p>
+</div>
+<!-- Banner: Under Review (Hidden by default, shown for demonstration) -->
+<div class="glass-panel rounded-xl p-4 flex items-start gap-4 border-secondary-container/50 bg-secondary-container/10">
+<div class="w-10 h-10 rounded-full bg-secondary-container/20 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-secondary" style="font-variation-settings: 'FILL' 1;">pending_actions</span>
+</div>
+<div>
+<h3 class="text-headline-md font-headline-md text-on-surface mb-1">Verification in Progress</h3>
+<p class="text-body-md font-body-md text-on-surface-variant">Your documents are currently being reviewed by our compliance team. This usually takes 2-4 hours.</p>
+</div>
+</div>
+<!-- Upload Cards Container -->
+<div class="space-y-4">
+<!-- Card 1: Aadhaar (Uploaded State) -->
+<div class="glass-panel active-upload rounded-xl p-5 relative overflow-hidden">
+<div class="flex items-center justify-between mb-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary">badge</span>
+</div>
+<div>
+<h3 class="text-body-lg font-headline-md text-on-surface">Aadhaar Card</h3>
+<p class="text-label-sm font-label-sm text-on-surface-variant">Front &amp; Back Uploaded</p>
+</div>
+</div>
+<div class="flex items-center gap-2 text-tertiary">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span class="text-label-bold font-label-bold">Verified</span>
+</div>
+</div>
+<div class="flex gap-4">
+<div class="relative w-24 h-16 rounded-lg overflow-hidden border border-white/10">
+<img alt="Aadhaar Front" class="w-full h-full object-cover opacity-60" data-alt="A stylized, darkened graphic representation of a generic ID card front, blending into a dark tech UI aesthetic with subtle blue glows. High contrast, professional." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA5Ff755dw-fWvjc3cNGqGXZXmXsa-d0CHmVZkA3vbnRJbLhiyof3owJId-P-9SOiV9t4ODYL8lkk0mcMo6jg0bvX1C0GSoZLvShMeUdC4nrSAsaUxRF1MCWZbaNTan_NnSOjGnTlvnhegJYKojrsezL6AU_ofKWyPX1d5KGjytKgfG2kwIL7ADVrr4CJHvONIWtS080V4kRxgkpK5qsy9drhPwOdS1pRpAJCTWQIbTYLIHkD0fCUlS"/>
+<div class="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent flex items-end justify-center pb-1">
+<span class="text-[10px] text-on-surface font-label-sm">Front.jpg</span>
+</div>
+</div>
+<div class="relative w-24 h-16 rounded-lg overflow-hidden border border-white/10">
+<img alt="Aadhaar Back" class="w-full h-full object-cover opacity-60" data-alt="A stylized, darkened graphic representation of a generic ID card back, blending into a dark tech UI aesthetic with subtle blue glows. High contrast, professional." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCWe7m7e7bkp8cOexIO5_y_v-HnnbSW3Xz5OTENEmBXmeCW3A6aE63zIqDzxGn3wRDTORIhZtsz1APaEqHFnuWNdiviIxHStLnWY10Kjdtk6g4Gw4Bhr3MbNwMoTCHtjZ5FQrIpw1J5tGwE08v1PuGLDIOd7x6oiZI5QD_0517qDSNepAPIRRqk7CspGQfloLcfQ0eesDuTCImtP58YLbecHVsQDX9YJEelIDBKg_HclUmif8hs4IxA"/>
+<div class="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent flex items-end justify-center pb-1">
+<span class="text-[10px] text-on-surface font-label-sm">Back.jpg</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Card 2: Driving License (Uploading State) -->
+<div class="glass-panel rounded-xl p-5 border border-primary/30 bg-primary/5">
+<div class="flex items-center justify-between mb-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary">drive_eta</span>
+</div>
+<div>
+<h3 class="text-body-lg font-headline-md text-on-surface">Driving License</h3>
+<p class="text-label-sm font-label-sm text-primary">Uploading 64%...</p>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<div class="spinner shrink-0"></div>
+<div class="w-full">
+<div class="h-2 w-full bg-surface-container-high rounded-full overflow-hidden">
+<div class="h-full bg-primary rounded-full" style="width: 64%;"></div>
+</div>
+<p class="text-label-sm font-label-sm text-on-surface-variant mt-2 text-right">Processing high-res image</p>
+</div>
+</div>
+</div>
+<!-- Card 3: Profile Photo (Idle State) -->
+<div class="glass-panel rounded-xl p-5">
+<div class="flex items-center justify-between mb-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-surface-container-high flex items-center justify-center">
+<span class="material-symbols-outlined text-on-surface-variant">face</span>
+</div>
+<div>
+<h3 class="text-body-lg font-headline-md text-on-surface">Profile Photo</h3>
+<p class="text-label-sm font-label-sm text-on-surface-variant">Clear selfie with good lighting</p>
+</div>
+</div>
+<span class="text-label-bold font-label-bold text-error">Required</span>
+</div>
+<button class="w-full upload-dashed rounded-lg p-6 flex flex-col items-center justify-center gap-2 cursor-pointer">
+<span class="material-symbols-outlined text-outline text-3xl">add_a_photo</span>
+<span class="text-label-bold font-label-bold text-on-surface">Tap to capture or upload</span>
+<span class="text-label-sm font-label-sm text-on-surface-variant">JPEG, PNG up to 5MB</span>
+</button>
+</div>
+</div>
+<!-- Action Area -->
+<div class="pt-6 pb-8">
+<button class="w-full btn-gradient text-on-primary-fixed h-14 rounded-xl text-headline-md font-headline-md shadow-[0_0_20px_rgba(79,219,200,0.3)] flex items-center justify-center gap-2 opacity-50 cursor-not-allowed">
+                Submit KYC
+                <span class="material-symbols-outlined">arrow_forward</span>
+</button>
+<p class="text-center text-label-sm font-label-sm text-on-surface-variant mt-4">By submitting, you agree to RapidMedico's background check policies.</p>
+</div>
+</main>
+<!-- Contextual FAB Suppression: Navigation omitted due to transactional task focus -->
+</body></html>

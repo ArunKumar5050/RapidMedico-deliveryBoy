@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>New Delivery Alert - RapidMedico</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "surface-container-high": "#252a38",
+                      "surface-tint": "#adc6ff",
+                      "secondary": "#4fdbc8",
+                      "primary-fixed-dim": "#adc6ff",
+                      "primary": "#adc6ff",
+                      "on-secondary-fixed": "#00201c",
+                      "on-tertiary": "#003915",
+                      "background": "#0e1320",
+                      "surface-dim": "#0e1320",
+                      "secondary-fixed": "#71f8e4",
+                      "outline-variant": "#424754",
+                      "on-surface": "#dee2f5",
+                      "inverse-surface": "#dee2f5",
+                      "tertiary-fixed-dim": "#4ae176",
+                      "surface-container-highest": "#303443",
+                      "on-secondary-fixed-variant": "#005048",
+                      "on-primary-fixed-variant": "#004395",
+                      "on-tertiary-fixed-variant": "#005321",
+                      "on-tertiary-container": "#003111",
+                      "on-background": "#dee2f5",
+                      "error-container": "#93000a",
+                      "outline": "#8c909f",
+                      "error": "#ffb4ab",
+                      "on-primary": "#002e6a",
+                      "surface-container-low": "#161b29",
+                      "on-error-container": "#ffdad6",
+                      "secondary-fixed-dim": "#4fdbc8",
+                      "primary-fixed": "#d8e2ff",
+                      "surface-bright": "#343948",
+                      "inverse-on-surface": "#2b303e",
+                      "surface-variant": "#303443",
+                      "on-secondary": "#003731",
+                      "tertiary-container": "#00a74b",
+                      "on-surface-variant": "#c2c6d6",
+                      "on-primary-fixed": "#001a42",
+                      "secondary-container": "#04b4a2",
+                      "on-tertiary-fixed": "#002109",
+                      "on-secondary-container": "#003f38",
+                      "on-error": "#690005",
+                      "on-primary-container": "#00285d",
+                      "tertiary": "#4ae176",
+                      "inverse-primary": "#005ac2",
+                      "surface-container": "#1a1f2d",
+                      "primary-container": "#4d8eff",
+                      "surface": "#0e1320",
+                      "tertiary-fixed": "#6bff8f",
+                      "surface-container-lowest": "#090e1b"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "stack-gap": "1.25rem",
+                      "inline-gap": "0.75rem",
+                      "section-padding": "1.5rem",
+                      "container-margin": "1rem"
+              },
+              "fontFamily": {
+                      "body-md": ["Inter"],
+                      "display-stat": ["Inter"],
+                      "label-bold": ["Inter"],
+                      "label-sm": ["Inter"],
+                      "headline-md": ["Inter"],
+                      "headline-lg": ["Inter"],
+                      "body-lg": ["Inter"]
+              },
+              "fontSize": {
+                      "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                      "display-stat": ["36px", {"lineHeight": "44px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                      "label-bold": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                      "label-sm": ["11px", {"lineHeight": "14px", "fontWeight": "500"}],
+                      "headline-md": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                      "headline-lg": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                      "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}]
+              },
+              animation: {
+                  'pulse-fast': 'pulse 1s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                  'vibrate': 'vibrate 0.3s linear infinite both',
+                  'glow-pulse': 'glow-pulse 2s ease-in-out infinite alternate',
+              },
+              keyframes: {
+                  vibrate: {
+                      '0%, 100%': { transform: 'rotate(0deg)' },
+                      '25%': { transform: 'rotate(5deg)' },
+                      '50%': { transform: 'rotate(0deg)' },
+                      '75%': { transform: 'rotate(-5deg)' },
+                  },
+                  'glow-pulse': {
+                      '0%': { boxShadow: '0 0 10px 0 rgba(74, 225, 118, 0.5)' },
+                      '100%': { boxShadow: '0 0 30px 10px rgba(74, 225, 118, 0.8)' }
+                  }
+              }
+            }
+          }
+        }
+    </script>
+<style>
+        body {
+            background-color: #0A0F1C;
+        }
+        
+        .timer-ring-circle {
+            stroke-dasharray: 283; /* 2 * pi * r (approx) */
+            stroke-dashoffset: 0;
+            transition: stroke-dashoffset 15s linear, stroke 15s linear;
+        }
+
+        .timer-active .timer-ring-circle {
+            stroke-dashoffset: 283;
+            stroke: #ffb4ab; /* error color for red */
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background min-h-screen overflow-hidden font-body-md relative">
+<!-- Simulated Map Background (Blurred) -->
+<div class="absolute inset-0 bg-cover bg-center opacity-30 blur-sm pointer-events-none z-0" data-alt="A dark mode digital street map centered on a dense urban grid in India, featuring high-contrast blue and neon purple route lines on a deep navy black background, optimized for nighttime visibility." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDG13zNph8Mvu32-0aZgt3UW5tPcX3rAvdmTgqkfryEs4vBb4JdPGGpbeEWZ0e0MeluYk5gZ0rPgI7nA9RlSVoP7SQf_-xG0u6cGjgZCvvQ1GSWiuobMDonnsZx4MWtbVu8Wj8ocwNL1nFsO8VAYtQk2mY0jcv4yLMZzHtyoJUdTzc4RehWuKlEH5bpi-0EuHZlHaPTWoEc1z4liEe1UHXVJlTiwG5vubK5RlnzqJFjbPHfJSxeTAKU')"></div>
+<!-- Full-screen Modal Backdrop -->
+<div class="fixed inset-0 bg-surface-lowest/80 backdrop-blur-[20px] z-50 flex flex-col justify-between items-center p-container-margin pb-8 pt-12">
+<!-- Header area -->
+<div class="w-full flex flex-col items-center gap-stack-gap animate-fade-in-up mt-8">
+<div class="w-20 h-20 rounded-full bg-secondary-container/20 flex items-center justify-center animate-glow-pulse mb-2">
+<span class="material-symbols-outlined text-[48px] text-secondary animate-vibrate" style="font-variation-settings: 'FILL' 1;">
+                    notifications_active
+                </span>
+</div>
+<h1 class="font-display-stat text-display-stat text-on-background text-center">
+                New Delivery Request!
+            </h1>
+<!-- Countdown Timer Ring -->
+<div class="relative w-32 h-32 mt-4" id="countdown-container">
+<svg class="w-full h-full transform -rotate-90" viewbox="0 0 100 100">
+<!-- Background Ring -->
+<circle class="text-surface-container-high" cx="50" cy="50" fill="none" r="45" stroke="currentColor" stroke-width="6"></circle>
+<!-- Progress Ring -->
+<circle class="text-tertiary-fixed-dim timer-ring-circle" cx="50" cy="50" fill="none" id="timer-progress" r="45" stroke="currentColor" stroke-linecap="round" stroke-width="6"></circle>
+</svg>
+<div class="absolute inset-0 flex items-center justify-center flex-col">
+<span class="font-headline-lg text-headline-lg text-on-background" id="countdown-text">15</span>
+<span class="font-label-sm text-label-sm text-outline">sec</span>
+</div>
+</div>
+</div>
+<!-- Order Details Card -->
+<div class="w-full max-w-sm bg-surface-container/90 border border-white/10 rounded-xl p-section-padding shadow-[0px_8px_24px_rgba(59,130,246,0.15)] backdrop-blur-md mt-auto mb-stack-gap">
+<!-- Earnings -->
+<div class="flex justify-between items-end mb-6 pb-6 border-b border-white/10">
+<div>
+<p class="font-label-bold text-label-bold text-outline uppercase tracking-wider mb-1">Expected Earning</p>
+<p class="font-display-stat text-display-stat text-tertiary">₹145.50</p>
+</div>
+<div class="bg-surface-container-high rounded-full px-3 py-1 flex items-center gap-1 border border-white/5">
+<span class="material-symbols-outlined text-[16px] text-secondary">distance</span>
+<span class="font-label-bold text-label-bold text-on-surface">3.2 km</span>
+</div>
+</div>
+<!-- Locations -->
+<div class="flex flex-col gap-4 relative">
+<!-- Vertical Line connecting points -->
+<div class="absolute left-[11px] top-[14px] bottom-[14px] w-[2px] bg-outline/30 z-0"></div>
+<!-- Pickup -->
+<div class="flex items-start gap-4 relative z-10">
+<div class="w-6 h-6 rounded-full bg-primary/20 border border-primary flex items-center justify-center shrink-0 mt-0.5">
+<div class="w-2 h-2 rounded-full bg-primary"></div>
+</div>
+<div>
+<p class="font-label-bold text-label-bold text-outline uppercase tracking-wider mb-0.5">Pickup</p>
+<p class="font-headline-md text-headline-md text-on-background">Apollo Pharmacy</p>
+<p class="font-body-md text-body-md text-on-surface-variant">Koramangala 4th Block</p>
+</div>
+</div>
+<!-- Dropoff -->
+<div class="flex items-start gap-4 relative z-10">
+<div class="w-6 h-6 rounded-full bg-tertiary/20 border border-tertiary flex items-center justify-center shrink-0 mt-0.5">
+<span class="material-symbols-outlined text-[14px] text-tertiary" style="font-variation-settings: 'FILL' 1;">location_on</span>
+</div>
+<div>
+<p class="font-label-bold text-label-bold text-outline uppercase tracking-wider mb-0.5">Drop-off</p>
+<p class="font-headline-md text-headline-md text-on-background">Customer Home</p>
+<p class="font-body-md text-body-md text-on-surface-variant">HSR Layout Sector 2</p>
+</div>
+</div>
+</div>
+<!-- Items info -->
+<div class="mt-6 pt-4 border-t border-white/10 flex items-center gap-2">
+<span class="material-symbols-outlined text-outline" style="font-variation-settings: 'FILL' 1;">medication</span>
+<p class="font-body-md text-body-md text-on-surface-variant">3 Items • Urgent Medication</p>
+</div>
+</div>
+<!-- Actions -->
+<div class="w-full max-w-sm flex flex-col gap-4 z-10">
+<!-- Swipe to Accept (Simulated Button) -->
+<button class="w-full h-[60px] bg-gradient-to-r from-tertiary-container to-tertiary rounded-lg font-headline-md text-headline-md text-on-tertiary-container flex items-center justify-center shadow-[0px_0px_20px_rgba(74,225,118,0.3)] hover:shadow-[0px_0px_30px_rgba(74,225,118,0.5)] transition-all duration-300 scale-95 active:scale-90 active:brightness-125 overflow-hidden relative group">
+<span class="absolute inset-0 w-1/4 h-full bg-white/20 skew-x-[-20deg] -translate-x-full group-hover:animate-[shimmer_1.5s_infinite]"></span>
+                ACCEPT DELIVERY
+            </button>
+<button class="w-full h-12 rounded-lg border border-outline text-outline font-headline-md text-body-lg flex items-center justify-center hover:bg-surface-container-high transition-colors active:scale-95 duration-200">
+                Skip Request
+            </button>
+</div>
+</div>
+<script>
+        // Simple countdown logic
+        document.addEventListener('DOMContentLoaded', () => {
+            const container = document.getElementById('countdown-container');
+            const text = document.getElementById('countdown-text');
+            let timeLeft = 15;
+            
+            // Trigger CSS animation for ring depleting and color change
+            setTimeout(() => {
+                container.classList.add('timer-active');
+            }, 50);
+
+            const timer = setInterval(() => {
+                timeLeft--;
+                text.textContent = timeLeft;
+                
+                if (timeLeft <= 0) {
+                    clearInterval(timer);
+                    text.textContent = "0";
+                    // Handle expiration visually if needed
+                }
+            }, 1000);
+        });
+    </script>
+<style>
+        @keyframes shimmer {
+            100% {
+                transform: translateX(400%);
+            }
+        }
+        .animate-fade-in-up {
+            animation: fadeInUp 0.5s ease-out forwards;
+        }
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</body></html>

@@ -1,0 +1,67 @@
+{
+  "expo": {
+    "name": "RapidMedi Delivery Partner",
+    "slug": "rapidmedi-delivery-partner",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "dark",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#0f172a"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": false,
+      "bundleIdentifier": "com.rapidmedi.deliverypartner",
+      "infoPlist": {
+        "NSLocationWhenInUseUsageDescription": "RapidMedi needs your location to assign nearby medicine deliveries.",
+        "NSLocationAlwaysAndWhenInUseUsageDescription": "RapidMedi tracks your delivery location in the background to provide live updates to customers."
+      }
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#0f172a"
+      },
+      "package": "com.rapidmedi.deliverypartner",
+      "androidStatusBar": {
+        "translucent": true,
+        "backgroundColor": "#00000000"
+      },
+      "androidNavigationBar": {
+        "visible": true,
+        "barStyle": "light-content",
+        "backgroundColor": "#0f172a"
+      },
+      "permissions": [
+        "ACCESS_COARSE_LOCATION",
+        "ACCESS_FINE_LOCATION",
+        "ACCESS_BACKGROUND_LOCATION",
+        "FOREGROUND_SERVICE",
+        "POST_NOTIFICATIONS",
+        "VIBRATE"
+      ]
+    },
+    "plugins": [
+      [
+        "expo-location",
+        {
+          "locationAlwaysAndWhenInUsePermission": "Allow RapidMedi to access your location for live tracking during active deliveries."
+        }
+      ],
+      [
+        "expo-notifications",
+        {
+          "icon": "./assets/notification-icon.png",
+          "color": "#0284c7"
+        }
+      ],
+      "expo-asset",
+      "expo-font"
+    ]
+  }
+}
