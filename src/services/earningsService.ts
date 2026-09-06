@@ -6,11 +6,13 @@ import {
   getDocs,
   doc,
   getDoc,
+  setDoc,
   orderBy,
   limit,
 } from 'firebase/firestore';
 import { db } from '../firebase/config';
 import { Earnings, DeliveryHistory, EarningsEntry } from '../types';
+import { useEarningsStore } from '../store/earningsStore';
 
 export const earningsService = {
   /**
@@ -248,4 +250,86 @@ export const earningsService = {
       });
     });
   },
+
+  /**
+   * Clears all delivery history and financial records for a partner
+   */
+  async clearAllDeliveryRecords(partnerId: string): Promise<boolean> {
+    if (!partnerId) return false;
+
+    try {
+      // 1. Reset delivery_partners document lifetime stats
+      const partnerRef = doc(db, 'delivery_partners', partnerId);
+      await setDoc(
+        partnerRef,
+        {
+          totalDeliveries: 0,
+          todayEarnings: 0,
+          totalEarnings: 0,
+          lastDeliveredAt: null,
+          updatedAt: new Date().toISOString(),
+        },
+        { merge: true }
+      );
+
+      // 2. Unlink delivery partner from customOrders
+      const customOrdersCol = collection(db, 'customOrders');
+      const qCustom = query(customOrdersCol, where('deliveryPartnerId', '==', partnerId));
+      const customSnap = await getDocs(qCustom);
+      for (const d of customSnap.docs) {
+        try {
+          await setDoc(
+            doc(db, 'customOrders', d.id),
+            {
+              deliveryPartnerId: null,
+              deliveryPartnerName: null,
+              deliveryStatus: null,
+              isArchived: true,
+              updatedAt: new Date().toISOString(),
+            },
+            { merge: true }
+          );
+        } catch (_) {}
+      }
+
+      // 3. Unlink delivery partner from standard orders
+      const ordersCol = collection(db, 'orders');
+      const qOrders = query(ordersCol, where('deliveryPartnerId', '==', partnerId));
+      const ordersSnap = await getDocs(qOrders);
+      for (const d of ordersSnap.docs) {
+        try {
+          await setDoc(
+            doc(db, 'orders', d.id),
+            {
+              deliveryPartnerId: null,
+              deliveryPartnerName: null,
+              deliveryStatus: null,
+              isArchived: true,
+              updatedAt: new Date().toISOString(),
+            },
+            { merge: true }
+          );
+        } catch (_) {}
+      }
+
+      // 4. Update local in-memory Zustand store
+      useEarningsStore.getState().setEarnings({
+        partnerId,
+        today: 0,
+        thisWeek: 0,
+        thisMonth: 0,
+        pendingSettlement: 0,
+        completedDeliveriesCount: 0,
+        deliveryEarnings: [],
+        updatedAt: Date.now(),
+      });
+      useEarningsStore.getState().setHistory([]);
+
+      return true;
+    } catch (err) {
+      console.warn('[EarningsService] clearAllDeliveryRecords error:', err);
+      return false;
+    }
+  },
 };
+

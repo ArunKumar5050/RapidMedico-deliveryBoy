@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, ScrollView, RefreshControl, ActivityIndicator, TouchableOpacity, Image } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, RefreshControl, ActivityIndicator, TouchableOpacity, Image, Alert } from 'react-native';
 import { useThemeStore } from '../store/themeStore';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useAuthStore } from '../store/authStore';
 import { earningsService } from '../services/earningsService';
 import { DeliveryHistory } from '../types';
 import { formatCurrency } from '../utils/formatting';
-import { History, CheckCircle2, XCircle, Clock, Search, Filter } from 'lucide-react-native';
+import { History, CheckCircle2, XCircle, Clock, Search, Filter, Trash2 } from 'lucide-react-native';
 
 const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 const formatDate = (d: Date): string => {
@@ -51,6 +51,39 @@ export const DeliveryHistoryScreen = () => {
     const data = await earningsService.getDeliveryHistory(partner.partnerId);
     setHistory(data);
     setRefreshing(false);
+  };
+
+  const [clearing, setClearing] = useState(false);
+
+  const handleClearHistory = () => {
+    if (!partner?.partnerId) return;
+    Alert.alert(
+      'Clear All Delivery Records?',
+      'Are you sure you want to permanently clear all completed delivery history and financial stats? This cannot be undone.',
+      [
+        { text: 'Cancel', style: 'cancel' },
+        {
+          text: 'Clear All Records',
+          style: 'destructive',
+          onPress: async () => {
+            setClearing(true);
+            try {
+              const success = await earningsService.clearAllDeliveryRecords(partner.partnerId);
+              if (success) {
+                setHistory([]);
+                Alert.alert('Records Cleared', 'All delivery records have been cleared successfully.');
+              } else {
+                Alert.alert('Error', 'Failed to clear delivery records.');
+              }
+            } catch (e: any) {
+              Alert.alert('Error', e?.message || 'Error clearing records.');
+            } finally {
+              setClearing(false);
+            }
+          },
+        },
+      ]
+    );
   };
 
   const filteredHistory = history.filter((item) => {
@@ -98,6 +131,17 @@ export const DeliveryHistoryScreen = () => {
             <History size={24} color="#adc6ff" />
             <Text style={styles.pageTitle}>Delivery History</Text>
           </View>
+          <TouchableOpacity
+            style={styles.clearRecordsBtn}
+            onPress={handleClearHistory}
+            disabled={clearing}
+            activeOpacity={0.7}
+          >
+            <Trash2 size={15} color="#ffb4ab" />
+            <Text style={styles.clearRecordsBtnText}>
+              {clearing ? 'Clearing...' : 'Clear All'}
+            </Text>
+          </TouchableOpacity>
         </View>
 
         {/* Filter Row */}
@@ -233,7 +277,26 @@ const createStyles = (theme: any) => StyleSheet.create({
     paddingTop: 24,
   },
   pageHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
     marginBottom: 20,
+  },
+  clearRecordsBtn: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+    paddingHorizontal: 12,
+    paddingVertical: 7,
+    borderRadius: 16,
+    borderWidth: 1,
+    borderColor: 'rgba(255, 180, 171, 0.4)',
+    backgroundColor: 'rgba(255, 180, 171, 0.15)',
+  },
+  clearRecordsBtnText: {
+    color: '#ffb4ab',
+    fontSize: 12,
+    fontWeight: '700',
   },
   titleRow: {
     flexDirection: 'row',

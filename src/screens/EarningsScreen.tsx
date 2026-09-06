@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, ScrollView, RefreshControl, ActivityIndicator, TouchableOpacity, Image } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, RefreshControl, ActivityIndicator, TouchableOpacity, Image, Alert } from 'react-native';
 import { useThemeStore } from '../store/themeStore';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useAuthStore } from '../store/authStore';
 import { useEarningsStore } from '../store/earningsStore';
 import { earningsService } from '../services/earningsService';
 import { formatCurrency } from '../utils/formatting';
-import { Wallet, TrendingUp, Calendar, Clock, AlertCircle, RefreshCw, Truck } from 'lucide-react-native';
+import { Wallet, TrendingUp, Calendar, Clock, AlertCircle, RefreshCw, Truck, Trash2 } from 'lucide-react-native';
 
 const timeAgo = (date: Date): string => {
   const seconds = Math.floor((Date.now() - date.getTime()) / 1000);
@@ -54,6 +54,38 @@ export const EarningsScreen = () => {
     setRefreshing(false);
   };
 
+  const [clearing, setClearing] = useState(false);
+
+  const handleClearEarnings = () => {
+    if (!partner?.partnerId) return;
+    Alert.alert(
+      'Reset Delivery Records & Earnings?',
+      'Are you sure you want to reset all completed delivery records and financial stats for this partner?',
+      [
+        { text: 'Cancel', style: 'cancel' },
+        {
+          text: 'Reset Records',
+          style: 'destructive',
+          onPress: async () => {
+            setClearing(true);
+            try {
+              const success = await earningsService.clearAllDeliveryRecords(partner.partnerId);
+              if (success) {
+                Alert.alert('Records Reset', 'All delivery records and earnings have been reset.');
+              } else {
+                Alert.alert('Error', 'Failed to reset records.');
+              }
+            } catch (e: any) {
+              Alert.alert('Error', e?.message || 'Error resetting records.');
+            } finally {
+              setClearing(false);
+            }
+          },
+        },
+      ]
+    );
+  };
+
   const deliveryList = earnings?.deliveryEarnings || [];
 
   return (
@@ -81,11 +113,24 @@ export const EarningsScreen = () => {
         showsVerticalScrollIndicator={false}
       >
         <View style={styles.pageHeader}>
-          <Text style={styles.pageTitle}>Financial Analytics</Text>
-          <View style={styles.liveBadge}>
-            <View style={styles.liveDot} />
-            <Text style={styles.liveText}>LIVE SYNC</Text>
+          <View>
+            <Text style={styles.pageTitle}>Financial Analytics</Text>
+            <View style={styles.liveBadge}>
+              <View style={styles.liveDot} />
+              <Text style={styles.liveText}>LIVE SYNC</Text>
+            </View>
           </View>
+          <TouchableOpacity
+            style={styles.clearBtn}
+            onPress={handleClearEarnings}
+            disabled={clearing}
+            activeOpacity={0.7}
+          >
+            <Trash2 size={15} color="#ffb4ab" />
+            <Text style={styles.clearBtnText}>
+              {clearing ? 'Resetting...' : 'Clear Records'}
+            </Text>
+          </TouchableOpacity>
         </View>
 
         {/* Stats Grid */}
@@ -218,6 +263,22 @@ const createStyles = (theme: any) => StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     marginBottom: 20,
+  },
+  clearBtn: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+    paddingHorizontal: 12,
+    paddingVertical: 7,
+    borderRadius: 16,
+    borderWidth: 1,
+    borderColor: 'rgba(255, 180, 171, 0.4)',
+    backgroundColor: 'rgba(255, 180, 171, 0.15)',
+  },
+  clearBtnText: {
+    color: '#ffb4ab',
+    fontSize: 12,
+    fontWeight: '700',
   },
   pageTitle: {
     fontSize: 24,

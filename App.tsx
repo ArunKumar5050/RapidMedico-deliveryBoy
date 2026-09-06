@@ -18,7 +18,7 @@ export default function App() {
 
   return (
     <SafeAreaProvider>
-      <StatusBar style={isDark ? 'light' : 'dark'} translucent backgroundColor="transparent" />
+      <StatusBar style={isDark ? 'light' : 'dark'} />
       <RootNavigator />
     </SafeAreaProvider>
   );

@@ -32,7 +32,8 @@ import {
   Truck,
   Home,
   CheckCircle2,
-  Banknote
+  Banknote,
+  XCircle,
 } from 'lucide-react-native';
 import Svg, { Defs, LinearGradient, Stop, Rect } from 'react-native-svg';
 
@@ -55,19 +56,15 @@ export const ActiveDeliveryScreen = ({ navigation }: any) => {
     if (!currentAssignment?.orderId) return;
 
     const rawOrderId = currentAssignment.orderId.replace('asgn_', '');
-    const orderDocRef = doc(db, 'customOrders', rawOrderId);
+    const customOrderRef = doc(db, 'customOrders', rawOrderId);
+    const standardOrderRef = doc(db, 'orders', rawOrderId);
 
-    const unsubscribe = onSnapshot(orderDocRef, (docSnap) => {
+    const handleSnapshot = (docSnap: any) => {
       if (docSnap.exists()) {
         const data = docSnap.data();
 
         // 1. Exact Store Pickup OTP from DB
-        const fetchedOtp =
-          data.storePickupOtp ||
-          data.pickupOtp ||
-          data.pickupPin ||
-          data.deliveryOtp ||
-          data.otp;
+        const fetchedOtp = data.storePickupOtp || currentAssignment.storePickupOtp;
 
         if (fetchedOtp) {
           setDbStorePickupOtp(String(fetchedOtp));
@@ -86,9 +83,20 @@ export const ActiveDeliveryScreen = ({ navigation }: any) => {
           updateStatusLocally('en_route_delivery');
         }
       }
+    };
+
+    const unsubscribeCustom = onSnapshot(customOrderRef, handleSnapshot, (err) => {
+      console.warn('[ActiveDeliveryScreen] customOrders subscription error:', err);
     });
 
-    return () => unsubscribe();
+    const unsubscribeStandard = onSnapshot(standardOrderRef, handleSnapshot, (err) => {
+      console.warn('[ActiveDeliveryScreen] orders subscription error:', err);
+    });
+
+    return () => {
+      unsubscribeCustom();
+      unsubscribeStandard();
+    };
   }, [currentAssignment?.orderId, currentAssignment?.status, updateStatusLocally]);
 
   if (!currentAssignment) {
@@ -124,6 +132,34 @@ export const ActiveDeliveryScreen = ({ navigation }: any) => {
     });
   };
 
+  const handleCloseActiveOrder = () => {
+    if (!currentAssignment) return;
+    Alert.alert(
+      'Close Active Order',
+      `Are you sure you want to close and cancel this active delivery order #${currentAssignment.orderId.substring(0, 8)}?`,
+      [
+        { text: 'Keep Active', style: 'cancel' },
+        {
+          text: 'Yes, Close Order',
+          style: 'destructive',
+          onPress: async () => {
+            try {
+              await assignmentService.closeActiveOrder(
+                currentAssignment.orderId,
+                partner?.partnerId
+              );
+              Alert.alert('Order Closed', 'The active order has been successfully closed and released.', [
+                { text: 'OK', onPress: () => navigation.navigate('Dashboard') }
+              ]);
+            } catch (e: any) {
+              Alert.alert('Error', e?.message || 'Failed to close order.');
+            }
+          },
+        },
+      ]
+    );
+  };
+
   return (
     <View style={styles.container}>
       {/* Top App Bar */}
@@ -143,9 +179,19 @@ export const ActiveDeliveryScreen = ({ navigation }: any) => {
             <Text style={styles.headerSubtitle}>Order #{currentAssignment.orderId.substring(0, 8)}</Text>
           </View>
         </View>
-        <TouchableOpacity style={styles.supportBtn}>
-          <Phone size={20} color="#adc6ff" />
-        </TouchableOpacity>
+        <View style={styles.headerRightRow}>
+          <TouchableOpacity 
+            style={styles.headerCloseBtn}
+            onPress={handleCloseActiveOrder}
+            activeOpacity={0.7}
+          >
+            <XCircle size={15} color="#ffb4ab" />
+            <Text style={styles.headerCloseBtnText}>Close</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.supportBtn}>
+            <Phone size={20} color="#adc6ff" />
+          </TouchableOpacity>
+        </View>
       </View>
 
       <ScrollView
@@ -346,6 +392,16 @@ export const ActiveDeliveryScreen = ({ navigation }: any) => {
             </View>
           </>
         )}
+
+        {/* Prominent Close Active Order Option */}
+        <TouchableOpacity
+          style={styles.closeActiveDeliveryBtn}
+          onPress={handleCloseActiveOrder}
+          activeOpacity={0.7}
+        >
+          <XCircle size={18} color="#ffb4ab" />
+          <Text style={styles.closeActiveDeliveryBtnText}>Close / Release This Active Order</Text>
+        </TouchableOpacity>
       </ScrollView>
 
       {/* Bottom Fixed CTA */}
@@ -435,6 +491,27 @@ const createStyles = (theme: any) => StyleSheet.create({
     marginTop: 2,
     fontWeight: '600',
   },
+  headerRightRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+  },
+  headerCloseBtn: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 4,
+    paddingHorizontal: 10,
+    paddingVertical: 6,
+    borderRadius: 16,
+    borderWidth: 1,
+    borderColor: 'rgba(255, 180, 171, 0.4)',
+    backgroundColor: 'rgba(255, 180, 171, 0.15)',
+  },
+  headerCloseBtnText: {
+    color: '#ffb4ab',
+    fontSize: 12,
+    fontWeight: '700',
+  },
   supportBtn: {
     width: 40,
     height: 40,
@@ -444,6 +521,26 @@ const createStyles = (theme: any) => StyleSheet.create({
     justifyContent: 'center',
     borderWidth: 1,
     borderColor: '#ffffff10',
+  },
+  closeActiveDeliveryBtn: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 8,
+    paddingVertical: 14,
+    paddingHorizontal: 16,
+    borderRadius: 14,
+    borderWidth: 1,
+    borderColor: 'rgba(255, 180, 171, 0.35)',
+    backgroundColor: 'rgba(255, 180, 171, 0.1)',
+    marginTop: 16,
+    marginBottom: 8,
+  },
+  closeActiveDeliveryBtnText: {
+    color: '#ffb4ab',
+    fontSize: 13,
+    fontWeight: '700',
+    letterSpacing: 0.3,
   },
   scrollContent: {
     padding: 16,

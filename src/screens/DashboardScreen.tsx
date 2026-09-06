@@ -24,7 +24,7 @@ import { useLocationStore } from '../store/locationStore';
 import { DeliveryCard } from '../components/DeliveryCard';
 import { DeliveryAssignment } from '../types';
 import { formatCurrency } from '../utils/formatting';
-import { LocateFixed, Navigation2, Package, MapPin, Wifi, Activity } from 'lucide-react-native';
+import { LocateFixed, Navigation2, Package, MapPin, Wifi, Activity, XCircle } from 'lucide-react-native';
 
 export const DashboardScreen = ({ navigation }: any) => {
   const { partner, availability, setAvailability } = useAuthStore();
@@ -206,6 +206,33 @@ export const DashboardScreen = ({ navigation }: any) => {
     }
   };
 
+  const handleCloseActiveOrder = () => {
+    if (!currentAssignment) return;
+    Alert.alert(
+      'Close Active Order',
+      `Are you sure you want to close and cancel active order #${currentAssignment.orderId.substring(0, 8)}?`,
+      [
+        { text: 'Keep Active', style: 'cancel' },
+        {
+          text: 'Yes, Close Order',
+          style: 'destructive',
+          onPress: async () => {
+            try {
+              await assignmentService.closeActiveOrder(
+                currentAssignment.orderId,
+                partner?.partnerId
+              );
+              setCurrentAssignment(null);
+              Alert.alert('Order Closed', 'The active order has been successfully closed and released.');
+            } catch (e: any) {
+              Alert.alert('Error', e?.message || 'Failed to close order.');
+            }
+          },
+        },
+      ]
+    );
+  };
+
   return (
     <View style={[styles.container, { backgroundColor: theme.bg }]}>
       {/* TopAppBar */}
@@ -319,11 +346,27 @@ export const DashboardScreen = ({ navigation }: any) => {
                   <Text style={[styles.liveBadgeText, { color: theme.warningGlow }]}>IN TRANSIT</Text>
                 </View>
               </View>
+              <TouchableOpacity
+                style={[styles.closeOrderMiniBtn, { backgroundColor: 'rgba(255, 180, 171, 0.15)', borderColor: 'rgba(255, 180, 171, 0.4)' }]}
+                onPress={handleCloseActiveOrder}
+                activeOpacity={0.7}
+              >
+                <XCircle size={14} color="#ffb4ab" />
+                <Text style={styles.closeOrderMiniBtnText}>Close</Text>
+              </TouchableOpacity>
             </View>
             <DeliveryCard
               assignment={currentAssignment}
               onPress={() => navigation.navigate('ActiveDelivery')}
             />
+            <TouchableOpacity
+              style={[styles.closeOrderBtnFull, { borderColor: 'rgba(255, 180, 171, 0.35)', backgroundColor: 'rgba(255, 180, 171, 0.1)' }]}
+              onPress={handleCloseActiveOrder}
+              activeOpacity={0.7}
+            >
+              <XCircle size={18} color="#ffb4ab" />
+              <Text style={styles.closeOrderBtnFullText}>Close / Cancel Active Order</Text>
+            </TouchableOpacity>
           </Animated.View>
         ) : null}
 
@@ -710,6 +753,37 @@ const createStyles = (theme: any) => StyleSheet.create({
     fontSize: 12,
     fontWeight: '600',
     letterSpacing: 0.6,
-  }
+  },
+  closeOrderMiniBtn: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 4,
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+    borderRadius: 8,
+    borderWidth: 1,
+  },
+  closeOrderMiniBtnText: {
+    color: '#ffb4ab',
+    fontSize: 12,
+    fontWeight: '700',
+  },
+  closeOrderBtnFull: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 8,
+    paddingVertical: 12,
+    paddingHorizontal: 16,
+    borderRadius: 12,
+    borderWidth: 1,
+    marginTop: 8,
+  },
+  closeOrderBtnFullText: {
+    color: '#ffb4ab',
+    fontSize: 13,
+    fontWeight: '700',
+    letterSpacing: 0.3,
+  },
 });
 

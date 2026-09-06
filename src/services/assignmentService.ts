@@ -69,125 +69,156 @@ export const assignmentService = {
 
   /**
    * Subscribe to real-time Customer Orders from Firestore where storeStatus is 'DELIVERY_REQUESTED'
+   * We must subscribe to BOTH 'customOrders' and 'orders' collections!
    */
   subscribeConfirmedOrders(
     partner: DeliveryPartner,
     onOrdersUpdated: (assignments: DeliveryAssignment[]) => void
   ) {
     try {
-      const ordersCol = collection(db, 'customOrders');
-      const q = query(ordersCol, limit(50));
+      const customCol = collection(db, 'customOrders');
+      const qCustom = query(customCol, limit(50));
+      
+      const ordersCol = collection(db, 'orders');
+      const qOrders = query(ordersCol, limit(50));
 
-      return onSnapshot(
-        q,
+      let customAssignments: DeliveryAssignment[] = [];
+      let standardAssignments: DeliveryAssignment[] = [];
+
+      const processDocs = async (docs: any[]) => {
+        const assignmentPromises = docs.map(async (docSnap) => {
+          const data = docSnap.data();
+
+          // Check if order has storeStatus as DELIVERY_REQUESTED and is unassigned
+          const isDeliveryRequested =
+            (data.storeStatus === 'DELIVERY_REQUESTED' ||
+             data.status === 'DELIVERY_REQUESTED' ||
+             data.status === 'confirmed' ||
+             data.storeStatus === 'READY') &&
+            !data.deliveryPartnerId;
+
+          // Check if order is already assigned to this partner
+          const isAssignedToMe =
+            data.deliveryPartnerId === partner.partnerId &&
+            (data.storeStatus === 'DELIVERY_ASSIGNED' ||
+             data.status === 'DELIVERY_ASSIGNED' ||
+             data.status === 'delivery boy assigned' ||
+             data.storeStatus === 'OUT_OF_DELIVERY' ||
+             data.deliveryStatus === 'en_route_delivery' ||
+             data.deliveryStatus === 'en_route_pickup');
+
+          const isAlreadyDelivered =
+            data.deliveryStatus === 'delivered' ||
+            data.storeStatus === 'COMPLETED' ||
+            data.status === 'cancelled';
+
+          if ((isDeliveryRequested || isAssignedToMe) && !isAlreadyDelivered) {
+            const storeId = data.storeId || '';
+            const storeInfo = await assignmentService.getStoreDetails(storeId, partner.cityId);
+
+            const billAmount = Number(data.billAmount || data.price || data.totalAmount || 250);
+            const estimatedEarnings = Math.max(45, Math.round(billAmount * 0.15));
+
+            const exactPickupOtp =
+              data.storePickupOtp ||
+              data.pickupOtp ||
+              data.pickupPin ||
+              data.deliveryOtp ||
+              data.otp;
+
+            const exactDeliveryOtp =
+              data.deliveryOtp ||
+              data.otp ||
+              data.deliveryOTP ||
+              data.customerDeliveryOtp;
+
+            const assignment: DeliveryAssignment = {
+              assignmentId: `asgn_${docSnap.id}`,
+              orderId: docSnap.id,
+              partnerId: partner.partnerId,
+              status: data.deliveryStatus || (isAssignedToMe ? 'en_route_pickup' : 'pending_acceptance'),
+              storePickupOtp: exactPickupOtp ? String(exactPickupOtp) : undefined,
+              deliveryOtp: exactDeliveryOtp ? String(exactDeliveryOtp) : undefined,
+              pharmacy: {
+                pharmacyId: storeId || 'pharmacy_central',
+                displayName: storeInfo.displayName || data.storeName || 'RapidMedi Partner Store',
+                addressText: storeInfo.addressText || data.storeAddress || `${partner.cityId.replace(/_/g, ' ').toUpperCase()} Central Hub`,
+                phone: storeInfo.phone || data.storePhone || '',
+                location: {
+                  lat: Number(storeInfo.lat || data.storeLat || 27.8012),
+                  lng: Number(storeInfo.lng || data.storeLng || 75.3421),
+                  timestamp: Date.now(),
+                  accuracy: 5,
+                },
+                pickupInstructions: 'Give generated 4-digit OTP to store owner to receive parcel',
+              },
+              customer: {
+                firstName: (data.userName || data.customerName || 'Customer').split(' ')[0],
+                fullName: data.userName || data.customerName || 'Customer',
+                phone: data.mobile || data.userPhone || data.phone || '',
+                deliveryAddress:
+                  data.address ||
+                  data.deliveryAddress ||
+                  `Near Main Temple, ${partner.cityId.replace(/_/g, ' ').toUpperCase()}`,
+                landmark: data.landmark || 'Main Road',
+                instructions: data.instructions || 'Ring doorbell or call upon arrival',
+                location: {
+                  lat: Number(data.customerLat || data.userLat || 27.8095),
+                  lng: Number(data.customerLng || data.userLng || 75.3498),
+                  timestamp: Date.now(),
+                  accuracy: 10,
+                },
+              },
+              codAmount: data.paymentMethod === 'COD' || data.isCod ? billAmount : undefined,
+              estimatedEarnings,
+              expiresAt: Date.now() + 60000,
+              createdAt: data.createdAt?.toMillis ? data.createdAt.toMillis() : Date.now(),
+            };
+            return assignment;
+          }
+          return null;
+        });
+
+        const results = await Promise.all(assignmentPromises);
+        return results.filter(Boolean) as DeliveryAssignment[];
+      };
+
+      const unsubCustom = onSnapshot(
+        qCustom,
         async (snapshot) => {
-          const assignmentPromises = snapshot.docs.map(async (docSnap) => {
-            const data = docSnap.data();
-
-            // Check if order has storeStatus as DELIVERY_REQUESTED and is unassigned
-            const isDeliveryRequested =
-              (data.storeStatus === 'DELIVERY_REQUESTED' ||
-               data.status === 'DELIVERY_REQUESTED' ||
-               data.status === 'confirmed' ||
-               data.storeStatus === 'READY') &&
-              !data.deliveryPartnerId;
-
-            // Check if order is already assigned to this partner
-            const isAssignedToMe =
-              data.deliveryPartnerId === partner.partnerId &&
-              (data.storeStatus === 'DELIVERY_ASSIGNED' ||
-               data.status === 'DELIVERY_ASSIGNED' ||
-               data.status === 'delivery boy assigned' ||
-               data.status === 'delivery partner assigned' ||
-               data.storeStatus === 'OUT_OF_DELIVERY' ||
-               data.storeStatus === 'DELIVERY_PARTNER_ASSIGNED' ||
-               data.deliveryStatus === 'en_route_pickup' ||
-               data.deliveryStatus === 'en_route_delivery');
-
-            const isAlreadyDelivered =
-              data.status === 'delivered' ||
-              data.status === 'completed' ||
-              data.storeStatus === 'COMPLETED' ||
-              data.status === 'cancelled';
-
-            if ((isDeliveryRequested || isAssignedToMe) && !isAlreadyDelivered) {
-              const storeId = data.storeId || '';
-              const storeInfo = await assignmentService.getStoreDetails(storeId, partner.cityId);
-
-              const billAmount = Number(data.billAmount || data.price || data.totalAmount || 250);
-              const estimatedEarnings = Math.max(45, Math.round(billAmount * 0.15));
-
-              const exactPickupOtp =
-                data.storePickupOtp ||
-                data.pickupOtp ||
-                data.pickupPin ||
-                data.deliveryOtp ||
-                data.otp;
-
-              const exactDeliveryOtp =
-                data.deliveryOtp ||
-                data.otp ||
-                data.deliveryOTP ||
-                data.customerDeliveryOtp;
-
-              const assignment: DeliveryAssignment = {
-                assignmentId: `asgn_${docSnap.id}`,
-                orderId: docSnap.id,
-                partnerId: partner.partnerId,
-                status: data.deliveryStatus || (isAssignedToMe ? 'en_route_pickup' : 'pending_acceptance'),
-                storePickupOtp: exactPickupOtp ? String(exactPickupOtp) : undefined,
-                deliveryOtp: exactDeliveryOtp ? String(exactDeliveryOtp) : undefined,
-                pharmacy: {
-                  pharmacyId: storeId || 'pharmacy_central',
-                  displayName: storeInfo.displayName || data.storeName || 'RapidMedi Partner Store',
-                  addressText: storeInfo.addressText || data.storeAddress || `${partner.cityId.replace(/_/g, ' ').toUpperCase()} Central Hub`,
-                  phone: storeInfo.phone || data.storePhone || '',
-                  location: {
-                    lat: Number(storeInfo.lat || data.storeLat || 27.8012),
-                    lng: Number(storeInfo.lng || data.storeLng || 75.3421),
-                    timestamp: Date.now(),
-                    accuracy: 5,
-                  },
-                  pickupInstructions: 'Give generated 4-digit OTP to store owner to receive parcel',
-                },
-                customer: {
-                  firstName: (data.userName || data.customerName || 'Customer').split(' ')[0],
-                  fullName: data.userName || data.customerName || 'Customer',
-                  phone: data.mobile || data.userPhone || data.phone || '',
-                  deliveryAddress:
-                    data.address ||
-                    data.deliveryAddress ||
-                    `Near Main Temple, ${partner.cityId.replace(/_/g, ' ').toUpperCase()}`,
-                  landmark: data.landmark || 'Main Road',
-                  instructions: data.instructions || 'Ring doorbell or call upon arrival',
-                  location: {
-                    lat: Number(data.customerLat || data.userLat || 27.8095),
-                    lng: Number(data.customerLng || data.userLng || 75.3498),
-                    timestamp: Date.now(),
-                    accuracy: 10,
-                  },
-                },
-                codAmount: data.paymentMethod === 'COD' || data.isCod ? billAmount : undefined,
-                estimatedEarnings,
-                expiresAt: Date.now() + 60000,
-                createdAt: data.createdAt?.toMillis ? data.createdAt.toMillis() : Date.now(),
-              };
-
-              return assignment;
-            }
-            return null;
-          });
-
-          const results = await Promise.all(assignmentPromises);
-          const validAssignments = results.filter((a): a is DeliveryAssignment => a !== null);
-          onOrdersUpdated(validAssignments);
+          customAssignments = await processDocs(snapshot.docs);
+          // Combine and filter out duplicates, prioritizing customOrders if ID matches
+          const map = new Map<string, DeliveryAssignment>();
+          standardAssignments.forEach(a => map.set(a.assignmentId, a));
+          customAssignments.forEach(a => map.set(a.assignmentId, a));
+          onOrdersUpdated(Array.from(map.values()));
         },
         (error) => {
-          console.warn('[AssignmentService] Firestore confirmed orders subscription warning:', error);
+          console.warn('[AssignmentService] customOrders subscription error:', error);
         }
       );
+
+      const unsubOrders = onSnapshot(
+        qOrders,
+        async (snapshot) => {
+          standardAssignments = await processDocs(snapshot.docs);
+          // Combine and filter out duplicates
+          const map = new Map<string, DeliveryAssignment>();
+          standardAssignments.forEach(a => map.set(a.assignmentId, a));
+          customAssignments.forEach(a => map.set(a.assignmentId, a));
+          onOrdersUpdated(Array.from(map.values()));
+        },
+        (error) => {
+          console.warn('[AssignmentService] orders subscription error:', error);
+        }
+      );
+
+      return () => {
+        unsubCustom();
+        unsubOrders();
+      };
     } catch (e) {
-      console.warn('[AssignmentService] Subscription error:', e);
+      console.warn('[AssignmentService] Subscription setup error:', e);
       return () => {};
     }
   },
@@ -387,29 +418,21 @@ export const assignmentService = {
       // Extract all possible stored delivery OTP values from customOrders, orders, or local assignment
       const candidateOtps: string[] = [
         customData?.deliveryOtp,
-        customData?.deliveryOTP,
         customData?.otp,
-        customData?.customerDeliveryOtp,
-        customData?.customerOtp,
         customData?.storePickupOtp,
-        customData?.pickupPin,
-        customData?.pickupOtp,
         altSnapData?.deliveryOtp,
-        altSnapData?.deliveryOTP,
         altSnapData?.otp,
-        altSnapData?.customerDeliveryOtp,
         altSnapData?.storePickupOtp,
         currentAssgn?.deliveryOtp,
         currentAssgn?.storePickupOtp,
-      ]
-        .filter(Boolean)
-        .map((v) => String(v).trim());
+      ].filter(Boolean) as string[];
 
       console.log(`[AssignmentService] verifyDeliveryOTP: entered=${cleanEntered}, candidates=`, candidateOtps);
 
+      // Strictly compare string values for exact matches
       const isMatch =
         candidateOtps.length === 0 ||
-        candidateOtps.some((cand) => cand === cleanEntered) ||
+        candidateOtps.some((otpCandidate) => String(otpCandidate).trim() === cleanEntered) ||
         cleanEntered === '7215' ||
         cleanEntered === '1234' ||
         cleanEntered === '0000';
@@ -572,4 +595,57 @@ export const assignmentService = {
       return { success: true, ticketId: `ticket_${Date.now()}` };
     }
   },
+
+  /**
+   * Closes / releases the currently active delivery order
+   */
+  async closeActiveOrder(
+    orderId: string,
+    partnerId?: string,
+    reason: string = 'closed_by_delivery_boy'
+  ): Promise<{ success: boolean }> {
+    const rawOrderId = orderId.replace('asgn_', '');
+    const nowIso = new Date().toISOString();
+
+    const resetPayload = {
+      deliveryPartnerId: null,
+      deliveryPartnerName: null,
+      deliveryPartnerPhone: null,
+      deliveryPartnerVehicle: null,
+      deliveryStatus: 'cancelled',
+      status: 'cancelled',
+      storeStatus: 'CANCELLED',
+      cancellationReason: reason,
+      cancelledAt: nowIso,
+      riderLat: null,
+      riderLng: null,
+      riderLocation: null,
+      partnerLocation: null,
+      deliveryPartnerLocation: null,
+      updatedAt: nowIso,
+    };
+
+    try {
+      const customRef = doc(db, 'customOrders', rawOrderId);
+      await setDoc(customRef, resetPayload, { merge: true });
+    } catch (e) {
+      console.warn('[AssignmentService] closeActiveOrder customOrders error:', e);
+    }
+
+    try {
+      const ordersRef = doc(db, 'orders', rawOrderId);
+      await setDoc(ordersRef, resetPayload, { merge: true });
+    } catch (e) {
+      console.warn('[AssignmentService] closeActiveOrder orders error:', e);
+    }
+
+    // Stop tracking
+    locationService.stopLiveTracking();
+
+    // Clear active assignment from in-memory Zustand store
+    useAssignmentStore.getState().setCurrentAssignment(null);
+
+    return { success: true };
+  },
 };
+

@@ -15,8 +15,9 @@ import { doc, onSnapshot, getDoc } from 'firebase/firestore';
 import { db } from '../firebase/config';
 import { useAssignmentStore } from '../store/assignmentStore';
 import { useAuthStore } from '../store/authStore';
+import { assignmentService } from '../services/assignmentService';
 import { locationService } from '../services/locationService';
-import { ArrowLeft, MapPin, Navigation, Phone, RefreshCcw } from 'lucide-react-native';
+import { ArrowLeft, MapPin, Navigation, Phone, RefreshCcw, XCircle } from 'lucide-react-native';
 
 
 export const PharmacyPickupScreen = ({ navigation }: any) => {
@@ -77,54 +78,68 @@ export const PharmacyPickupScreen = ({ navigation }: any) => {
     if (!currentAssignment?.orderId) return;
 
     const rawOrderId = currentAssignment.orderId.replace('asgn_', '');
-    const orderDocRef = doc(db, 'customOrders', rawOrderId);
+    const customOrderRef = doc(db, 'customOrders', rawOrderId);
+    const standardOrderRef = doc(db, 'orders', rawOrderId);
 
-    const unsubscribe = onSnapshot(
-      orderDocRef,
-      (docSnap) => {
-        if (docSnap.exists()) {
-          const data = docSnap.data();
+    const handleSnapshot = (docSnap: any) => {
+      if (docSnap.exists()) {
+        const data = docSnap.data();
 
-          // 1. Fetch exact storePickupOtp from database
-          const fetchedOtp = data.storePickupOtp || currentAssignment.storePickupOtp;
+        // 1. Fetch exact storePickupOtp from database
+        const fetchedOtp = data.storePickupOtp || currentAssignment.storePickupOtp;
 
-          if (fetchedOtp) {
-            setDbStorePickupOtp(String(fetchedOtp));
-          }
-
-          // 2. Real-time detect when Store Owner enters OTP and confirms on their store tablet
-          const storeVerified =
-            data.storeOtpConfirmed === true ||
-            data.storePickupOtpVerified === true ||
-            data.storeStatus === 'OUT_OF_DELIVERY' ||
-            data.storeStatus === 'PICKED_UP' ||
-            data.status === 'delivery boy assigned' ||
-            data.deliveryStatus === 'en_route_delivery';
-
-          if (storeVerified && !isStoreVerified) {
-            setIsStoreVerified(true);
-            updateStatusLocally('en_route_delivery');
-
-            // Auto-redirect to ActiveDeliveryScreen (Customer drop-off navigation)
-            Alert.alert(
-              'Store Handover Verified! 🎉',
-              'Store owner has verified your OTP and handed over the parcel. Customer address and live navigation are now unlocked.',
-              [
-                {
-                  text: 'Start Customer Delivery 🚀',
-                  onPress: () => navigation.replace('ActiveDelivery'),
-                },
-              ]
-            );
-          }
+        if (fetchedOtp) {
+          setDbStorePickupOtp(String(fetchedOtp));
         }
-      },
+
+        // 2. Real-time detect when Store Owner enters OTP and confirms on their store tablet
+        const storeVerified =
+          data.storeOtpConfirmed === true ||
+          data.storePickupOtpVerified === true ||
+          data.storeStatus === 'OUT_OF_DELIVERY' ||
+          data.storeStatus === 'PICKED_UP' ||
+          data.status === 'delivery boy assigned' ||
+          data.deliveryStatus === 'en_route_delivery';
+
+        if (storeVerified && !isStoreVerified) {
+          setIsStoreVerified(true);
+          updateStatusLocally('en_route_delivery');
+
+          // Auto-redirect to ActiveDeliveryScreen (Customer drop-off navigation)
+          Alert.alert(
+            'Store Handover Verified! 🎉',
+            'Store owner has verified your OTP and handed over the parcel. Customer address and live navigation are now unlocked.',
+            [
+              {
+                text: 'Start Customer Delivery 🚀',
+                onPress: () => navigation.replace('ActiveDelivery'),
+              },
+            ]
+          );
+        }
+      }
+    };
+
+    const unsubscribeCustom = onSnapshot(
+      customOrderRef,
+      handleSnapshot,
       (err) => {
-        console.warn('[PharmacyPickupScreen] Firestore order subscription error:', err);
+        console.warn('[PharmacyPickupScreen] customOrders subscription error:', err);
       }
     );
 
-    return () => unsubscribe();
+    const unsubscribeStandard = onSnapshot(
+      standardOrderRef,
+      handleSnapshot,
+      (err) => {
+        console.warn('[PharmacyPickupScreen] orders subscription error:', err);
+      }
+    );
+
+    return () => {
+      unsubscribeCustom();
+      unsubscribeStandard();
+    };
   }, [currentAssignment?.orderId, isStoreVerified, navigation, updateStatusLocally]);
 
   if (!currentAssignment) return null;
@@ -156,6 +171,34 @@ export const PharmacyPickupScreen = ({ navigation }: any) => {
     });
   };
 
+  const handleCloseActiveOrder = () => {
+    if (!currentAssignment) return;
+    Alert.alert(
+      'Close Active Order',
+      `Are you sure you want to close and cancel this active order #${currentAssignment.orderId.substring(0, 8)}?`,
+      [
+        { text: 'Keep Active', style: 'cancel' },
+        {
+          text: 'Yes, Close Order',
+          style: 'destructive',
+          onPress: async () => {
+            try {
+              await assignmentService.closeActiveOrder(
+                currentAssignment.orderId,
+                partner?.partnerId
+              );
+              Alert.alert('Order Closed', 'The active order has been closed and released.', [
+                { text: 'OK', onPress: () => navigation.navigate('Dashboard') }
+              ]);
+            } catch (e: any) {
+              Alert.alert('Error', e?.message || 'Failed to close order.');
+            }
+          },
+        },
+      ]
+    );
+  };
+
   return (
     <View style={styles.container}>
       {/* TopAppBar */}
@@ -167,11 +210,14 @@ export const PharmacyPickupScreen = ({ navigation }: any) => {
           <Text style={styles.headerTitle}>Pickup from Store</Text>
         </View>
         <View style={styles.headerRight}>
-           <View style={styles.radarContainer}>
-              <Animated.View style={[styles.radarDot, { transform: [{ scale: pulseAnim }], opacity: pulseAnim.interpolate({ inputRange: [1, 1.5], outputRange: [0.8, 0] }) }]} />
-              <View style={styles.radarDotInner} />
-           </View>
-           <Text style={styles.gpsActiveText}>GPS Active</Text>
+           <TouchableOpacity
+             style={styles.closeHeaderBtn}
+             onPress={handleCloseActiveOrder}
+             activeOpacity={0.7}
+           >
+             <XCircle size={14} color="#ffb4ab" />
+             <Text style={styles.closeHeaderBtnText}>Close</Text>
+           </TouchableOpacity>
         </View>
       </View>
 
@@ -315,6 +361,22 @@ const createStyles = (theme: any) => StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     gap: 8,
+  },
+  closeHeaderBtn: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 4,
+    paddingHorizontal: 10,
+    paddingVertical: 6,
+    borderRadius: 14,
+    borderWidth: 1,
+    borderColor: 'rgba(255, 180, 171, 0.4)',
+    backgroundColor: 'rgba(255, 180, 171, 0.15)',
+  },
+  closeHeaderBtnText: {
+    color: '#ffb4ab',
+    fontSize: 12,
+    fontWeight: '700',
   },
   radarContainer: {
     width: 12,
