@@ -97,7 +97,7 @@ export const EarningsScreen = () => {
             source={{ uri: partner?.profilePhotoUrl || 'https://ui-avatars.com/api/?name=' + (partner?.fullName || 'Partner') }} 
             style={styles.avatar} 
           />
-          <Text style={styles.headerTitle}>RapidMedicoco</Text>
+          <Text style={styles.headerTitle}>RapidMedico</Text>
         </View>
         <TouchableOpacity style={styles.headerRight}>
           <RefreshCw size={20} color="#adc6ff" />

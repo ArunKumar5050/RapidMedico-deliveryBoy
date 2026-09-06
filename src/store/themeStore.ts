@@ -2,7 +2,7 @@ import { create } from 'zustand';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { ThemeMode, ThemeColors, darkTheme, lightTheme } from '../theme';
 
-const STORAGE_KEY = '@rapidmedicoco_theme_mode';
+const STORAGE_KEY = '@rapidmedico_theme_mode';
 
 interface ThemeState {
   themeMode: ThemeMode;

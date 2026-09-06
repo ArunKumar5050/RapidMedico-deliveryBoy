@@ -63,7 +63,7 @@ export const KYCUploadScreen = ({ navigation }: any) => {
 
     Alert.alert(
       'KYC Dossier Submitted! 📋',
-      'Your documents are under review by RapidMedicoco Compliance Ops. Approval usually takes 2-4 business hours.',
+      'Your documents are under review by RapidMedico Compliance Ops. Approval usually takes 2-4 business hours.',
       [{ text: 'OK', onPress: () => navigation.goBack() }]
     );
   };
@@ -77,7 +77,7 @@ export const KYCUploadScreen = ({ navigation }: any) => {
         <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
           <ArrowLeft size={24} color="#dee2f5" />
         </TouchableOpacity>
-        <Text style={styles.headerTitle}>RapidMedicoco</Text>
+        <Text style={styles.headerTitle}>RapidMedico</Text>
         <View style={styles.headerRight}>
            <View style={styles.avatar}>
                <Text style={styles.avatarText}>{partner?.fullName?.charAt(0) || 'P'}</Text>
@@ -162,7 +162,7 @@ export const KYCUploadScreen = ({ navigation }: any) => {
             </View>
           </TouchableOpacity>
           <Text style={styles.footerText}>
-            By submitting, you agree to RapidMedicoco's background check policies.
+            By submitting, you agree to RapidMedico's background check policies.
           </Text>
         </View>
       </ScrollView>

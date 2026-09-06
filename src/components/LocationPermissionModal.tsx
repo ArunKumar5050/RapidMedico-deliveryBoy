@@ -27,13 +27,13 @@ export const LocationPermissionModal: React.FC<LocationPermissionModalProps> = (
       case 'background':
         return {
           title: 'Background Location Permission Required',
-          body: 'RapidMedicoco tracks your delivery route in the background so customers receive accurate live tracking while your phone is locked or you are using turn-by-turn navigation.',
+          body: 'RapidMedico tracks your delivery route in the background so customers receive accurate live tracking while your phone is locked or you are using turn-by-turn navigation.',
           button: 'Allow Always / Background',
         };
       default:
         return {
           title: 'Location Access Needed',
-          body: 'RapidMedicoco uses your high-accuracy location to match nearby pharmacy pickups and track delivery routes.',
+          body: 'RapidMedico uses your high-accuracy location to match nearby pharmacy pickups and track delivery routes.',
           button: 'Grant Location Access',
         };
     }

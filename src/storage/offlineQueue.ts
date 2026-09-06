@@ -1,8 +1,8 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { LocationPoint } from '../types';
 
-const LOCATION_QUEUE_KEY = '@rapidmedicoco_location_queue';
-const ACTION_QUEUE_KEY = '@rapidmedicoco_action_queue';
+const LOCATION_QUEUE_KEY = '@rapidmedico_location_queue';
+const ACTION_QUEUE_KEY = '@rapidmedico_action_queue';
 const MAX_QUEUE_SIZE = 100; // Cap to avoid unbounded memory growth per Section 9.1
 
 export interface QueuedAction {

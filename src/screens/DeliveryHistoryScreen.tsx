@@ -114,7 +114,7 @@ export const DeliveryHistoryScreen = () => {
             source={{ uri: partner?.profilePhotoUrl || 'https://ui-avatars.com/api/?name=' + (partner?.fullName || 'Partner') }} 
             style={styles.avatar} 
           />
-          <Text style={styles.headerTitle}>RapidMedicoco</Text>
+          <Text style={styles.headerTitle}>RapidMedico</Text>
         </View>
       </View>
 

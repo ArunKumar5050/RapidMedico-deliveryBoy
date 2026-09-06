@@ -81,7 +81,7 @@ export const LoginScreen = ({ navigation }: any) => {
             <PackagePlus size={40} color={theme.primary} />
             <View style={[styles.glowingRing, { borderColor: 'rgba(77,142,255,0.3)' }]} />
           </View>
-          <Text style={[styles.brandName, { color: theme.primary }]}>RapidMedicoco</Text>
+          <Text style={[styles.brandName, { color: theme.primary }]}>RapidMedico</Text>
           <Text style={[styles.tagline, { color: theme.textSecondary }]}>MEDICAL LOGISTICS</Text>
         </View>
 

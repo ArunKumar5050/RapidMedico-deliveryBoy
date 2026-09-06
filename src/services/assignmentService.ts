@@ -26,7 +26,7 @@ export const assignmentService = {
   async getStoreDetails(storeId: string, cityId: string = 'khatushyam_ji') {
     if (!storeId) {
       return {
-        displayName: 'RapidMedicoco Partner Store',
+        displayName: 'RapidMedico Partner Store',
         addressText: `${cityId.replace(/_/g, ' ').toUpperCase()} Central Hub`,
         phone: '',
         lat: 27.8012,
@@ -43,7 +43,7 @@ export const assignmentService = {
       if (storeSnap.exists()) {
         const data = storeSnap.data();
         const storeInfo = {
-          displayName: data.businessName || data.ownerName || 'RapidMedicoco Partner Pharmacy',
+          displayName: data.businessName || data.ownerName || 'RapidMedico Partner Pharmacy',
           addressText: data.streetAddress || data.location?.address || `${data.city || cityId} Main Market`,
           phone: data.phone || '',
           lat: data.latitude || data.location?.latitude || 27.8012,
@@ -57,7 +57,7 @@ export const assignmentService = {
     }
 
     const fallback = {
-      displayName: 'RapidMedicoco Partner Store',
+      displayName: 'RapidMedico Partner Store',
       addressText: `${cityId.replace(/_/g, ' ').toUpperCase()} Hub`,
       phone: '',
       lat: 27.8012,
@@ -141,7 +141,7 @@ export const assignmentService = {
               deliveryOtp: exactDeliveryOtp ? String(exactDeliveryOtp) : undefined,
               pharmacy: {
                 pharmacyId: storeId || 'pharmacy_central',
-                displayName: storeInfo.displayName || data.storeName || 'RapidMedicoco Partner Store',
+                displayName: storeInfo.displayName || data.storeName || 'RapidMedico Partner Store',
                 addressText: storeInfo.addressText || data.storeAddress || `${partner.cityId.replace(/_/g, ' ').toUpperCase()} Central Hub`,
                 phone: storeInfo.phone || data.storePhone || '',
                 location: {

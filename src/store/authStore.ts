@@ -2,7 +2,7 @@ import { create } from 'zustand';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { DeliveryPartner, AvailabilityStatus } from '../types';
 
-const SESSION_STORAGE_KEY = '@rapidmedicoco_delivery_auth_session';
+const SESSION_STORAGE_KEY = '@rapidmedico_delivery_auth_session';
 
 interface AuthState {
   partner: DeliveryPartner | null;

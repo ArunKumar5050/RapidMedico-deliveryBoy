@@ -1,6 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-const dir = 'c:\\Users\\Arun kumar\\Desktop\\RapidMedicoco delivery\\src\\screens';
+const dir = 'c:\\Users\\Arun kumar\\Desktop\\RapidMedico delivery\\src\\screens';
 const files = fs.readdirSync(dir).filter(f => f.endsWith('.tsx'));
 
 const colorMap = {
