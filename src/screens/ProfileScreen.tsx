@@ -29,7 +29,7 @@ export const ProfileScreen = ({ navigation }: any) => {
             source={{ uri: partner?.profilePhotoUrl || 'https://ui-avatars.com/api/?name=' + (partner?.fullName || 'Partner') }} 
             style={styles.avatarSmall} 
           />
-          <Text style={styles.headerTitle}>RapidMedico</Text>
+          <Text style={styles.headerTitle}>RapidMedicoco</Text>
         </View>
       </View>
 

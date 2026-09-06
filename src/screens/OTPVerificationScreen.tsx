@@ -92,7 +92,7 @@ export const OTPVerificationScreen = ({ navigation }: any) => {
         >
           <ArrowRight size={24} color="#dee2f5" style={{ transform: [{ rotate: '180deg' }] }} />
         </TouchableOpacity>
-        <Text style={styles.headerTitle}>RapidMedico</Text>
+        <Text style={styles.headerTitle}>RapidMedicoco</Text>
         <View style={{ width: 40 }} />
       </View>
 

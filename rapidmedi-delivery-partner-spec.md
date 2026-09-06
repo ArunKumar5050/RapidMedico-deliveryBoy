@@ -1,4 +1,4 @@
-# RapidMedi — Delivery Partner App
+# RapidMedico — Delivery Partner App
 ## AI Engineering Specification Document (v1.0)
 
 > **Scope note:** This document specifies the **React Native Delivery Partner App only**. It excludes the Customer App, Medical Store App, Admin Dashboard, and backend implementation code, which are governed by separate specifications. This document describes the data contracts and backend behaviors the Delivery Partner App depends on, without implementing them.
@@ -11,7 +11,7 @@ Primary target: **Android** (React Native), architected so an iOS build can be a
 
 ## 1. Project Overview
 
-The Delivery Partner App is the operational tool for verified riders ("Delivery Partners") to fulfil RapidMedi's hyperlocal medicine deliveries: receive assignments, navigate to pickup and drop-off, confirm handoffs, and get paid — reliably, on a spectrum of real-world Android devices and network conditions.
+The Delivery Partner App is the operational tool for verified riders ("Delivery Partners") to fulfil RapidMedico's hyperlocal medicine deliveries: receive assignments, navigate to pickup and drop-off, confirm handoffs, and get paid — reliably, on a spectrum of real-world Android devices and network conditions.
 
 **Non-functional baseline the entire spec is built around:** the app must degrade gracefully, never silently lose a critical action, and never let the client alone decide something the backend must authorize. Delivery partners are often on prepaid data plans with poor coverage in exactly the moments that matter (basements of pharmacies, apartment stairwells) — every design decision below assumes network and GPS are unreliable, not exceptional.
 
@@ -29,7 +29,7 @@ The Delivery Partner App is the operational tool for verified riders ("Delivery 
 | Customer first name | Yes | Last name withheld |
 | Delivery address (required fields only) | Yes | Building/street/area needed for physical delivery |
 | Delivery landmark | Yes | As supplied by customer |
-| Order ID | Yes | RapidMedi order reference, not payment reference |
+| Order ID | Yes | RapidMedico order reference, not payment reference |
 | Delivery OTP | Yes | Only at the point delivery is being completed — see Section 13 |
 | Delivery instructions relevant to handoff | Yes | e.g. "leave with security guard" |
 | Real phone number | **Never** | Masked calling only (Section 15) |
@@ -48,14 +48,14 @@ The Delivery Partner App is the operational tool for verified riders ("Delivery 
 | Pharmacy owner's personal phone number | **Never** | Masked calling only |
 
 ### 2.3 Communication architecture
-All customer/pharmacy contact happens through **RapidMedi-controlled communication**, never a raw phone number reaching the device dialer with the real number. The app architecture supports:
+All customer/pharmacy contact happens through **RapidMedico-controlled communication**, never a raw phone number reaching the device dialer with the real number. The app architecture supports:
 - **Masked calling** — a virtual/proxy number connects the call; provider-agnostic interface (Section 30) so the underlying telephony vendor (e.g., Exotel/Knowlarity-class provider) can be swapped without app changes.
 - **Virtual phone numbers** issued per-order, expiring at order completion.
 - **Call routing** through the backend telephony service, never a client-resolved number.
 - **Call logging** (duration, timestamp, outcome) written server-side, not trusted from client.
 - **Support-mediated communication** as the fallback path whenever masked calling is unavailable (Section 15.3).
 
-If the masked-calling service is unavailable, the app shows **"Contact RapidMedi Support"** and does **not** fall back to revealing a real number under any circumstance.
+If the masked-calling service is unavailable, the app shows **"Contact RapidMedico Support"** and does **not** fall back to revealing a real number under any circumstance.
 
 ---
 
@@ -264,7 +264,7 @@ Going offline mid-delivery is explicitly disallowed (Section 5.2); the toggle is
 
 ### 8.2 Foreground vs. background location
 - **Foreground:** High-accuracy mode (`PRIORITY_HIGH_ACCURACY`), used whenever the Active Delivery Screen is visible.
-- **Background:** Required while BUSY so tracking continues if the partner switches to a navigation app or locks the screen — implemented via a foreground service with a persistent, dismissible-only-on-delivery-completion notification ("RapidMedi is tracking your delivery"), per Android's background-location policy (foreground service + notification is mandatory for continuous background location on modern Android, not optional).
+- **Background:** Required while BUSY so tracking continues if the partner switches to a navigation app or locks the screen — implemented via a foreground service with a persistent, dismissible-only-on-delivery-completion notification ("RapidMedico is tracking your delivery"), per Android's background-location policy (foreground service + notification is mandatory for continuous background location on modern Android, not optional).
 
 ### 8.3 Update frequency (battery-aware, detailed in Section 35)
 - Time-based fallback: every 15–20 seconds **[ASSUMPTION-09: exact interval configurable server-side via Remote Config, not hardcoded]**.
@@ -331,7 +331,7 @@ processLocationUpdate Cloud Function (validates, dedupes, rejects implausible po
 - Primary: **Google Maps** embedded map for in-app route preview + "Open in Google Maps" deep link for turn-by-turn navigation (leverages a tool drivers already know, rather than reinventing turn-by-turn — safer and faster to ship).
 - Deep link pattern: `google.navigation:q=<lat>,<lng>&mode=d` (driving), with a graceful fallback to a generic maps intent chooser if Google Maps isn't installed.
 - In-app map shows: partner's current position, destination pin (pharmacy or customer depending on current leg), a simplified route line (for context, not authoritative turn-by-turn — that's delegated to Google Maps).
-- "Return to RapidMedi" — after external navigation, the app's own notification/persistent foreground-service notification acts as the way back (tap to return); the app doesn't attempt to programmatically detect when the partner "arrives" via the external app — arrival is still confirmed via the in-app Arrived button + geofence-assist (Section 8.5/11).
+- "Return to RapidMedico" — after external navigation, the app's own notification/persistent foreground-service notification acts as the way back (tap to return); the app doesn't attempt to programmatically detect when the partner "arrives" via the external app — arrival is still confirmed via the in-app Arrived button + geofence-assist (Section 8.5/11).
 - Destination details shown: address text, landmark, and (pickup only) any store display info permitted under Section 2.2 — never more than the privacy rules allow, even on the map screen.
 
 ---
@@ -415,17 +415,17 @@ Every failure state requires a **reason code** from a controlled vocabulary (nev
 | Delivery partner unable to continue (personal emergency, etc.) | `partner_unable_to_continue` | Partner reports; order reassigned | Immediate Ops notification |
 | Customer requests cancellation | `customer_requested_cancellation` | Partner relays / Support confirms via customer's own channel (not solely partner-reported, to prevent abuse) | Support-mediated confirmation before backend honors it |
 
-**Critical incidents** (`vehicle_breakdown`, `accident`, any partner-flagged safety issue) always trigger an immediate, high-priority notification to Admin Ops/Support regardless of time of day, and surface the RapidMedi Support contact prominently — see Section 24 for the full safety system.
+**Critical incidents** (`vehicle_breakdown`, `accident`, any partner-flagged safety issue) always trigger an immediate, high-priority notification to Admin Ops/Support regardless of time of day, and surface the RapidMedico Support contact prominently — see Section 24 for the full safety system.
 
 ---
 
 ## 15. Customer Communication
 
-- **Call Customer / Message Customer** buttons on the Active Delivery Screen — both route through RapidMedi-controlled communication (Section 2.3); the app never has access to, stores, or displays the customer's real number at any point in its data model.
+- **Call Customer / Message Customer** buttons on the Active Delivery Screen — both route through RapidMedico-controlled communication (Section 2.3); the app never has access to, stores, or displays the customer's real number at any point in its data model.
 - **Masked call:** tapping "Call Customer" invokes a provider-issued virtual number (or a click-to-call flow through the telephony provider's SDK/API) that bridges to the customer's real number server-side; the device's own call log will show the virtual number, not the customer's real one.
-- **Secure messaging [ASSUMPTION-16]:** an in-app, RapidMedi-hosted lightweight chat/quick-message feature (e.g., preset messages: "I've arrived", "Running 5 min late") rather than SMS to a real number — avoids exposing any number at all for simple status updates.
+- **Secure messaging [ASSUMPTION-16]:** an in-app, RapidMedico-hosted lightweight chat/quick-message feature (e.g., preset messages: "I've arrived", "Running 5 min late") rather than SMS to a real number — avoids exposing any number at all for simple status updates.
 - **Call duration & attempt logging:** written server-side from the telephony provider's webhook/callback, not self-reported by the client (preventing a partner from falsifying "I tried calling" if that becomes relevant to a dispute).
-- **If communication service is unavailable:** UI clearly shows **"Contact RapidMedi Support"** as the only path — no fallback to any real number is ever shown, under any failure condition.
+- **If communication service is unavailable:** UI clearly shows **"Contact RapidMedico Support"** as the only path — no fallback to any real number is ever shown, under any failure condition.
 
 ## 16. Pharmacy Communication
 
@@ -478,7 +478,7 @@ Sections: Personal information (name, DOB, gender if provided — edit requests 
 
 ## 21. Delivery History
 
-List of completed, cancelled, and failed deliveries: date, time, earnings for that delivery, status, order reference (RapidMedi order ID, not any payment-gateway reference), pickup area (coarse, e.g. locality name — not the full pharmacy address retroactively), delivery area (coarse, e.g. locality/landmark — not the customer's full historical address retained indefinitely in the partner-visible view). This coarsening is a deliberate data-minimization choice: a partner doesn't need indefinite access to a past customer's exact address once the delivery is long complete (Section 34).
+List of completed, cancelled, and failed deliveries: date, time, earnings for that delivery, status, order reference (RapidMedico order ID, not any payment-gateway reference), pickup area (coarse, e.g. locality name — not the full pharmacy address retroactively), delivery area (coarse, e.g. locality/landmark — not the customer's full historical address retained indefinitely in the partner-visible view). This coarsening is a deliberate data-minimization choice: a partner doesn't need indefinite access to a past customer's exact address once the delivery is long complete (Section 34).
 
 ## 22. Dashboard
 
@@ -512,12 +512,12 @@ Design constraints: **large touch targets** (minimum 48dp per Android accessibil
 
 ## 24. Emergency / Safety
 
-- **RapidMedi Support** — always-visible entry point (Active Delivery Screen, Dashboard) for non-emergency issues (customer/pharmacy problems, app issues, general help).
+- **RapidMedico Support** — always-visible entry point (Active Delivery Screen, Dashboard) for non-emergency issues (customer/pharmacy problems, app issues, general help).
 - **Accident reporting** — one-tap "I was in an accident" flow from the Report Issue surface: captures location, timestamp, optional photo, immediately flags Admin as a critical incident, and pauses the delivery-progress expectations for that order (no SLA penalty accrues while a critical incident is open).
 - **Vehicle breakdown reporting** — similar immediate-flag flow, triggers reassignment consideration by Ops.
 - **Unsafe situation reporting** — a general "I don't feel safe" escalation for situations like a hostile customer, unsafe delivery location, etc. — routes directly to Support with priority handling.
-- **Emergency contact integration [ASSUMPTION-20]:** the app may surface a clearly-labeled, non-integrated link/shortcut to call local emergency services (e.g., a simple "Call 112" button using the standard Android dialer, not a masked/proxied call) — but this is presented as a convenience shortcut to the *standard device dialer*, not a RapidMedi-operated emergency response service.
-- **Explicit disclaimer, shown contextually wherever safety features appear:** *"RapidMedi Support is not an emergency service. In a medical, safety, or law-enforcement emergency, contact local emergency services directly."* This distinction is treated as a hard requirement, not optional copy — the spec does not permit any UI language implying RapidMedi Support can or will dispatch emergency responders.
+- **Emergency contact integration [ASSUMPTION-20]:** the app may surface a clearly-labeled, non-integrated link/shortcut to call local emergency services (e.g., a simple "Call 112" button using the standard Android dialer, not a masked/proxied call) — but this is presented as a convenience shortcut to the *standard device dialer*, not a RapidMedico-operated emergency response service.
+- **Explicit disclaimer, shown contextually wherever safety features appear:** *"RapidMedico Support is not an emergency service. In a medical, safety, or law-enforcement emergency, contact local emergency services directly."* This distinction is treated as a hard requirement, not optional copy — the spec does not permit any UI language implying RapidMedico Support can or will dispatch emergency responders.
 
 ---
 
@@ -816,7 +816,7 @@ React Hook Form + Zod, client-side for immediate feedback and server-side (Cloud
 ## 42. Folder Structure
 
 ```
-rapidmedi-delivery-partner/
+rapidmedico-delivery-partner/
 ├── src/
 │   ├── screens/            # One folder per screen (Dashboard, ActiveDelivery, Earnings, ...) —
 │   │                        # keeps screen-level composition separate from reusable pieces
@@ -1057,4 +1057,4 @@ Reviewing the above as a CTO of a healthcare-adjacent delivery platform surfaces
 
 ---
 
-*End of RapidMedi Delivery Partner App Engineering Specification v1.0.*
+*End of RapidMedico Delivery Partner App Engineering Specification v1.0.*

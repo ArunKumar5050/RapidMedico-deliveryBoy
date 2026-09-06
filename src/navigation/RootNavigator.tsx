@@ -39,7 +39,7 @@ export const RootNavigator = () => {
         <View style={[styles.splashLogoGlow, { backgroundColor: theme.primaryBg, borderColor: theme.primary }]}>
           <Bike size={44} color={theme.primary} />
         </View>
-        <Text style={[styles.splashTitle, { color: theme.textPrimary }]}>RapidMedi</Text>
+        <Text style={[styles.splashTitle, { color: theme.textPrimary }]}>RapidMedicoco</Text>
         <Text style={[styles.splashSubtitle, { color: theme.textSecondary }]}>
           Delivery Partner Network
         </Text>

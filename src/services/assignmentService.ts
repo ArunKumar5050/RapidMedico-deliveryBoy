@@ -26,7 +26,7 @@ export const assignmentService = {
   async getStoreDetails(storeId: string, cityId: string = 'khatushyam_ji') {
     if (!storeId) {
       return {
-        displayName: 'RapidMedi Partner Store',
+        displayName: 'RapidMedicoco Partner Store',
         addressText: `${cityId.replace(/_/g, ' ').toUpperCase()} Central Hub`,
         phone: '',
         lat: 27.8012,
@@ -43,7 +43,7 @@ export const assignmentService = {
       if (storeSnap.exists()) {
         const data = storeSnap.data();
         const storeInfo = {
-          displayName: data.businessName || data.ownerName || 'RapidMedi Partner Pharmacy',
+          displayName: data.businessName || data.ownerName || 'RapidMedicoco Partner Pharmacy',
           addressText: data.streetAddress || data.location?.address || `${data.city || cityId} Main Market`,
           phone: data.phone || '',
           lat: data.latitude || data.location?.latitude || 27.8012,
@@ -57,7 +57,7 @@ export const assignmentService = {
     }
 
     const fallback = {
-      displayName: 'RapidMedi Partner Store',
+      displayName: 'RapidMedicoco Partner Store',
       addressText: `${cityId.replace(/_/g, ' ').toUpperCase()} Hub`,
       phone: '',
       lat: 27.8012,
@@ -141,7 +141,7 @@ export const assignmentService = {
               deliveryOtp: exactDeliveryOtp ? String(exactDeliveryOtp) : undefined,
               pharmacy: {
                 pharmacyId: storeId || 'pharmacy_central',
-                displayName: storeInfo.displayName || data.storeName || 'RapidMedi Partner Store',
+                displayName: storeInfo.displayName || data.storeName || 'RapidMedicoco Partner Store',
                 addressText: storeInfo.addressText || data.storeAddress || `${partner.cityId.replace(/_/g, ' ').toUpperCase()} Central Hub`,
                 phone: storeInfo.phone || data.storePhone || '',
                 location: {
@@ -263,7 +263,7 @@ export const assignmentService = {
       await setDoc(
         orderRef,
         {
-          status: 'DELIVERY_ASSIGNED',
+          status: 'out_for_delivery',
           storeStatus: 'DELIVERY_ASSIGNED',
           deliveryPartnerId: partnerId,
           deliveryPartnerName: partner?.fullName || 'Delivery Partner',
@@ -291,7 +291,7 @@ export const assignmentService = {
         await setDoc(
           altOrderRef,
           {
-            status: 'DELIVERY_ASSIGNED',
+            status: 'out_for_delivery',
             storeStatus: 'DELIVERY_ASSIGNED',
             deliveryPartnerId: partnerId,
             deliveryStatus: 'en_route_pickup',
@@ -339,7 +339,7 @@ export const assignmentService = {
       await setDoc(
         orderRef,
         {
-          status: 'delivery boy assigned',
+          status: 'out_for_delivery',
           storeStatus: 'OUT_OF_DELIVERY',
           deliveryStatus: 'en_route_delivery',
           deliveryOtp: finalDeliveryOtp,
@@ -357,7 +357,7 @@ export const assignmentService = {
         await setDoc(
           altOrderRef,
           {
-            status: 'delivery boy assigned',
+            status: 'out_for_delivery',
             storeStatus: 'OUT_OF_DELIVERY',
             deliveryStatus: 'en_route_delivery',
             deliveryOtp: finalDeliveryOtp,
@@ -486,11 +486,24 @@ export const assignmentService = {
         try {
           const partnerRef = doc(db, 'delivery_partners', partnerId);
           const earned = earningsAmount || 60;
+          const partnerSnap = await getDoc(partnerRef);
+          
+          let updatedTodayEarnings = earned;
+          if (partnerSnap.exists()) {
+            const partnerData = partnerSnap.data();
+            const lastDate = partnerData.lastDeliveredAt ? new Date(partnerData.lastDeliveredAt).toDateString() : '';
+            const todayDate = new Date(nowIso).toDateString();
+            
+            if (lastDate === todayDate && partnerData.todayEarnings) {
+              updatedTodayEarnings = partnerData.todayEarnings + earned;
+            }
+          }
+
           await setDoc(
             partnerRef,
             {
               totalDeliveries: increment(1),
-              todayEarnings: increment(earned),
+              todayEarnings: updatedTodayEarnings,
               lastDeliveredAt: nowIso,
               updatedAt: nowIso,
             },
@@ -612,11 +625,11 @@ export const assignmentService = {
       deliveryPartnerName: null,
       deliveryPartnerPhone: null,
       deliveryPartnerVehicle: null,
-      deliveryStatus: 'cancelled',
-      status: 'cancelled',
-      storeStatus: 'CANCELLED',
-      cancellationReason: reason,
-      cancelledAt: nowIso,
+      deliveryStatus: null,
+      status: 'ready_for_pickup',
+      storeStatus: 'DELIVERY_REQUESTED',
+      unassignReason: reason,
+      unassignedAt: nowIso,
       riderLat: null,
       riderLng: null,
       riderLocation: null,

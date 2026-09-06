@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "RapidMedico delivery",
-    "slug": "rapidmedi-delivery-partner",
+    "name": "RapidMedicoco delivery partner",
+    "slug": "rapidmedicoco-delivery-partner",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -16,10 +16,10 @@
     ],
     "ios": {
       "supportsTablet": false,
-      "bundleIdentifier": "com.rapidmedi.deliverypartner",
+      "bundleIdentifier": "com.rapidmedicoco.deliverypartner",
       "infoPlist": {
-        "NSLocationWhenInUseUsageDescription": "RapidMedi needs your location to assign nearby medicine deliveries.",
-        "NSLocationAlwaysAndWhenInUseUsageDescription": "RapidMedi tracks your delivery location in the background to provide live updates to customers."
+        "NSLocationWhenInUseUsageDescription": "RapidMedicoco needs your location to assign nearby medicine deliveries.",
+        "NSLocationAlwaysAndWhenInUseUsageDescription": "RapidMedicoco tracks your delivery location in the background to provide live updates to customers."
       }
     },
     "android": {
@@ -27,7 +27,7 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#0f172a"
       },
-      "package": "com.rapidmedi.deliverypartner",
+      "package": "com.rapidmedicoco.deliverypartner",
       "androidStatusBar": {
         "translucent": true,
         "backgroundColor": "#00000000"
@@ -50,7 +50,7 @@
       [
         "expo-location",
         {
-          "locationAlwaysAndWhenInUsePermission": "Allow RapidMedi to access your location for live tracking during active deliveries."
+          "locationAlwaysAndWhenInUsePermission": "Allow RapidMedicoco to access your location for live tracking during active deliveries."
         }
       ],
       [

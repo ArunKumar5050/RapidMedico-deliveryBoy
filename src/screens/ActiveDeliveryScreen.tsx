@@ -350,15 +350,13 @@ export const ActiveDeliveryScreen = ({ navigation }: any) => {
               ) : null}
 
               <View style={styles.actionRow}>
-                {customer.phone && (
-                  <TouchableOpacity 
-                    style={styles.actionBtnSecondary}
-                    onPress={() => handlePhoneCall(customer.phone)}
-                  >
-                    <Phone size={20} color="#dee2f5" />
-                    <Text style={styles.actionBtnTextSecondary}>Call</Text>
-                  </TouchableOpacity>
-                )}
+                <TouchableOpacity 
+                  style={styles.actionBtnSecondary}
+                  onPress={() => handlePhoneCall(customer.phone)}
+                >
+                  <Phone size={20} color="#dee2f5" />
+                  <Text style={styles.actionBtnTextSecondary}>Call</Text>
+                </TouchableOpacity>
                 <TouchableOpacity 
                   style={styles.actionBtnPrimary}
                   onPress={handleStartNav}
@@ -377,19 +375,7 @@ export const ActiveDeliveryScreen = ({ navigation }: any) => {
               </TouchableOpacity>
             </View>
 
-            {/* Earnings Preview */}
-            <View style={styles.earningsCard}>
-              <View style={styles.earningsLeft}>
-                <View style={styles.earningsIconWrap}>
-                  <Banknote size={20} color="#4fdbc8" />
-                </View>
-                <View>
-                  <Text style={styles.earningsLabel}>EST. PAYOUT</Text>
-                  <Text style={styles.earningsSub}>Base + Surge</Text>
-                </View>
-              </View>
-              <Text style={styles.earningsValue}>₹145</Text>
-            </View>
+            {/* Earnings Preview Removed as per request */}
           </>
         )}
 
