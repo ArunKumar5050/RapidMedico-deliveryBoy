@@ -150,7 +150,6 @@ export const authService = {
    * Request OTP code for a phone number
    */
   async sendOTP(phone: string): Promise<{ success: boolean; message: string }> {
-    await new Promise((resolve) => setTimeout(resolve, 800));
     return {
       success: true,
       message: `Verification code sent to +91 ${phone}. Use test OTP: 1234`,
@@ -165,7 +164,6 @@ export const authService = {
     otp: string,
     signupData?: SignupPayload
   ): Promise<{ success: boolean; partner?: DeliveryPartner; error?: string }> {
-    await new Promise((resolve) => setTimeout(resolve, 900));
 
     // Support standard test OTP 1234 or any 4-digit code in dev mode
     if (otp !== '1234' && otp.length !== 4 && otp !== '0000') {

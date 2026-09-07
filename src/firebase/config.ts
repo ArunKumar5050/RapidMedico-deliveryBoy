@@ -2,7 +2,7 @@ declare const process: any;
 
 import { initializeApp, getApps, getApp } from 'firebase/app';
 import ReactNativeAsyncStorage from '@react-native-async-storage/async-storage';
-import { getFirestore } from 'firebase/firestore';
+import { getFirestore, initializeFirestore } from 'firebase/firestore';
 import { getFunctions } from 'firebase/functions';
 import { getStorage } from 'firebase/storage';
 
@@ -50,7 +50,7 @@ export const auth: any = new Proxy({}, {
   }
 });
 
-export const db = getFirestore(app);
+export const db = initializeFirestore(app, { experimentalForceLongPolling: true });
 export const functions = getFunctions(app, 'asia-south1');
 export const storage = getStorage(app);
 
