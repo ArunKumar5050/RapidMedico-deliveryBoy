@@ -61,3 +61,11 @@ export const calculateHaversineDistance = (
 
   return R * c; // distance in meters
 };
+
+export const getPartnerDisplayName = (partner: any): string => {
+  if (!partner) return 'Delivery Partner';
+  if (partner.fullName && !/^partner\s*\d*$/i.test(partner.fullName)) {
+    return partner.fullName;
+  }
+  return partner.bankDetails?.accountHolderName || partner.name || partner.firstName || 'Delivery Partner';
+};

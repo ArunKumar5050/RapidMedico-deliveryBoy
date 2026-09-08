@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { DeliveryPartner, AvailabilityStatus } from '../types';
+import { authService } from '../services/authService';
 
 const SESSION_STORAGE_KEY = '@rapidmedico_delivery_auth_session';
 
@@ -64,6 +65,16 @@ export const useAuthStore = create<AuthState>((set, get) => ({
           availability: partner.availability || 'OFFLINE',
           isLoading: false,
         });
+        
+        // Background sync to ensure we have the latest name/status
+        authService.fetchPartnerFromFirestore(partner.partnerId, 0)
+          .then((latestPartner) => {
+            if (latestPartner) {
+              get().setPartner(latestPartner);
+            }
+          })
+          .catch((e) => console.warn('[AuthStore] Background sync failed:', e));
+          
         return;
       }
     } catch (e) {

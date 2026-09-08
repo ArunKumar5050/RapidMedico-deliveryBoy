@@ -23,7 +23,7 @@ import { locationService } from '../services/locationService';
 import { useLocationStore } from '../store/locationStore';
 import { DeliveryCard } from '../components/DeliveryCard';
 import { DeliveryAssignment } from '../types';
-import { formatCurrency } from '../utils/formatting';
+import { formatCurrency, getPartnerDisplayName } from '../utils/formatting';
 import { LocateFixed, Navigation2, Package, MapPin, Wifi, Activity, XCircle } from 'lucide-react-native';
 
 export const DashboardScreen = ({ navigation }: any) => {
@@ -199,8 +199,15 @@ export const DashboardScreen = ({ navigation }: any) => {
     if (!partner) return;
     setLoading(true);
     try {
+      // Sync earnings
       const data = await earningsService.getPartnerEarnings(partner.partnerId);
       setEarnings(data);
+      
+      // Sync profile to get latest name/status
+      const latestPartner = await authService.fetchPartnerFromFirestore(partner.partnerId, 0);
+      if (latestPartner) {
+        useAuthStore.getState().setPartner(latestPartner);
+      }
     } finally {
       setLoading(false);
     }
@@ -240,13 +247,13 @@ export const DashboardScreen = ({ navigation }: any) => {
         <View style={styles.headerProfileInfo}>
           <View style={[styles.profileImageContainer, { borderColor: theme.cardBorder }]}>
             <Image 
-              source={{ uri: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCT2OEyOTnyIUgoZWwTs46fJ5ASPSN9vCoVX0TfcHEjGH-AgEx4AM1TYLk76wwCThPgY55Rj8mEHsZ9X9zXwX88sNx2vG2zKc-xA1VN5q0UxfnBKNVllUmfqWX3Sk7qezKtEs5ZPRRaFO5bJQGXmwqSsXmqY1naSmMYQZsdPrC4zU9f40f47FpiutjLWM9T09F0kPYMmuSKMv9-68qbmC0wM1MDaUdMNC1tDEvhBY7Sg2SWloerS7gH' }} 
+              source={{ uri: partner?.profilePhotoUrl || 'https://ui-avatars.com/api/?name=' + encodeURIComponent(getPartnerDisplayName(partner)) }} 
               style={styles.profileImage}
             />
           </View>
           <View>
             <Text style={[styles.greeting, { color: theme.textSecondary }]}>Hello,</Text>
-            <Text style={[styles.partnerName, { color: theme.primary }]}>{partner?.fullName || 'Arjun'}</Text>
+            <Text style={[styles.partnerName, { color: theme.primary }]}>{getPartnerDisplayName(partner)}</Text>
           </View>
         </View>
         <TouchableOpacity style={[styles.sensorButton, { backgroundColor: theme.cardBg }]}>

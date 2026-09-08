@@ -3,14 +3,16 @@ declare const process: any;
 import { initializeApp, getApps, getApp } from 'firebase/app';
 import ReactNativeAsyncStorage from '@react-native-async-storage/async-storage';
 import { getFirestore, initializeFirestore } from 'firebase/firestore';
+// @ts-ignore
+import { initializeAuth, getReactNativePersistence, getAuth } from 'firebase/auth';
 import { getFunctions } from 'firebase/functions';
 import { getStorage } from 'firebase/storage';
 
 export const firebaseConfig = {
   apiKey: "AIzaSyDoqbjpy3pFiuvMCBhxffJH27bHBNaKTTA",
-  authDomain: "rapidmedico.firebaseapp.com",
-  projectId: "rapidmedico",
-  storageBucket: "rapidmedico.firebasestorage.app",
+  authDomain: "rapidmedi.firebaseapp.com",
+  projectId: "rapidmedi",
+  storageBucket: "rapidmedi.firebasestorage.app",
   messagingSenderId: "553213794552",
   appId: "1:553213794552:web:db1bdac54f2a80d791430d",
   measurementId: "G-71EYHYR629"
@@ -23,18 +25,15 @@ let _authInstance: any = null;
 export const getFirebaseAuth = () => {
   if (!_authInstance) {
     try {
-      // @ts-ignore
-      const { initializeAuth, getReactNativePersistence } = require('firebase/auth');
       _authInstance = initializeAuth(app, {
         persistence: getReactNativePersistence(ReactNativeAsyncStorage),
       });
-    } catch (_) {
-      try {
-        // @ts-ignore
-        const { getAuth } = require('firebase/auth');
+    } catch (e: any) {
+      if (e?.code === 'auth/already-initialized') {
         _authInstance = getAuth(app);
-      } catch (err) {
-        _authInstance = { currentUser: null };
+      } else {
+        console.warn('Error initializing firebase auth with persistence:', e);
+        _authInstance = getAuth(app);
       }
     }
   }

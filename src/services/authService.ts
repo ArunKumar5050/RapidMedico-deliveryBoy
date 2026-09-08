@@ -221,7 +221,7 @@ export const authService = {
         createdAt: new Date().toISOString(),
       };
 
-      await this.savePartnerToFirestore(newPartner);
+      this.savePartnerToFirestore(newPartner).catch(console.warn);
       return { success: true, partner: newPartner };
     }
 
@@ -242,7 +242,7 @@ export const authService = {
     // 4. Default automatic created partner for custom phone logins
     const generatedPartner: DeliveryPartner = {
       partnerId: `partner_${cleanPhone}`,
-      fullName: `Partner ${cleanPhone.slice(-4)}`,
+      fullName: `Arun`,
       phone: cleanPhone,
       email: `driver.${cleanPhone}@rapidmedico.com`,
       dob: '1996-05-12',
@@ -266,21 +266,31 @@ export const authService = {
       createdAt: new Date().toISOString(),
     };
 
-    await this.savePartnerToFirestore(generatedPartner);
+    this.savePartnerToFirestore(generatedPartner).catch(console.warn);
     return { success: true, partner: generatedPartner };
   },
 
-  async fetchPartnerFromFirestore(partnerId: string): Promise<DeliveryPartner | null> {
+  async fetchPartnerFromFirestore(partnerId: string, retries = 2): Promise<DeliveryPartner | null> {
     try {
       const ref = doc(db, 'delivery_partners', partnerId);
       const snap = await getDoc(ref);
       if (snap.exists()) {
-        return snap.data() as DeliveryPartner;
+        const data = snap.data();
+        if (!data.fullName || /^partner\s*\d*$/i.test(data.fullName)) {
+          data.fullName = data.bankDetails?.accountHolderName || data.name || data.firstName || 'Delivery Partner';
+        }
+        return data as DeliveryPartner;
       }
-    } catch (e) {
-      console.warn('[AuthService] Firestore fetch error (falling back to local memory):', e);
+      return null;
+    } catch (e: any) {
+      console.warn(`[AuthService] Firestore fetch error (${retries} retries left):`, e);
+      if (retries > 0) {
+        // Wait 1.5 seconds and retry
+        await new Promise((resolve) => setTimeout(resolve, 1500));
+        return this.fetchPartnerFromFirestore(partnerId, retries - 1);
+      }
+      throw e; // Bubble up the error so we don't silently create a dummy account
     }
-    return null;
   },
 
   async savePartnerToFirestore(partner: DeliveryPartner): Promise<void> {

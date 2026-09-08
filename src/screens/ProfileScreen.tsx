@@ -4,6 +4,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useAuthStore } from '../store/authStore';
 import { useThemeStore } from '../store/themeStore';
 import { ShieldCheck, Bike, Award, Moon, Bell, LogOut, CheckCircle2 } from 'lucide-react-native';
+import { getPartnerDisplayName } from '../utils/formatting';
 
 export const ProfileScreen = ({ navigation }: any) => {
   const { theme } = useThemeStore();
@@ -26,7 +27,7 @@ export const ProfileScreen = ({ navigation }: any) => {
       <View style={[styles.header, { paddingTop: Math.max(insets.top, 16) }]}>
         <View style={styles.headerLeft}>
           <Image 
-            source={{ uri: partner?.profilePhotoUrl || 'https://ui-avatars.com/api/?name=' + (partner?.fullName || 'Partner') }} 
+            source={{ uri: partner?.profilePhotoUrl || 'https://ui-avatars.com/api/?name=' + encodeURIComponent(getPartnerDisplayName(partner)) }} 
             style={styles.avatarSmall} 
           />
           <Text style={styles.headerTitle}>RapidMedico</Text>
@@ -43,14 +44,14 @@ export const ProfileScreen = ({ navigation }: any) => {
           <View style={styles.avatarContainer}>
             <View style={styles.avatarPulse} />
             <Image 
-              source={{ uri: partner?.profilePhotoUrl || 'https://ui-avatars.com/api/?name=' + (partner?.fullName || 'Partner') }} 
+              source={{ uri: partner?.profilePhotoUrl || 'https://ui-avatars.com/api/?name=' + encodeURIComponent(getPartnerDisplayName(partner)) }} 
               style={styles.avatarLarge} 
             />
             <View style={styles.verifiedBadge}>
               <CheckCircle2 size={16} color="#003915" />
             </View>
           </View>
-          <Text style={styles.nameText}>{partner?.fullName || 'Delivery Partner'}</Text>
+          <Text style={styles.nameText}>{getPartnerDisplayName(partner)}</Text>
           <Text style={styles.phoneText}>{partner?.phone || '+91 -'}</Text>
           <View style={styles.vehicleBadge}>
             <Bike size={16} color="#4fdbc8" />

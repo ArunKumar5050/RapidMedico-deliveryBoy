@@ -61,7 +61,7 @@ export const LoginScreen = ({ navigation }: any) => {
 
   return (
     <KeyboardAvoidingView
-      behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       style={[styles.container, { backgroundColor: theme.bg }]}
     >
       <ScrollView
@@ -69,7 +69,7 @@ export const LoginScreen = ({ navigation }: any) => {
           styles.scrollContent,
           {
             paddingTop: Math.max(insets.top, 24) + 20,
-            paddingBottom: Math.max(insets.bottom, 24) + 30,
+            paddingBottom: Math.max(insets.bottom, 24) + 150,
           },
         ]}
         keyboardShouldPersistTaps="handled"
@@ -133,7 +133,7 @@ export const LoginScreen = ({ navigation }: any) => {
             onPress={handleRequestOTP} 
             disabled={!isValidPhone || loading}
           >
-            <View style={[styles.heroSection, { backgroundColor: theme.success }]}>
+            <View style={[styles.submitBtnGradient, { backgroundColor: theme.success }]}>
               <Text style={styles.submitBtnText}>{loading ? 'SENDING...' : 'Send OTP'}</Text>
               {!loading && <ArrowRight size={18} color="#00285d" style={{ marginLeft: 8 }} />}
             </View>

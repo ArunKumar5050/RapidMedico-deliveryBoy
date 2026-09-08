@@ -102,7 +102,11 @@ export const AuthOTPVerifyScreen = ({ route, navigation }: any) => {
         setError(res.error || 'Invalid verification code. Please try 1234.');
       }
     } catch (e: any) {
-      setError('Verification failed. Please try again.');
+      if (e?.message?.toLowerCase().includes('offline')) {
+        setError('Network is offline. Please check your connection and try again.');
+      } else {
+        setError('Verification failed. Please try again.');
+      }
     } finally {
       setLoading(false);
     }
@@ -131,7 +135,7 @@ export const AuthOTPVerifyScreen = ({ route, navigation }: any) => {
 
   return (
     <KeyboardAvoidingView
-      behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       style={[styles.container, { backgroundColor: theme.bg }]}
     >
       <ScrollView
@@ -139,7 +143,7 @@ export const AuthOTPVerifyScreen = ({ route, navigation }: any) => {
           styles.scrollContent,
           {
             paddingTop: Math.max(insets.top, 24) + 16,
-            paddingBottom: Math.max(insets.bottom, 24) + 30,
+            paddingBottom: Math.max(insets.bottom, 24) + 150,
           },
         ]}
         keyboardShouldPersistTaps="handled"
@@ -249,14 +253,17 @@ export const AuthOTPVerifyScreen = ({ route, navigation }: any) => {
               disabled={!isFilled || loading}
             >
               <View
-                style={[styles.verifyBtnGradient, { backgroundColor: theme.containerHigh || theme.primaryGlow }]}
+                style={[styles.verifyBtnGradient, { backgroundColor: theme.success }]}
               >
                 {loading ? (
                   <View style={styles.spinner} />
                 ) : (
-                  <Text style={styles.verifyBtnText}>
-                    {mode === 'signup' ? 'Verify & Enter' : 'Verify Securely'}
-                  </Text>
+                  <>
+                    <Text style={[styles.verifyBtnText, { color: '#00285d' }]}>
+                      {mode === 'signup' ? 'Verify & Enter' : 'Verify Securely'}
+                    </Text>
+                    <ShieldCheck size={18} color="#00285d" style={{ marginLeft: 8 }} />
+                  </>
                 )}
               </View>
             </TouchableOpacity>
@@ -424,6 +431,7 @@ const createStyles = (theme: any) => StyleSheet.create({
   },
   verifyBtnGradient: {
     flex: 1,
+    flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
   },

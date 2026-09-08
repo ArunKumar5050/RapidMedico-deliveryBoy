@@ -7,6 +7,7 @@ import {
   getDoc,
   increment,
   limit,
+  orderBy,
 } from 'firebase/firestore';
 import { db } from '../firebase/config';
 import { DeliveryAssignment, DeliveryPartner, DeliveryStatus, LocationPoint } from '../types';
@@ -77,10 +78,10 @@ export const assignmentService = {
   ) {
     try {
       const customCol = collection(db, 'customOrders');
-      const qCustom = query(customCol, limit(50));
+      const qCustom = query(customCol, orderBy('createdAt', 'desc'), limit(100));
       
       const ordersCol = collection(db, 'orders');
-      const qOrders = query(ordersCol, limit(50));
+      const qOrders = query(ordersCol, orderBy('createdAt', 'desc'), limit(100));
 
       let customAssignments: DeliveryAssignment[] = [];
       let standardAssignments: DeliveryAssignment[] = [];
@@ -294,6 +295,9 @@ export const assignmentService = {
             status: 'out_for_delivery',
             storeStatus: 'DELIVERY_ASSIGNED',
             deliveryPartnerId: partnerId,
+            deliveryPartnerName: partner?.fullName || 'Delivery Partner',
+            deliveryPartnerPhone: partner?.phone || '',
+            deliveryPartnerVehicle: partner?.vehicleNumber || '',
             deliveryStatus: 'en_route_pickup',
             riderLat: initialLocation?.lat || null,
             riderLng: initialLocation?.lng || null,
