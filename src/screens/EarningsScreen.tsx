@@ -100,7 +100,7 @@ export const EarningsScreen = () => {
           <Text style={styles.headerTitle}>RapidMedico</Text>
         </View>
         <TouchableOpacity style={styles.headerRight}>
-          <RefreshCw size={20} color="#adc6ff" />
+          <RefreshCw size={20} color={theme.primary} />
         </TouchableOpacity>
       </View>
 
@@ -108,7 +108,7 @@ export const EarningsScreen = () => {
         style={styles.scrollContainer}
         contentContainerStyle={{ paddingBottom: Math.max(insets.bottom, 24) + 80 }}
         refreshControl={
-          <RefreshControl refreshing={refreshing} onRefresh={handleRefresh} tintColor="#4ae176" />
+          <RefreshControl refreshing={refreshing} onRefresh={handleRefresh} tintColor={theme.primary} />
         }
         showsVerticalScrollIndicator={false}
       >
@@ -126,8 +126,8 @@ export const EarningsScreen = () => {
             disabled={clearing}
             activeOpacity={0.7}
           >
-            <Trash2 size={15} color="#ffb4ab" />
-            <Text style={styles.clearBtnText}>
+            <Trash2 size={15} color={theme.danger} />
+            <Text style={[styles.clearBtnText, { color: theme.danger }]}>
               {clearing ? 'Resetting...' : 'Clear Records'}
             </Text>
           </TouchableOpacity>
@@ -139,7 +139,7 @@ export const EarningsScreen = () => {
           <View style={[styles.card, styles.todayCard]}>
             <View style={styles.cardHeader}>
               <Text style={styles.todayCardLabel}>TODAY'S TOTAL</Text>
-              <Wallet size={20} color="rgba(173, 198, 255, 0.8)" />
+              <Wallet size={20} color={theme.primary} />
             </View>
             <Text style={styles.todayCardAmount}>{formatCurrency(earnings?.today || 0)}</Text>
           </View>
@@ -160,7 +160,7 @@ export const EarningsScreen = () => {
           <View style={[styles.card, styles.pendingCard]}>
             <View style={styles.pendingLeft}>
               <View style={styles.pendingIconWrapper}>
-                <Clock size={20} color="#4fdbc8" />
+                <Clock size={20} color={theme.secondaryAccent} />
               </View>
               <View>
                 <Text style={styles.pendingTitle}>Pending Settlement</Text>
@@ -177,7 +177,7 @@ export const EarningsScreen = () => {
 
           {isLoading && deliveryList.length === 0 ? (
             <View style={styles.loadingBox}>
-              <ActivityIndicator size="small" color="#4ae176" />
+              <ActivityIndicator size="small" color={theme.primary} />
               <Text style={styles.loadingText}>Syncing live earnings from database...</Text>
             </View>
           ) : deliveryList.length === 0 ? (
@@ -272,11 +272,10 @@ const createStyles = (theme: any) => StyleSheet.create({
     paddingVertical: 7,
     borderRadius: 16,
     borderWidth: 1,
-    borderColor: 'rgba(255, 180, 171, 0.4)',
-    backgroundColor: 'rgba(255, 180, 171, 0.15)',
+    borderColor: 'rgba(220, 38, 38, 0.4)',
+    backgroundColor: theme.dangerBg,
   },
   clearBtnText: {
-    color: '#ffb4ab',
     fontSize: 12,
     fontWeight: '700',
   },
@@ -322,7 +321,7 @@ const createStyles = (theme: any) => StyleSheet.create({
   todayCard: {
     height: 128,
     justifyContent: 'space-between',
-    borderColor: 'rgba(173, 198, 255, 0.3)',
+    borderColor: theme.primaryBg,
   },
   cardHeader: {
     flexDirection: 'row',
@@ -375,7 +374,7 @@ const createStyles = (theme: any) => StyleSheet.create({
     width: 40,
     height: 40,
     borderRadius: 20,
-    backgroundColor: 'rgba(79, 219, 200, 0.1)',
+    backgroundColor: theme.secondaryBg,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -456,7 +455,7 @@ const createStyles = (theme: any) => StyleSheet.create({
     width: 40,
     height: 40,
     borderRadius: 20,
-    backgroundColor: theme.containerHigh,
+    backgroundColor: theme.primaryBg,
     alignItems: 'center',
     justifyContent: 'center',
   },

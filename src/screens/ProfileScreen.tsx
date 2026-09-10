@@ -48,13 +48,13 @@ export const ProfileScreen = ({ navigation }: any) => {
               style={styles.avatarLarge} 
             />
             <View style={styles.verifiedBadge}>
-              <CheckCircle2 size={16} color="#003915" />
+              <CheckCircle2 size={16} color="#FFFFFF" />
             </View>
           </View>
           <Text style={styles.nameText}>{getPartnerDisplayName(partner)}</Text>
           <Text style={styles.phoneText}>{partner?.phone || '+91 -'}</Text>
           <View style={styles.vehicleBadge}>
-            <Bike size={16} color="#4fdbc8" />
+            <Bike size={16} color={theme.secondaryAccent} />
             <Text style={styles.vehicleBadgeText}>EV PARTNER PRO</Text>
           </View>
         </View>
@@ -63,7 +63,7 @@ export const ProfileScreen = ({ navigation }: any) => {
         <View style={styles.kycCard}>
           <View style={styles.kycLeft}>
             <View style={styles.kycIconWrapper}>
-              <ShieldCheck size={24} color="#4ae176" />
+              <ShieldCheck size={24} color={theme.success} />
             </View>
             <View>
               <Text style={styles.kycTitle}>KYC Verified</Text>
@@ -78,8 +78,8 @@ export const ProfileScreen = ({ navigation }: any) => {
         {/* Info Grid */}
         <View style={styles.infoGrid}>
           <View style={styles.infoCard}>
-            <View style={[styles.infoIconWrapper, { backgroundColor: 'rgba(173, 198, 255, 0.15)' }]}>
-              <Bike size={24} color="#adc6ff" />
+            <View style={[styles.infoIconWrapper, { backgroundColor: theme.primaryBg }]}>
+              <Bike size={24} color={theme.primary} />
             </View>
             <Text style={styles.infoLabel}>Vehicle</Text>
             <Text style={styles.infoValue}>{partner?.vehicleNumber || 'Electric Scooter'}</Text>
@@ -87,7 +87,7 @@ export const ProfileScreen = ({ navigation }: any) => {
           </View>
           <View style={styles.infoCard}>
             <View style={[styles.infoIconWrapper, { backgroundColor: theme.secondaryBg }]}>
-              <Award size={24} color="#4fdbc8" />
+              <Award size={24} color={theme.secondaryAccent} />
             </View>
             <Text style={styles.infoLabel}>Training</Text>
             <Text style={styles.infoValue}>Level 2 Bio-Safety</Text>
@@ -204,7 +204,7 @@ const createStyles = (theme: any) => StyleSheet.create({
     position: 'absolute',
     inset: -4,
     borderRadius: 64,
-    backgroundColor: 'rgba(173, 198, 255, 0.2)',
+    backgroundColor: theme.primaryBg,
   },
   avatarLarge: {
     width: 112,
@@ -242,12 +242,12 @@ const createStyles = (theme: any) => StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     gap: 8,
-    backgroundColor: theme.containerHigh,
+    backgroundColor: theme.primaryBg,
     paddingHorizontal: 16,
     paddingVertical: 8,
     borderRadius: 20,
     borderWidth: 1,
-    borderColor: 'rgba(173, 198, 255, 0.2)',
+    borderColor: theme.cardBorder,
   },
   vehicleBadgeText: {
     fontSize: 12,
@@ -260,10 +260,10 @@ const createStyles = (theme: any) => StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     backgroundColor: theme.cardBg,
-    borderRadius: 12,
+    borderRadius: 16,
     padding: 16,
     borderWidth: 1,
-    borderColor: 'rgba(74, 225, 118, 0.3)',
+    borderColor: 'rgba(16, 185, 129, 0.3)',
     marginBottom: 24,
   },
   kycLeft: {
@@ -387,8 +387,8 @@ const createStyles = (theme: any) => StyleSheet.create({
     paddingVertical: 16,
     borderRadius: 12,
     borderWidth: 1,
-    borderColor: 'rgba(255, 180, 171, 0.5)',
-    backgroundColor: 'rgba(147, 0, 10, 0.1)',
+    borderColor: 'rgba(220, 38, 38, 0.5)',
+    backgroundColor: theme.dangerBg,
   },
   logoutText: {
     fontSize: 14,

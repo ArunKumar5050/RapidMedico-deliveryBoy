@@ -163,12 +163,12 @@ export const AuthOTPVerifyScreen = ({ route, navigation }: any) => {
         {/* Auth Card */}
         <View style={styles.cardContainer}>
           <View
-            style={[styles.glassPanel, { backgroundColor: 'rgba(17, 24, 39, 0.8)' }]}
+            style={[styles.glassPanel, { backgroundColor: theme.cardBg, borderColor: theme.cardBorder }]}
           />
           <View style={styles.cardContent}>
             {/* Header */}
             <View style={styles.headerSection}>
-              <View style={[styles.iconContainer, { backgroundColor: theme.cardBg }]}>
+              <View style={[styles.iconContainer, { backgroundColor: theme.subtleBox, borderColor: theme.cardBorder }]}>
                 <ShieldCheck size={32} color={theme.primary} />
                 <View style={styles.pulseDot} />
               </View>
@@ -187,12 +187,12 @@ export const AuthOTPVerifyScreen = ({ route, navigation }: any) => {
                   style={[
                     styles.digitBox,
                     {
-                      backgroundColor: digit ? theme.cardBg : theme.cardBg,
+                      backgroundColor: digit ? theme.primaryBg : theme.subtleBox,
                       borderColor: digit
                         ? theme.primary
                         : error
                         ? theme.danger
-                        : 'rgba(255,255,255,0.1)',
+                        : theme.cardBorder,
                       color: theme.textPrimary,
                     },
                   ]}
@@ -217,7 +217,7 @@ export const AuthOTPVerifyScreen = ({ route, navigation }: any) => {
                     cx="24"
                     cy="24"
                     r={radius}
-                    stroke="rgba(255, 255, 255, 0.1)"
+                    stroke={theme.cardBorder}
                     strokeWidth={strokeWidth}
                     fill="none"
                   />
@@ -253,16 +253,16 @@ export const AuthOTPVerifyScreen = ({ route, navigation }: any) => {
               disabled={!isFilled || loading}
             >
               <View
-                style={[styles.verifyBtnGradient, { backgroundColor: theme.success }]}
+                style={[styles.verifyBtnGradient, { backgroundColor: theme.primary }]}
               >
                 {loading ? (
                   <View style={styles.spinner} />
                 ) : (
                   <>
-                    <Text style={[styles.verifyBtnText, { color: '#00285d' }]}>
+                    <Text style={[styles.verifyBtnText, { color: '#FFFFFF' }]}>
                       {mode === 'signup' ? 'Verify & Enter' : 'Verify Securely'}
                     </Text>
-                    <ShieldCheck size={18} color="#00285d" style={{ marginLeft: 8 }} />
+                    <ShieldCheck size={18} color="#FFFFFF" style={{ marginLeft: 8 }} />
                   </>
                 )}
               </View>
@@ -305,18 +305,18 @@ const createStyles = (theme: any) => StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderWidth: 1,
-    borderColor: 'rgba(255,255,255,0.05)',
+    borderColor: theme.cardBorder,
   },
   cardContainer: {
     width: '100%',
     maxWidth: 400,
     borderRadius: 16,
     overflow: 'hidden',
-    shadowColor: '#000',
+    shadowColor: theme.primary,
     shadowOffset: { width: 0, height: 8 },
-    shadowOpacity: 0.5,
+    shadowOpacity: 0.15,
     shadowRadius: 32,
-    elevation: 15,
+    elevation: 8,
   },
   glassPanel: {
     position: 'absolute',
@@ -325,7 +325,6 @@ const createStyles = (theme: any) => StyleSheet.create({
     top: 0,
     bottom: 0,
     borderWidth: 1,
-    borderColor: 'rgba(255,255,255,0.1)',
     borderRadius: 16,
   },
   cardContent: {
@@ -343,7 +342,6 @@ const createStyles = (theme: any) => StyleSheet.create({
     alignItems: 'center',
     marginBottom: 24,
     borderWidth: 1,
-    borderColor: 'rgba(255,255,255,0.05)',
   },
   pulseDot: {
     position: 'absolute',
@@ -370,7 +368,7 @@ const createStyles = (theme: any) => StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     gap: 12,
-    marginBottom: 24, // Added to fix alignment
+    marginBottom: 24,
   },
   digitBox: {
     width: 48,
@@ -380,9 +378,9 @@ const createStyles = (theme: any) => StyleSheet.create({
     textAlign: 'center',
     fontSize: 24,
     fontWeight: '600',
-    shadowColor: '#000',
+    shadowColor: theme.cardBorder,
     shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.2,
+    shadowOpacity: 0.1,
     shadowRadius: 4,
   },
   errorText: {
@@ -436,7 +434,6 @@ const createStyles = (theme: any) => StyleSheet.create({
     justifyContent: 'center',
   },
   verifyBtnText: {
-    color: '#00285d',
     fontSize: 16,
     fontWeight: '600',
   },

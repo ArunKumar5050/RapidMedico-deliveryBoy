@@ -77,9 +77,9 @@ export const LoginScreen = ({ navigation }: any) => {
       >
         {/* Hero Branding */}
         <View style={styles.heroSection}>
-          <View style={[styles.iconContainer, { backgroundColor: theme.cardBg, borderColor: 'rgba(255,255,255,0.1)' }]}>
+          <View style={[styles.iconContainer, { backgroundColor: theme.cardBg, borderColor: theme.cardBorder }]}>
             <PackagePlus size={40} color={theme.primary} />
-            <View style={[styles.glowingRing, { borderColor: 'rgba(77,142,255,0.3)' }]} />
+            <View style={[styles.glowingRing, { borderColor: 'rgba(0,180,216,0.35)' }]} />
           </View>
           <Text style={[styles.brandName, { color: theme.primary }]}>RapidMedico</Text>
           <Text style={[styles.tagline, { color: theme.textSecondary }]}>MEDICAL LOGISTICS</Text>
@@ -88,8 +88,7 @@ export const LoginScreen = ({ navigation }: any) => {
         {/* Login Card Container */}
         <View style={[styles.card, { backgroundColor: theme.cardBg, borderColor: 'rgba(255,255,255,0.1)' }]}>
           <View
-            style={[styles.cardGradientOverlay, { backgroundColor: 'rgba(17,24,39,0.5)' }]}
-            pointerEvents="none"
+          pointerEvents="none"
           />
           <Text style={[styles.cardTitle, { color: theme.textPrimary }]}>Delivery Partner Login</Text>
 
@@ -101,11 +100,11 @@ export const LoginScreen = ({ navigation }: any) => {
                 styles.phoneInputRow,
                 {
                   backgroundColor: theme.cardBg,
-                  borderColor: error ? theme.danger : (isValidPhone ? theme.tertiaryAccent : 'rgba(255,255,255,0.1)'),
+                  borderColor: error ? theme.danger : (isValidPhone ? theme.primary : theme.cardBorder),
                 },
               ]}
             >
-              <View style={[styles.countryCodeBadge, { backgroundColor: theme.cardBg, borderColor: 'rgba(255,255,255,0.1)' }]}>
+              <View style={[styles.countryCodeBadge, { backgroundColor: theme.containerLow, borderColor: theme.cardBorder }]}>
                 <Text style={[styles.countryCode, { color: theme.textPrimary }]}>+91</Text>
               </View>
               <TextInput
@@ -120,7 +119,7 @@ export const LoginScreen = ({ navigation }: any) => {
               />
               {isValidPhone && (
                 <View style={styles.validIconContainer}>
-                  <CheckCircle size={18} color={theme.tertiaryAccent} />
+                  <CheckCircle size={18} color={theme.primary} />
                 </View>
               )}
             </View>
@@ -133,9 +132,9 @@ export const LoginScreen = ({ navigation }: any) => {
             onPress={handleRequestOTP} 
             disabled={!isValidPhone || loading}
           >
-            <View style={[styles.submitBtnGradient, { backgroundColor: theme.success }]}>
-              <Text style={styles.submitBtnText}>{loading ? 'SENDING...' : 'Send OTP'}</Text>
-              {!loading && <ArrowRight size={18} color="#00285d" style={{ marginLeft: 8 }} />}
+            <View style={[styles.submitBtnGradient, { backgroundColor: theme.primary }]}>
+              <Text style={[styles.submitBtnText, { color: '#FFFFFF' }]}>{loading ? 'SENDING...' : 'Send OTP'}</Text>
+              {!loading && <ArrowRight size={18} color="#FFFFFF" style={{ marginLeft: 8 }} />}
             </View>
           </TouchableOpacity>
 
@@ -171,7 +170,7 @@ export const LoginScreen = ({ navigation }: any) => {
                 onPress={() => handleQuickDemoLogin(demo)}
                 activeOpacity={0.7}
               >
-                <View style={[styles.demoAvatar, { backgroundColor: 'rgba(173,198,255,0.1)' }]}>
+                <View style={[styles.demoAvatar, { backgroundColor: theme.primaryBg }]}>
                   <Text style={[styles.demoAvatarText, { color: theme.primary }]}>
                     {demo.fullName.substring(0, 1)}
                   </Text>
@@ -209,12 +208,12 @@ const createStyles = (theme: any) => StyleSheet.create({
   iconContainer: {
     width: 80,
     height: 80,
-    borderRadius: 16,
+    borderRadius: 20,
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: 16,
     borderWidth: 1,
-    shadowColor: '#3b82f6',
+    shadowColor: '#0077B6',
     shadowOffset: { width: 0, height: 8 },
     shadowOpacity: 0.15,
     shadowRadius: 24,
@@ -248,14 +247,14 @@ const createStyles = (theme: any) => StyleSheet.create({
   card: {
     width: '100%',
     maxWidth: 400,
-    borderRadius: 16,
+    borderRadius: 20,
     padding: 24,
     borderWidth: 1,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 10 },
-    shadowOpacity: 0.5,
+    shadowColor: '#0077B6',
+    shadowOffset: { width: 0, height: 6 },
+    shadowOpacity: 0.15,
     shadowRadius: 20,
-    elevation: 15,
+    elevation: 12,
     overflow: 'hidden',
     marginBottom: 32,
   },
@@ -317,14 +316,14 @@ const createStyles = (theme: any) => StyleSheet.create({
   },
   submitBtn: {
     width: '100%',
-    height: 48,
-    borderRadius: 8,
+    height: 52,
+    borderRadius: 12,
     overflow: 'hidden',
     marginTop: 8,
-    shadowColor: '#3b82f6',
-    shadowOffset: { width: 0, height: 8 },
-    shadowOpacity: 0.2,
-    shadowRadius: 24,
+    shadowColor: '#0077B6',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.25,
+    shadowRadius: 16,
     elevation: 5,
   },
   submitBtnGradient: {
@@ -334,9 +333,9 @@ const createStyles = (theme: any) => StyleSheet.create({
     justifyContent: 'center',
   },
   submitBtnText: {
-    color: '#00285d',
-    fontSize: 14,
-    fontWeight: '600',
+    fontSize: 15,
+    fontWeight: '700',
+    letterSpacing: 0.5,
   },
   footerRow: {
     flexDirection: 'row',

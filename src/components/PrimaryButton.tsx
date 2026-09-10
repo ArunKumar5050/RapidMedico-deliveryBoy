@@ -1,6 +1,7 @@
 import React from 'react';
 import { TouchableOpacity, Text, ActivityIndicator, StyleSheet, View } from 'react-native';
 import { useThemeStore } from '../store/themeStore';
+import { componentDefaults, shadows } from '../theme';
 
 interface PrimaryButtonProps {
   label: string;
@@ -25,11 +26,11 @@ export const PrimaryButton: React.FC<PrimaryButtonProps> = ({
     }
     switch (variant) {
       case 'success':
-        return { bg: theme.success, border: theme.successGlow, text: '#ffffff' };
+        return { bg: theme.accept || theme.success, border: theme.acceptPressed || theme.successGlow, text: '#ffffff' };
       case 'danger':
-        return { bg: theme.danger, border: theme.dangerGlow, text: '#ffffff' };
+        return { bg: theme.reject || theme.danger, border: theme.rejectPressed || theme.dangerGlow, text: '#ffffff' };
       default:
-        return { bg: theme.primary, border: theme.primaryGlow, text: '#ffffff' };
+        return { bg: theme.primary, border: theme.primaryGlow || theme.primaryDark, text: '#ffffff' };
     }
   };
 
@@ -39,12 +40,16 @@ export const PrimaryButton: React.FC<PrimaryButtonProps> = ({
     <TouchableOpacity
       style={[
         styles.button,
-        { backgroundColor: style.bg, borderColor: style.border },
+        {
+          backgroundColor: style.bg,
+          borderColor: style.border,
+          shadowColor: theme.primary,
+        },
         disabled && styles.disabledButton,
       ]}
       onPress={onPress}
       disabled={disabled || loading}
-      activeOpacity={0.82}
+      activeOpacity={0.85}
     >
       <View style={styles.contentRow}>
         {loading ? (
@@ -59,8 +64,8 @@ export const PrimaryButton: React.FC<PrimaryButtonProps> = ({
 
 const styles = StyleSheet.create({
   button: {
-    height: 54,
-    borderRadius: 14,
+    minHeight: componentDefaults.buttonPrimary.minHeight, // 56
+    borderRadius: componentDefaults.buttonPrimary.borderRadius, // 14
     borderWidth: 1.5,
     justifyContent: 'center',
     alignItems: 'center',
@@ -68,7 +73,7 @@ const styles = StyleSheet.create({
     marginVertical: 6,
     width: '100%',
     shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.15,
+    shadowOpacity: 0.16,
     shadowRadius: 8,
     elevation: 4,
   },
@@ -82,9 +87,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   text: {
-    fontSize: 15,
-    fontWeight: '800',
-    letterSpacing: 0.8,
-    textTransform: 'uppercase',
+    fontSize: 16,
+    fontWeight: '700',
+    letterSpacing: 0.6,
   },
 });
+

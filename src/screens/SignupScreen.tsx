@@ -272,7 +272,7 @@ export const SignupScreen = ({ navigation }: any) => {
           onPress={() => (currentStep === 2 ? setCurrentStep(1) : navigation.goBack())}
           style={styles.backButton}
         >
-          <ArrowLeft size={24} color="#dee2f5" />
+          <ArrowLeft size={24} color={theme.textPrimary} />
         </TouchableOpacity>
         <Text style={styles.headerTitle}>RapidMedico</Text>
         <View style={{ width: 40 }} />
@@ -302,11 +302,11 @@ export const SignupScreen = ({ navigation }: any) => {
               <View style={styles.inputGroup}>
                 <Text style={styles.inputLabel}>Full Name</Text>
                 <View style={[styles.inputRow, errors.fullName && styles.inputError]}>
-                  <User size={20} color="#8c909f" />
+                  <User size={20} color={theme.textMuted} />
                   <TextInput
                     style={styles.textInput}
                     placeholder="Enter your full name"
-                    placeholderTextColor="#8c909f"
+                    placeholderTextColor={theme.textMuted}
                     value={fullName}
                     onChangeText={(text) => {
                       setFullName(text);
@@ -321,11 +321,11 @@ export const SignupScreen = ({ navigation }: any) => {
               <View style={styles.inputGroup}>
                 <Text style={styles.inputLabel}>Email Address</Text>
                 <View style={[styles.inputRow, errors.email && styles.inputError]}>
-                  <Mail size={20} color="#8c909f" />
+                  <Mail size={20} color={theme.textMuted} />
                   <TextInput
                     style={styles.textInput}
                     placeholder="name@example.com"
-                    placeholderTextColor="#8c909f"
+                    placeholderTextColor={theme.textMuted}
                     keyboardType="email-address"
                     autoCapitalize="none"
                     value={email}
@@ -346,11 +346,11 @@ export const SignupScreen = ({ navigation }: any) => {
                     <Text style={styles.countryCodeText}>🇮🇳 +91</Text>
                   </View>
                   <View style={[styles.inputRow, { flex: 1 }, errors.phone && styles.inputError]}>
-                    <Phone size={20} color="#8c909f" />
+                    <Phone size={20} color={theme.textMuted} />
                     <TextInput
                       style={styles.textInput}
                       placeholder="00000 00000"
-                      placeholderTextColor="#8c909f"
+                      placeholderTextColor={theme.textMuted}
                       keyboardType="phone-pad"
                       maxLength={10}
                       value={phone}
@@ -382,7 +382,7 @@ export const SignupScreen = ({ navigation }: any) => {
                           <Text style={[styles.zoneName, selected && styles.textPrimary]}>{zone.name}</Text>
                           <Text style={styles.zoneState}>{zone.state}</Text>
                         </View>
-                        {selected && <CheckCircle2 size={18} color="#adc6ff" />}
+                        {selected && <CheckCircle2 size={18} color={theme.primary} />}
                       </TouchableOpacity>
                     );
                   })}
@@ -407,7 +407,7 @@ export const SignupScreen = ({ navigation }: any) => {
                           <Text style={[styles.vehicleOptionTitle, selected && styles.textPrimary]}>{v.label}</Text>
                           <Text style={styles.vehicleOptionDesc}>{v.desc}</Text>
                         </View>
-                        {selected && <CheckCircle2 size={18} color="#adc6ff" />}
+                        {selected && <CheckCircle2 size={18} color={theme.primary} />}
                       </TouchableOpacity>
                     );
                   })}
@@ -417,15 +417,15 @@ export const SignupScreen = ({ navigation }: any) => {
             </View>
           ) : (
             <View style={styles.formContainer}>
-               {/* DL */}
-               <View style={styles.inputGroup}>
+                {/* DL */}
+                <View style={styles.inputGroup}>
                 <Text style={styles.inputLabel}>Driving License Number (DL)</Text>
                 <View style={[styles.inputRow, errors.dlNumber && styles.inputError]}>
-                  <CreditCard size={20} color="#8c909f" />
+                  <CreditCard size={20} color={theme.textMuted} />
                   <TextInput
                     style={styles.textInput}
                     placeholder="e.g. RJ-2320150012345"
-                    placeholderTextColor="#8c909f"
+                    placeholderTextColor={theme.textMuted}
                     autoCapitalize="characters"
                     value={dlNumber}
                     onChangeText={(text) => {
@@ -449,9 +449,9 @@ export const SignupScreen = ({ navigation }: any) => {
                     disabled={uploadingDoc === 'driving_license'}
                   >
                     {uploadingDoc === 'driving_license' ? (
-                      <ActivityIndicator size="small" color="#adc6ff" />
+                      <ActivityIndicator size="small" color={theme.primary} />
                     ) : (
-                      <Camera size={18} color={dlImageUri ? theme.successGlow : theme.primary} />
+                      <Camera size={18} color={dlImageUri ? theme.success : theme.primary} />
                     )}
                   </TouchableOpacity>
                 </View>
@@ -461,11 +461,11 @@ export const SignupScreen = ({ navigation }: any) => {
                <View style={styles.inputGroup}>
                 <Text style={styles.inputLabel}>Vehicle Registration (RC)</Text>
                 <View style={[styles.inputRow, errors.vehicleNumber && styles.inputError]}>
-                  <Bike size={20} color="#8c909f" />
+                  <Bike size={20} color={theme.textMuted} />
                   <TextInput
                     style={styles.textInput}
                     placeholder="e.g. RJ 23 EQ 1234"
-                    placeholderTextColor="#8c909f"
+                    placeholderTextColor={theme.textMuted}
                     autoCapitalize="characters"
                     value={vehicleNumber}
                     onChangeText={(text) => {
@@ -489,9 +489,9 @@ export const SignupScreen = ({ navigation }: any) => {
                     disabled={uploadingDoc === 'vehicle_rc'}
                   >
                     {uploadingDoc === 'vehicle_rc' ? (
-                      <ActivityIndicator size="small" color="#adc6ff" />
+                      <ActivityIndicator size="small" color={theme.primary} />
                     ) : (
-                      <Camera size={18} color={rcImageUri ? theme.successGlow : theme.primary} />
+                      <Camera size={18} color={rcImageUri ? theme.success : theme.primary} />
                     )}
                   </TouchableOpacity>
                 </View>
@@ -501,11 +501,11 @@ export const SignupScreen = ({ navigation }: any) => {
               <View style={styles.inputGroup}>
                 <Text style={styles.inputLabel}>Aadhaar Card Number</Text>
                 <View style={[styles.inputRow, errors.aadhaarNumber && styles.inputError]}>
-                  <FileText size={20} color="#8c909f" />
+                  <FileText size={20} color={theme.textMuted} />
                   <TextInput
                     style={styles.textInput}
                     placeholder="12-digit Aadhaar number"
-                    placeholderTextColor="#8c909f"
+                    placeholderTextColor={theme.textMuted}
                     keyboardType="numeric"
                     maxLength={14}
                     value={aadhaarNumber}
@@ -530,9 +530,9 @@ export const SignupScreen = ({ navigation }: any) => {
                     disabled={uploadingDoc === 'aadhaar'}
                   >
                     {uploadingDoc === 'aadhaar' ? (
-                      <ActivityIndicator size="small" color="#adc6ff" />
+                      <ActivityIndicator size="small" color={theme.primary} />
                     ) : (
-                      <Camera size={18} color={aadhaarImageUri ? theme.successGlow : theme.primary} />
+                      <Camera size={18} color={aadhaarImageUri ? theme.success : theme.primary} />
                     )}
                   </TouchableOpacity>
                 </View>
@@ -542,11 +542,11 @@ export const SignupScreen = ({ navigation }: any) => {
               <View style={styles.inputGroup}>
                 <Text style={styles.inputLabel}>PAN Card Number</Text>
                 <View style={[styles.inputRow, errors.panNumber && styles.inputError]}>
-                  <CreditCard size={20} color="#8c909f" />
+                  <CreditCard size={20} color={theme.textMuted} />
                   <TextInput
                     style={styles.textInput}
                     placeholder="10-character PAN (e.g. ABCDE1234F)"
-                    placeholderTextColor="#8c909f"
+                    placeholderTextColor={theme.textMuted}
                     autoCapitalize="characters"
                     maxLength={10}
                     value={panNumber}
@@ -571,9 +571,9 @@ export const SignupScreen = ({ navigation }: any) => {
                     disabled={uploadingDoc === 'pan'}
                   >
                     {uploadingDoc === 'pan' ? (
-                      <ActivityIndicator size="small" color="#adc6ff" />
+                      <ActivityIndicator size="small" color={theme.primary} />
                     ) : (
-                      <Camera size={18} color={panImageUri ? theme.successGlow : theme.primary} />
+                      <Camera size={18} color={panImageUri ? theme.success : theme.primary} />
                     )}
                   </TouchableOpacity>
                 </View>
@@ -583,11 +583,11 @@ export const SignupScreen = ({ navigation }: any) => {
                <View style={styles.inputGroup}>
                 <Text style={styles.inputLabel}>Bank Name</Text>
                 <View style={[styles.inputRow, errors.bankName && styles.inputError]}>
-                  <Building2 size={20} color="#8c909f" />
+                  <Building2 size={20} color={theme.textMuted} />
                   <TextInput
                     style={styles.textInput}
                     placeholder="e.g. State Bank of India"
-                    placeholderTextColor="#8c909f"
+                    placeholderTextColor={theme.textMuted}
                     value={bankName}
                     onChangeText={(text) => {
                       setBankName(text);
@@ -602,11 +602,11 @@ export const SignupScreen = ({ navigation }: any) => {
                <View style={styles.inputGroup}>
                 <Text style={styles.inputLabel}>Bank Account Number</Text>
                 <View style={[styles.inputRow, errors.accountNumber && styles.inputError]}>
-                  <Building2 size={20} color="#8c909f" />
+                  <Building2 size={20} color={theme.textMuted} />
                   <TextInput
                     style={styles.textInput}
                     placeholder="Enter Account Number"
-                    placeholderTextColor="#8c909f"
+                    placeholderTextColor={theme.textMuted}
                     keyboardType="numeric"
                     value={accountNumber}
                     onChangeText={(text) => {
@@ -622,11 +622,11 @@ export const SignupScreen = ({ navigation }: any) => {
               <View style={styles.inputGroup}>
                 <Text style={styles.inputLabel}>Re-enter Account Number</Text>
                 <View style={[styles.inputRow, errors.confirmAccountNumber && styles.inputError]}>
-                  <Building2 size={20} color="#8c909f" />
+                  <Building2 size={20} color={theme.textMuted} />
                   <TextInput
                     style={styles.textInput}
                     placeholder="Re-enter Account Number"
-                    placeholderTextColor="#8c909f"
+                    placeholderTextColor={theme.textMuted}
                     keyboardType="numeric"
                     value={confirmAccountNumber}
                     onChangeText={(text) => {
@@ -643,11 +643,11 @@ export const SignupScreen = ({ navigation }: any) => {
               <View style={styles.inputGroup}>
                 <Text style={styles.inputLabel}>IFSC Code</Text>
                 <View style={[styles.inputRow, errors.ifscCode && styles.inputError]}>
-                  <Building2 size={20} color="#8c909f" />
+                  <Building2 size={20} color={theme.textMuted} />
                   <TextInput
                     style={styles.textInput}
                     placeholder="e.g. SBIN0001234"
-                    placeholderTextColor="#8c909f"
+                    placeholderTextColor={theme.textMuted}
                     autoCapitalize="characters"
                     maxLength={11}
                     value={ifscCode}
@@ -672,9 +672,9 @@ export const SignupScreen = ({ navigation }: any) => {
                     disabled={uploadingDoc === 'cancelled_cheque'}
                   >
                     {uploadingDoc === 'cancelled_cheque' ? (
-                      <ActivityIndicator size="small" color="#adc6ff" />
+                      <ActivityIndicator size="small" color={theme.primary} />
                     ) : (
-                      <Camera size={18} color={chequeImageUri ? theme.successGlow : theme.primary} />
+                      <Camera size={18} color={chequeImageUri ? theme.success : theme.primary} />
                     )}
                   </TouchableOpacity>
                 </View>
@@ -690,16 +690,16 @@ export const SignupScreen = ({ navigation }: any) => {
             disabled={loading}
           >
             <View
-              style={[styles.btnPrimary, { backgroundColor: theme.primaryGlow }]}
+              style={[styles.btnPrimary, { backgroundColor: theme.primary }]}
             >
               {loading ? (
-                <ActivityIndicator color="#0e1320" />
+                <ActivityIndicator color="#FFFFFF" />
               ) : (
                 <>
                   <Text style={styles.btnPrimaryText}>
                     {currentStep === 1 ? 'Continue to Verification' : 'Submit KYC'}
                   </Text>
-                  <ArrowRight size={20} color="#0e1320" />
+                  <ArrowRight size={20} color="#FFFFFF" />
                 </>
               )}
             </View>
@@ -726,8 +726,8 @@ const createStyles = (theme: any) => StyleSheet.create({
     paddingVertical: 16,
     backgroundColor: theme.bg,
     borderBottomWidth: 1,
-    borderBottomColor: 'rgba(255,255,255,0.1)',
-    shadowColor: '#3b82f6',
+    borderBottomColor: theme.cardBorder,
+    shadowColor: theme.primary,
     shadowOffset: { width: 0, height: 8 },
     shadowOpacity: 0.15,
     shadowRadius: 24,
@@ -790,7 +790,7 @@ const createStyles = (theme: any) => StyleSheet.create({
     elevation: 3,
   },
   stepBarInactive: {
-    backgroundColor: 'rgba(255,255,255,0.1)',
+    backgroundColor: theme.cardBorder,
   },
   titleContainer: {
     marginBottom: 32,
@@ -809,14 +809,14 @@ const createStyles = (theme: any) => StyleSheet.create({
   formCard: {
     backgroundColor: theme.cardBg,
     borderWidth: 1,
-    borderColor: 'rgba(255,255,255,0.1)',
+    borderColor: theme.cardBorder,
     borderRadius: 20,
     padding: 24,
-    shadowColor: '#000',
+    shadowColor: theme.primary,
     shadowOffset: { width: 0, height: 10 },
-    shadowOpacity: 0.3,
+    shadowOpacity: 0.1,
     shadowRadius: 20,
-    elevation: 8,
+    elevation: 5,
     position: 'relative',
     overflow: 'hidden',
   },
@@ -826,16 +826,14 @@ const createStyles = (theme: any) => StyleSheet.create({
     right: -96,
     width: 192,
     height: 192,
-    backgroundColor: 'rgba(173,198,255,0.05)',
+    backgroundColor: 'rgba(0,180,216,0.05)',
     borderRadius: 96,
-    // blur radius would be implemented via a View but we just use opacity and color here for a subtle effect
   },
   formContainer: {
     gap: 20,
     zIndex: 10,
   },
   inputGroup: {
-    // marginBottom handled by gap
   },
   inputLabel: {
     fontSize: 12,
@@ -850,7 +848,7 @@ const createStyles = (theme: any) => StyleSheet.create({
     alignItems: 'center',
     backgroundColor: theme.bg,
     borderWidth: 1,
-    borderColor: 'rgba(255,255,255,0.1)',
+    borderColor: theme.cardBorder,
     borderRadius: 12,
     paddingHorizontal: 16,
     paddingVertical: 12,
@@ -873,7 +871,7 @@ const createStyles = (theme: any) => StyleSheet.create({
   countryCode: {
     backgroundColor: theme.bg,
     borderWidth: 1,
-    borderColor: 'rgba(255,255,255,0.1)',
+    borderColor: theme.cardBorder,
     borderRadius: 12,
     paddingHorizontal: 12,
     justifyContent: 'center',
@@ -897,14 +895,14 @@ const createStyles = (theme: any) => StyleSheet.create({
     alignItems: 'center',
     backgroundColor: theme.bg,
     borderWidth: 1,
-    borderColor: 'rgba(255,255,255,0.1)',
+    borderColor: theme.cardBorder,
     borderRadius: 12,
     padding: 12,
     gap: 12,
   },
   zoneCardSelected: {
-    borderColor: 'rgba(173,198,255,0.5)',
-    backgroundColor: 'rgba(173,198,255,0.1)',
+    borderColor: theme.primary,
+    backgroundColor: theme.primaryBg,
   },
   zoneName: {
     fontSize: 14,
@@ -927,14 +925,14 @@ const createStyles = (theme: any) => StyleSheet.create({
     alignItems: 'center',
     backgroundColor: theme.bg,
     borderWidth: 1,
-    borderColor: 'rgba(255,255,255,0.1)',
+    borderColor: theme.cardBorder,
     borderRadius: 12,
     padding: 12,
     gap: 12,
   },
   vehicleOptionSelected: {
-    borderColor: 'rgba(173,198,255,0.5)',
-    backgroundColor: 'rgba(173,198,255,0.1)',
+    borderColor: theme.primary,
+    backgroundColor: theme.primaryBg,
   },
   vehicleIconEmoji: {
     fontSize: 20,
@@ -954,7 +952,7 @@ const createStyles = (theme: any) => StyleSheet.create({
     justifyContent: 'space-between',
     backgroundColor: theme.bg,
     borderWidth: 1,
-    borderColor: 'rgba(255,255,255,0.1)',
+    borderColor: theme.cardBorder,
     borderRadius: 12,
     padding: 12,
     marginTop: 8,
@@ -975,13 +973,13 @@ const createStyles = (theme: any) => StyleSheet.create({
   uploadBtn: {
     padding: 10,
     borderRadius: 8,
-    backgroundColor: 'rgba(173,198,255,0.1)',
+    backgroundColor: theme.primaryBg,
     borderWidth: 1,
-    borderColor: 'rgba(173,198,255,0.3)',
+    borderColor: theme.primary,
   },
   uploadBtnSuccess: {
-    backgroundColor: 'rgba(107,255,143,0.1)',
-    borderColor: 'rgba(107,255,143,0.3)',
+    backgroundColor: theme.successBg,
+    borderColor: theme.success,
   },
   actionContainer: {
     marginTop: 32,
@@ -989,7 +987,7 @@ const createStyles = (theme: any) => StyleSheet.create({
   btnPrimaryContainer: {
     borderRadius: 12,
     overflow: 'hidden',
-    shadowColor: theme.secondaryAccent,
+    shadowColor: theme.primaryGlow,
     shadowOffset: { width: 0, height: 0 },
     shadowOpacity: 0.3,
     shadowRadius: 20,
@@ -1003,7 +1001,7 @@ const createStyles = (theme: any) => StyleSheet.create({
     gap: 8,
   },
   btnPrimaryText: {
-    color: theme.bg,
+    color: '#FFFFFF',
     fontSize: 14,
     fontWeight: '600',
     letterSpacing: 0.6,
@@ -1015,3 +1013,4 @@ const createStyles = (theme: any) => StyleSheet.create({
     marginTop: 16,
   },
 });
+

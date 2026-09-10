@@ -267,12 +267,12 @@ export const DashboardScreen = ({ navigation }: any) => {
         showsVerticalScrollIndicator={false}
       >
         {/* Online/Offline Toggle & GPS */}
-        <View style={[styles.toggleCard, { backgroundColor: theme.cardBg, borderColor: 'rgba(255,255,255,0.1)' }]}>
+        <View style={[styles.toggleCard, { backgroundColor: theme.cardBg, borderColor: theme.cardBorder }]}>
           <View style={styles.toggleLeft}>
             <TouchableOpacity 
               style={[
                 styles.customSwitch, 
-                { backgroundColor: theme.cardBorder, borderColor: availability === 'ONLINE' ? 'rgba(74,225,118,0.3)' : 'rgba(255,255,255,0.1)' },
+                { backgroundColor: theme.containerHigh, borderColor: availability === 'ONLINE' ? 'rgba(16,185,129,0.4)' : theme.cardBorder },
                 isBusy && { opacity: 0.5 }
               ]}
               onPress={() => handleToggleOnline(availability !== 'ONLINE')}
@@ -285,7 +285,7 @@ export const DashboardScreen = ({ navigation }: any) => {
                    transform: [{ translateX: availability === 'ONLINE' ? 24 : 0 }]
                  }
                ]}>
-                 <View style={[styles.switchThumbInner, { backgroundColor: availability === 'ONLINE' ? '#003915' : '#000' }]} />
+                 <View style={[styles.switchThumbInner, { backgroundColor: availability === 'ONLINE' ? '#F0FDFA' : '#F8FAFC' }]} />
                </Animated.View>
             </TouchableOpacity>
             <View>
@@ -308,7 +308,7 @@ export const DashboardScreen = ({ navigation }: any) => {
           <View style={styles.radarContainer}>
             {availability === 'ONLINE' && (
               <>
-                <Animated.View style={[styles.radarCircle, { borderColor: 'rgba(173,198,255,0.5)', transform: [{ scale: radarScale1 }], opacity: radarOpacity1 }]} />
+                <Animated.View style={[styles.radarCircle, { borderColor: '#06B6D4', transform: [{ scale: radarScale1 }], opacity: radarOpacity1 }]} />
               </>
             )}
             <LocateFixed size={24} color={availability === 'ONLINE' ? theme.primary : theme.textMuted} />
@@ -318,9 +318,9 @@ export const DashboardScreen = ({ navigation }: any) => {
         {/* Stats Row */}
         <View style={styles.statsRow}>
           <View 
-            style={[styles.statCard, { backgroundColor: theme.cardBg, borderColor: 'rgba(255,255,255,0.1)' }]}
+            style={[styles.statCard, { backgroundColor: theme.cardBg, borderColor: theme.cardBorder }]}
           >
-            <View style={[styles.statGlow, { backgroundColor: 'rgba(173,198,255,0.1)' }]} />
+            <View style={[styles.statGlow, { backgroundColor: 'rgba(6,182,212,0.08)' }]} />
             <Text style={[styles.statLabel, { color: theme.textSecondary }]}>TODAY'S EARNINGS</Text>
             <View style={styles.statValueRow}>
               <Text style={[styles.statCurrency, { color: theme.textSecondary }]}>₹</Text>
@@ -329,9 +329,9 @@ export const DashboardScreen = ({ navigation }: any) => {
           </View>
           
           <View 
-            style={[styles.statCard, { backgroundColor: theme.cardBg, borderColor: 'rgba(255,255,255,0.1)' }]}
+            style={[styles.statCard, { backgroundColor: theme.cardBg, borderColor: theme.cardBorder }]}
           >
-            <View style={[styles.statGlow, { backgroundColor: 'rgba(79,219,200,0.1)' }]} />
+            <View style={[styles.statGlow, { backgroundColor: 'rgba(6,182,212,0.08)' }]} />
             <Text style={[styles.statLabel, { color: theme.textSecondary }]}>THIS WEEK</Text>
             <View style={styles.statValueRow}>
               <Text style={[styles.statCurrency, { color: theme.textSecondary }]}>₹</Text>
@@ -354,12 +354,12 @@ export const DashboardScreen = ({ navigation }: any) => {
                 </View>
               </View>
               <TouchableOpacity
-                style={[styles.closeOrderMiniBtn, { backgroundColor: 'rgba(255, 180, 171, 0.15)', borderColor: 'rgba(255, 180, 171, 0.4)' }]}
+                style={[styles.closeOrderMiniBtn, { backgroundColor: theme.dangerBg, borderColor: 'rgba(239,68,68,0.4)' }]}
                 onPress={handleCloseActiveOrder}
                 activeOpacity={0.7}
               >
-                <XCircle size={14} color="#ffb4ab" />
-                <Text style={styles.closeOrderMiniBtnText}>Close</Text>
+                <XCircle size={14} color={theme.danger} />
+                <Text style={[styles.closeOrderMiniBtnText, { color: theme.danger }]}>Close</Text>
               </TouchableOpacity>
             </View>
             <DeliveryCard
@@ -367,12 +367,12 @@ export const DashboardScreen = ({ navigation }: any) => {
               onPress={() => navigation.navigate('ActiveDelivery')}
             />
             <TouchableOpacity
-              style={[styles.closeOrderBtnFull, { borderColor: 'rgba(255, 180, 171, 0.35)', backgroundColor: 'rgba(255, 180, 171, 0.1)' }]}
+              style={[styles.closeOrderBtnFull, { borderColor: 'rgba(239,68,68,0.35)', backgroundColor: theme.dangerBg }]}
               onPress={handleCloseActiveOrder}
               activeOpacity={0.7}
             >
-              <XCircle size={18} color="#ffb4ab" />
-              <Text style={styles.closeOrderBtnFullText}>Close / Cancel Active Order</Text>
+              <XCircle size={18} color={theme.danger} />
+              <Text style={[styles.closeOrderBtnFullText, { color: theme.danger }]}>Close / Cancel Active Order</Text>
             </TouchableOpacity>
           </Animated.View>
         ) : null}
@@ -385,16 +385,16 @@ export const DashboardScreen = ({ navigation }: any) => {
                  <Text style={[styles.sectionTitle, { color: theme.textPrimary }]}>
                     Available Orders
                  </Text>
-                 <View style={[styles.liveBadge, { backgroundColor: '#93000a' }]}>
+                 <View style={[styles.liveBadge, { backgroundColor: theme.dangerBg, borderWidth: 1, borderColor: 'rgba(220,38,38,0.3)' }]}>
                     <View style={[styles.liveDot, { backgroundColor: theme.danger }]} />
-                    <Text style={[styles.liveBadgeText, { color: theme.dangerGlow }]}>LIVE</Text>
+                    <Text style={[styles.liveBadgeText, { color: theme.danger }]}>LIVE</Text>
                  </View>
                </View>
             </View>
             
             <View style={styles.ordersList}>
               {availableOrders.map((order, index) => (
-                <View key={order.orderId} style={[styles.newOrderCard, { backgroundColor: theme.cardBg, borderColor: 'rgba(173,198,255,0.2)' }]}>
+                <View key={order.orderId} style={[styles.newOrderCard, { backgroundColor: theme.cardBg, borderColor: theme.cardBorder }]}>
                   <View style={[styles.cardGradientBorder, { backgroundColor: theme.primary }]} />
                   
                   <View style={styles.newOrderHeader}>
@@ -419,9 +419,9 @@ export const DashboardScreen = ({ navigation }: any) => {
                     </View>
                   </View>
                   
-                  <View style={[styles.orderDetailBox, { backgroundColor: theme.cardBorder }]}>
-                    <View style={[styles.medIconBox, { backgroundColor: 'rgba(147,0,10,0.3)' }]}>
-                      <Package size={16} color="#ffb4ab" />
+                  <View style={[styles.orderDetailBox, { backgroundColor: theme.containerHigh }]}>
+                    <View style={[styles.medIconBox, { backgroundColor: theme.primaryBg }]}>
+                      <Package size={16} color={theme.primary} />
                     </View>
                     <View style={{ flex: 1 }}>
                       <Text style={[styles.medText, { color: theme.textPrimary }]}>Medical Package</Text>
@@ -434,8 +434,8 @@ export const DashboardScreen = ({ navigation }: any) => {
                     onPress={() => handleAcceptDirectOrder(order)}
                     disabled={acceptingId === order.orderId}
                   >
-                    <View style={[styles.acceptBtnGradient, { backgroundColor: '#00a74b' }]}>
-                      <Text style={[styles.acceptBtnText, { color: '#003111' }]}>
+                    <View style={[styles.acceptBtnGradient, { backgroundColor: '#10B981' }]}>
+                      <Text style={[styles.acceptBtnText, { color: '#FFFFFF' }]}>
                         {acceptingId === order.orderId ? 'ACCEPTING...' : 'Accept Order'}
                       </Text>
                     </View>
@@ -462,7 +462,7 @@ const createStyles = (theme: any) => StyleSheet.create({
     paddingBottom: 16,
     borderBottomWidth: 1,
     zIndex: 50,
-    shadowColor: '#3b82f6',
+    shadowColor: '#0077B6',
     shadowOffset: { width: 0, height: 8 },
     shadowOpacity: 0.15,
     shadowRadius: 24,
@@ -502,18 +502,18 @@ const createStyles = (theme: any) => StyleSheet.create({
     alignItems: 'center',
   },
   toggleCard: {
-    borderRadius: 12,
+    borderRadius: 16,
     padding: 16,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
     marginBottom: 20,
     borderWidth: 1,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 8 },
-    shadowOpacity: 0.2,
-    shadowRadius: 24,
-    elevation: 5,
+    shadowColor: '#0077B6',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.12,
+    shadowRadius: 16,
+    elevation: 4,
   },
   toggleLeft: {
     flexDirection: 'row',
@@ -598,15 +598,15 @@ const createStyles = (theme: any) => StyleSheet.create({
   },
   statCard: {
     flex: 1,
-    borderRadius: 12,
+    borderRadius: 16,
     padding: 16,
     borderWidth: 1,
     overflow: 'hidden',
-    shadowColor: '#3b82f6',
-    shadowOffset: { width: 0, height: 8 },
-    shadowOpacity: 0.05,
-    shadowRadius: 24,
-    elevation: 2,
+    shadowColor: '#0077B6',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.10,
+    shadowRadius: 16,
+    elevation: 3,
   },
   statGlow: {
     position: 'absolute',
@@ -674,13 +674,13 @@ const createStyles = (theme: any) => StyleSheet.create({
     gap: 16,
   },
   newOrderCard: {
-    borderRadius: 12,
+    borderRadius: 16,
     padding: 16,
     borderWidth: 1,
-    shadowColor: '#3b82f6',
-    shadowOffset: { width: 0, height: 8 },
-    shadowOpacity: 0.1,
-    shadowRadius: 24,
+    shadowColor: '#0077B6',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.12,
+    shadowRadius: 16,
     elevation: 3,
     overflow: 'hidden',
   },
@@ -743,16 +743,16 @@ const createStyles = (theme: any) => StyleSheet.create({
   },
   acceptBtn: {
     width: '100%',
-    borderRadius: 8,
+    borderRadius: 12,
     overflow: 'hidden',
-    shadowColor: theme.success,
-    shadowOffset: { width: 0, height: 0 },
-    shadowOpacity: 0.2,
-    shadowRadius: 15,
+    shadowColor: '#10B981',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.25,
+    shadowRadius: 12,
     elevation: 4,
   },
   acceptBtnGradient: {
-    paddingVertical: 12,
+    paddingVertical: 14,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -771,7 +771,6 @@ const createStyles = (theme: any) => StyleSheet.create({
     borderWidth: 1,
   },
   closeOrderMiniBtnText: {
-    color: '#ffb4ab',
     fontSize: 12,
     fontWeight: '700',
   },
@@ -787,7 +786,6 @@ const createStyles = (theme: any) => StyleSheet.create({
     marginTop: 8,
   },
   closeOrderBtnFullText: {
-    color: '#ffb4ab',
     fontSize: 13,
     fontWeight: '700',
     letterSpacing: 0.3,

@@ -40,11 +40,16 @@ export const EarningsCard: React.FC<EarningsCardProps> = ({
 
 const styles = StyleSheet.create({
   card: {
-    borderRadius: 16,
-    padding: 16,
+    borderRadius: 24,
+    padding: 20,
     flex: 1,
     margin: 4,
     borderWidth: 1,
+    shadowColor: '#0077B6',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.08,
+    shadowRadius: 6,
+    elevation: 2,
   },
   label: {
     fontSize: 11,
@@ -63,3 +68,4 @@ const styles = StyleSheet.create({
     marginTop: 4,
   },
 });
+

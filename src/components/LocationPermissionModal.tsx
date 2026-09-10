@@ -2,6 +2,7 @@ import React from 'react';
 import { Modal, View, Text, StyleSheet } from 'react-native';
 import { PrimaryButton } from './PrimaryButton';
 import { SecondaryButton } from './SecondaryButton';
+import { useThemeStore } from '../store/themeStore';
 
 interface LocationPermissionModalProps {
   visible: boolean;
@@ -16,6 +17,8 @@ export const LocationPermissionModal: React.FC<LocationPermissionModalProps> = (
   onGrant,
   onDismiss,
 }) => {
+  const { theme } = useThemeStore();
+
   const getTitleAndText = () => {
     switch (stage) {
       case 'servicesDisabled':
@@ -44,9 +47,9 @@ export const LocationPermissionModal: React.FC<LocationPermissionModalProps> = (
   return (
     <Modal visible={visible} transparent animationType="fade">
       <View style={styles.overlay}>
-        <View style={styles.dialog}>
-          <Text style={styles.title}>{content.title}</Text>
-          <Text style={styles.body}>{content.body}</Text>
+        <View style={[styles.dialog, { backgroundColor: theme.cardBg, borderColor: theme.cardBorder }]}>
+          <Text style={[styles.title, { color: theme.textPrimary }]}>{content.title}</Text>
+          <Text style={[styles.body, { color: theme.textSecondary }]}>{content.body}</Text>
           <View style={styles.btnContainer}>
             <PrimaryButton label={content.button} onPress={onGrant} />
             <SecondaryButton label="Not Now" onPress={onDismiss} />
@@ -65,20 +68,16 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   dialog: {
-    backgroundColor: '#0f172a',
     borderRadius: 16,
     padding: 24,
     borderWidth: 1,
-    borderColor: '#334155',
   },
   title: {
-    color: '#ffffff',
     fontSize: 20,
     fontWeight: '700',
     marginBottom: 12,
   },
   body: {
-    color: '#94a3b8',
     fontSize: 14,
     lineHeight: 20,
     marginBottom: 20,
@@ -87,3 +86,4 @@ const styles = StyleSheet.create({
     width: '100%',
   },
 });
+

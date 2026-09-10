@@ -11,7 +11,8 @@ import {
 import { DocumentType, KYCStatusType } from '../types';
 import { StatusBadge } from './StatusBadge';
 import { cloudinaryService } from '../services/cloudinaryService';
-import { Camera, CheckCircle2, FileText, AlertCircle, CarFront, Shield, CreditCard, Banknote, User } from 'lucide-react-native';
+import { useThemeStore } from '../store/themeStore';
+import { Camera, CheckCircle2, FileText, AlertCircle, CarFront, Shield, CreditCard, Banknote } from 'lucide-react-native';
 
 interface DocumentUploaderProps {
   label: string;
@@ -41,6 +42,9 @@ export const DocumentUploader: React.FC<DocumentUploaderProps> = ({
   rejectionReason,
   onUpload,
 }) => {
+  const { theme } = useThemeStore();
+  const styles = createStyles(theme);
+
   const [uploading, setUploading] = useState(false);
   const [localPreview, setLocalPreview] = useState<string | null>(currentImageUrl || null);
 
@@ -81,7 +85,7 @@ export const DocumentUploader: React.FC<DocumentUploaderProps> = ({
         <View style={styles.header}>
           <View style={styles.labelRow}>
             <View style={styles.iconBoxPrimary}>
-              {getIconForDocType(documentType, 20, '#adc6ff')}
+              {getIconForDocType(documentType, 20, theme.primary)}
             </View>
             <View>
               <Text style={styles.title}>{label}</Text>
@@ -89,7 +93,7 @@ export const DocumentUploader: React.FC<DocumentUploaderProps> = ({
             </View>
           </View>
           <View style={styles.statusRow}>
-            <CheckCircle2 size={16} color="#4ae176" />
+            <CheckCircle2 size={16} color={theme.success} />
             <Text style={styles.statusTextVerified}>
                {isApproved ? 'Verified' : 'Under Review'}
             </Text>
@@ -98,7 +102,7 @@ export const DocumentUploader: React.FC<DocumentUploaderProps> = ({
 
         {rejectionReason ? (
           <View style={styles.rejectionBox}>
-             <AlertCircle size={14} color="#ffb4ab" style={{ marginRight: 6 }} />
+             <AlertCircle size={14} color={theme.danger} style={{ marginRight: 6 }} />
              <Text style={styles.rejectionText} numberOfLines={2}>{rejectionReason}</Text>
           </View>
         ) : null}
@@ -124,7 +128,7 @@ export const DocumentUploader: React.FC<DocumentUploaderProps> = ({
          <View style={styles.header}>
           <View style={styles.labelRow}>
             <View style={styles.iconBoxPrimary}>
-              {getIconForDocType(documentType, 20, '#adc6ff')}
+              {getIconForDocType(documentType, 20, theme.primary)}
             </View>
             <View>
               <Text style={styles.title}>{label}</Text>
@@ -134,7 +138,7 @@ export const DocumentUploader: React.FC<DocumentUploaderProps> = ({
         </View>
 
         <View style={styles.progressContainer}>
-           <ActivityIndicator size="small" color="#adc6ff" style={{ marginRight: 16 }} />
+           <ActivityIndicator size="small" color={theme.primary} style={{ marginRight: 16 }} />
            <View style={{ flex: 1 }}>
               <View style={styles.progressBarBg}>
                  <View style={styles.progressBarFill} />
@@ -152,7 +156,7 @@ export const DocumentUploader: React.FC<DocumentUploaderProps> = ({
       <View style={styles.header}>
           <View style={styles.labelRow}>
             <View style={styles.iconBoxMuted}>
-              {getIconForDocType(documentType, 20, '#c2c6d6')}
+              {getIconForDocType(documentType, 20, theme.textMuted)}
             </View>
             <View>
               <Text style={styles.title}>{label}</Text>
@@ -164,7 +168,7 @@ export const DocumentUploader: React.FC<DocumentUploaderProps> = ({
 
       {rejectionReason ? (
         <View style={styles.rejectionBox}>
-            <AlertCircle size={14} color="#ffb4ab" style={{ marginRight: 6 }} />
+            <AlertCircle size={14} color={theme.danger} style={{ marginRight: 6 }} />
             <Text style={styles.rejectionText} numberOfLines={2}>{rejectionReason}</Text>
         </View>
       ) : null}
@@ -174,7 +178,7 @@ export const DocumentUploader: React.FC<DocumentUploaderProps> = ({
         onPress={handleActionSheet}
         activeOpacity={0.7}
       >
-        <Camera size={32} color="#8c909f" />
+        <Camera size={32} color={theme.textMuted} />
         <Text style={styles.uploadBtnText}>Tap to capture or upload</Text>
         <Text style={styles.uploadBtnSubtext}>JPEG, PNG up to 5MB</Text>
       </TouchableOpacity>
@@ -182,26 +186,26 @@ export const DocumentUploader: React.FC<DocumentUploaderProps> = ({
   );
 };
 
-const styles = StyleSheet.create({
+const createStyles = (theme: any) => StyleSheet.create({
   card: {
-    backgroundColor: 'rgba(17, 24, 39, 0.7)',
+    backgroundColor: theme.cardBg,
     borderRadius: 20,
     padding: 20,
     borderWidth: 1,
-    borderColor: 'rgba(255, 255, 255, 0.1)',
+    borderColor: theme.cardBorder,
     marginBottom: 16,
   },
   cardActiveUpload: {
-    borderColor: 'rgba(77, 142, 255, 0.3)',
-    shadowColor: '#3b82f6',
+    borderColor: theme.primary,
+    shadowColor: theme.primaryGlow,
     shadowOffset: { width: 0, height: 8 },
     shadowOpacity: 0.15,
     shadowRadius: 24,
     elevation: 5,
   },
   cardUploading: {
-    borderColor: 'rgba(173, 198, 255, 0.3)',
-    backgroundColor: 'rgba(173, 198, 255, 0.05)',
+    borderColor: theme.primary,
+    backgroundColor: theme.primaryBg,
   },
   header: {
     flexDirection: 'row',
@@ -218,7 +222,7 @@ const styles = StyleSheet.create({
     width: 40,
     height: 40,
     borderRadius: 20,
-    backgroundColor: 'rgba(173, 198, 255, 0.1)',
+    backgroundColor: theme.primaryBg,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -226,27 +230,27 @@ const styles = StyleSheet.create({
     width: 40,
     height: 40,
     borderRadius: 20,
-    backgroundColor: '#252a38',
+    backgroundColor: theme.subtleBox,
     alignItems: 'center',
     justifyContent: 'center',
   },
   title: {
     fontSize: 16,
     fontWeight: '600',
-    color: '#dee2f5',
+    color: theme.textPrimary,
   },
   subtitle: {
     fontSize: 11,
-    color: '#c2c6d6',
+    color: theme.textSecondary,
     fontWeight: '500',
   },
   subtitleMuted: {
     fontSize: 11,
-    color: '#c2c6d6',
+    color: theme.textMuted,
   },
   subtitleUploading: {
     fontSize: 11,
-    color: '#adc6ff',
+    color: theme.primary,
     fontWeight: '500',
   },
   statusRow: {
@@ -257,26 +261,26 @@ const styles = StyleSheet.create({
   statusTextVerified: {
     fontSize: 12,
     fontWeight: '600',
-    color: '#4ae176',
+    color: theme.success,
   },
   statusTextRequired: {
     fontSize: 12,
     fontWeight: '600',
-    color: '#ffb4ab',
+    color: theme.danger,
   },
   rejectionBox: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: 'rgba(255, 180, 171, 0.1)',
+    backgroundColor: theme.dangerBg,
     borderWidth: 1,
-    borderColor: '#ffb4ab',
+    borderColor: theme.danger,
     padding: 12,
     borderRadius: 12,
     marginBottom: 16,
   },
   rejectionText: {
     fontSize: 12,
-    color: '#ffb4ab',
+    color: theme.danger,
     fontWeight: '500',
     flex: 1,
   },
@@ -289,29 +293,28 @@ const styles = StyleSheet.create({
     height: 64,
     borderRadius: 8,
     borderWidth: 1,
-    borderColor: 'rgba(255, 255, 255, 0.1)',
+    borderColor: theme.cardBorder,
     overflow: 'hidden',
     position: 'relative',
   },
   image: {
     width: '100%',
     height: '100%',
-    opacity: 0.6,
+    opacity: 0.8,
   },
   imageOverlay: {
     position: 'absolute',
     bottom: 0,
     left: 0,
     right: 0,
-    height: 32,
-    backgroundColor: 'rgba(10, 15, 28, 0.8)',
-    justifyContent: 'flex-end',
+    height: 24,
+    backgroundColor: 'rgba(0, 0, 0, 0.65)',
+    justifyContent: 'center',
     alignItems: 'center',
-    paddingBottom: 4,
   },
   imageOverlayText: {
     fontSize: 10,
-    color: '#dee2f5',
+    color: '#ffffff',
     fontWeight: '500',
   },
   progressContainer: {
@@ -320,27 +323,27 @@ const styles = StyleSheet.create({
   },
   progressBarBg: {
     height: 8,
-    backgroundColor: '#252a38',
+    backgroundColor: theme.subtleBox,
     borderRadius: 4,
     overflow: 'hidden',
     width: '100%',
   },
   progressBarFill: {
     height: '100%',
-    backgroundColor: '#adc6ff',
-    width: '64%', // fake progress
+    backgroundColor: theme.primary,
+    width: '64%',
     borderRadius: 4,
   },
   progressText: {
     fontSize: 11,
-    color: '#c2c6d6',
+    color: theme.textSecondary,
     marginTop: 8,
     textAlign: 'right',
   },
   uploadDashed: {
     borderWidth: 2,
     borderStyle: 'dashed',
-    borderColor: 'rgba(255, 255, 255, 0.2)',
+    borderColor: theme.cardBorder,
     borderRadius: 12,
     padding: 24,
     alignItems: 'center',
@@ -350,10 +353,11 @@ const styles = StyleSheet.create({
   uploadBtnText: {
     fontSize: 12,
     fontWeight: '600',
-    color: '#dee2f5',
+    color: theme.textPrimary,
   },
   uploadBtnSubtext: {
     fontSize: 11,
-    color: '#c2c6d6',
+    color: theme.textMuted,
   },
 });
+

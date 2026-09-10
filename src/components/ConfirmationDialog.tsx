@@ -2,6 +2,7 @@ import React from 'react';
 import { Modal, View, Text, StyleSheet } from 'react-native';
 import { PrimaryButton } from './PrimaryButton';
 import { SecondaryButton } from './SecondaryButton';
+import { useThemeStore } from '../store/themeStore';
 
 interface ConfirmationDialogProps {
   visible: boolean;
@@ -24,12 +25,14 @@ export const ConfirmationDialog: React.FC<ConfirmationDialogProps> = ({
   onConfirm,
   onCancel,
 }) => {
+  const { theme } = useThemeStore();
+
   return (
     <Modal visible={visible} transparent animationType="fade">
       <View style={styles.overlay}>
-        <View style={styles.dialog}>
-          <Text style={styles.title}>{title}</Text>
-          <Text style={styles.message}>{message}</Text>
+        <View style={[styles.dialog, { backgroundColor: theme.cardBg, borderColor: theme.cardBorder }]}>
+          <Text style={[styles.title, { color: theme.textPrimary }]}>{title}</Text>
+          <Text style={[styles.message, { color: theme.textSecondary }]}>{message}</Text>
           <View style={styles.btnRow}>
             <SecondaryButton label={cancelLabel} onPress={onCancel} />
             <PrimaryButton
@@ -52,20 +55,16 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   dialog: {
-    backgroundColor: '#0f172a',
     borderRadius: 16,
     padding: 20,
     borderWidth: 1,
-    borderColor: '#334155',
   },
   title: {
-    color: '#ffffff',
     fontSize: 18,
     fontWeight: '700',
     marginBottom: 8,
   },
   message: {
-    color: '#94a3b8',
     fontSize: 14,
     lineHeight: 20,
     marginBottom: 16,
@@ -75,3 +74,4 @@ const styles = StyleSheet.create({
     gap: 8,
   },
 });
+

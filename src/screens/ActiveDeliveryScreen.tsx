@@ -185,11 +185,11 @@ export const ActiveDeliveryScreen = ({ navigation }: any) => {
             onPress={handleCloseActiveOrder}
             activeOpacity={0.7}
           >
-            <XCircle size={15} color="#ffb4ab" />
-            <Text style={styles.headerCloseBtnText}>Close</Text>
+            <XCircle size={15} color={theme.danger} />
+            <Text style={[styles.headerCloseBtnText, { color: theme.danger }]}>Close</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.supportBtn}>
-            <Phone size={20} color="#adc6ff" />
+            <Phone size={20} color={theme.primary} />
           </TouchableOpacity>
         </View>
       </View>
@@ -218,9 +218,9 @@ export const ActiveDeliveryScreen = ({ navigation }: any) => {
               <View style={[styles.nodeWrapper, !isPickupLeg && { opacity: 0.5 }]}>
                 <View style={[styles.nodeCircle, isPickupLeg ? styles.nodeActive : styles.nodeCompleted]}>
                   {isPickupLeg ? (
-                    <Store size={24} color="#4fdbc8" />
+                    <Store size={24} color={theme.secondaryAccent} />
                   ) : (
-                    <Check size={24} color="#adc6ff" />
+                    <Check size={24} color={theme.primary} />
                   )}
                 </View>
                 <Text style={[styles.nodeLabel, isPickupLeg ? styles.nodeLabelActive : styles.nodeLabelCompleted]}>Store Pickup</Text>
@@ -229,7 +229,7 @@ export const ActiveDeliveryScreen = ({ navigation }: any) => {
               {/* En Route Node */}
               <View style={styles.nodeWrapper}>
                 <View style={[styles.nodeCircle, !isPickupLeg ? styles.nodeActive : styles.nodePending]}>
-                  <Truck size={24} color={!isPickupLeg ? "#4fdbc8" : theme.textMuted} />
+                  <Truck size={24} color={!isPickupLeg ? theme.secondaryAccent : theme.textMuted} />
                 </View>
                 <Text style={[styles.nodeLabel, !isPickupLeg ? styles.nodeLabelActive : styles.nodeLabelPending]}>Delivering</Text>
               </View>
@@ -237,7 +237,7 @@ export const ActiveDeliveryScreen = ({ navigation }: any) => {
               {/* Customer Node */}
               <View style={styles.nodeWrapper}>
                 <View style={[styles.nodeCircle, styles.nodePending]}>
-                  <Home size={24} color="#8c909f" />
+                  <Home size={24} color={theme.textMuted} />
                 </View>
                 <Text style={[styles.nodeLabel, styles.nodeLabelPending]}>Drop-off</Text>
               </View>
@@ -248,11 +248,11 @@ export const ActiveDeliveryScreen = ({ navigation }: any) => {
         {isPickupLeg ? (
           <>
             {/* Store Details Card */}
-            <View style={[styles.customerCard, { borderColor: '#adc6ff30' }]}>
+            <View style={[styles.customerCard, { borderColor: theme.cardBorder }]}>
               <View style={styles.customerHeader}>
                 <View style={styles.customerInfo}>
                   <View style={styles.avatarWrapper}>
-                    <Store size={24} color="#adc6ff" />
+                    <Store size={24} color={theme.primary} />
                   </View>
                   <View>
                     <Text style={styles.customerName}>{pharmacy.displayName || 'Partner Store'}</Text>
@@ -262,7 +262,7 @@ export const ActiveDeliveryScreen = ({ navigation }: any) => {
               </View>
 
               <View style={styles.addressBox}>
-                <MapPin size={20} color="#adc6ff" style={styles.addressIcon} />
+                <MapPin size={20} color={theme.primary} style={styles.addressIcon} />
                 <View style={{ flex: 1 }}>
                   <Text style={styles.addressText}>{pharmacy.addressText}</Text>
                   <Text style={styles.addressSubText}>Coordinates: {pharmacy.location.lat.toFixed(4)}, {pharmacy.location.lng.toFixed(4)}</Text>
@@ -272,7 +272,7 @@ export const ActiveDeliveryScreen = ({ navigation }: any) => {
               {/* Glowing Store Pickup OTP Box */}
               <View style={styles.otpCard}>
                 <View style={styles.otpHeaderRow}>
-                  <KeyRound size={16} color="#4ae176" />
+                  <KeyRound size={16} color={theme.success} />
                   <Text style={styles.otpCardTitle}>STORE PICKUP OTP</Text>
                 </View>
                 <Text style={styles.otpValueText}>{pickupOtp}</Text>
@@ -287,7 +287,7 @@ export const ActiveDeliveryScreen = ({ navigation }: any) => {
                     style={styles.actionBtnSecondary}
                     onPress={() => handlePhoneCall(pharmacy.phone)}
                   >
-                    <Phone size={20} color="#dee2f5" />
+                    <Phone size={20} color={theme.textPrimary} />
                     <Text style={styles.actionBtnTextSecondary}>Call</Text>
                   </TouchableOpacity>
                 )}
@@ -295,7 +295,7 @@ export const ActiveDeliveryScreen = ({ navigation }: any) => {
                   style={styles.actionBtnPrimary}
                   onPress={handleStartNav}
                 >
-                  <Navigation size={20} color="#adc6ff" />
+                  <Navigation size={20} color={theme.primary} />
                   <Text style={styles.actionBtnTextPrimary}>Navigate</Text>
                 </TouchableOpacity>
               </View>
@@ -304,8 +304,8 @@ export const ActiveDeliveryScreen = ({ navigation }: any) => {
             {/* Privacy Locked Customer Card */}
             <View style={styles.lockedCustomerCard}>
               <View style={styles.lockedHeaderRow}>
-                <Lock size={18} color="#ffb4ab" />
-                <Text style={styles.lockedHeaderTitle}>Customer Contact Locked</Text>
+                <Lock size={18} color={theme.warningGlow} />
+                <Text style={[styles.lockedHeaderTitle, { color: theme.warningGlow }]}>Customer Contact Locked</Text>
               </View>
               <Text style={styles.lockedBodyText}>
                 Security Policy: Customer phone number and exact address will unlock automatically once the pharmacy staff verifies your pickup OTP.
@@ -319,7 +319,7 @@ export const ActiveDeliveryScreen = ({ navigation }: any) => {
               <View style={styles.customerHeader}>
                 <View style={styles.customerInfo}>
                   <View style={styles.avatarWrapper}>
-                    <User size={24} color="#dee2f5" />
+                    <User size={24} color={theme.textPrimary} />
                   </View>
                   <View>
                     <Text style={styles.customerName}>{customer.fullName || customer.firstName}</Text>
@@ -327,13 +327,13 @@ export const ActiveDeliveryScreen = ({ navigation }: any) => {
                   </View>
                 </View>
                 <View style={styles.paymentTag}>
-                  <CheckCircle2 size={16} color="#4fdbc8" />
-                  <Text style={styles.paymentTagText}>{codAmount ? 'COD' : 'Pre-paid'}</Text>
+                  <CheckCircle2 size={16} color={theme.secondaryAccent} />
+                  <Text style={[styles.paymentTagText, { color: theme.secondaryAccent }]}>{codAmount ? 'COD' : 'Pre-paid'}</Text>
                 </View>
               </View>
 
               <View style={styles.addressBox}>
-                <MapPin size={20} color="#adc6ff" style={styles.addressIcon} />
+                <MapPin size={20} color={theme.primary} style={styles.addressIcon} />
                 <View style={{ flex: 1 }}>
                   <Text style={styles.addressText}>{customer.deliveryAddress}</Text>
                   {customer.landmark ? (
@@ -354,14 +354,14 @@ export const ActiveDeliveryScreen = ({ navigation }: any) => {
                   style={styles.actionBtnSecondary}
                   onPress={() => handlePhoneCall(customer.phone)}
                 >
-                  <Phone size={20} color="#dee2f5" />
+                  <Phone size={20} color={theme.textPrimary} />
                   <Text style={styles.actionBtnTextSecondary}>Call</Text>
                 </TouchableOpacity>
                 <TouchableOpacity 
                   style={styles.actionBtnPrimary}
                   onPress={handleStartNav}
                 >
-                  <Navigation size={20} color="#adc6ff" />
+                  <Navigation size={20} color={theme.primary} />
                   <Text style={styles.actionBtnTextPrimary}>Navigate</Text>
                 </TouchableOpacity>
               </View>
@@ -370,8 +370,8 @@ export const ActiveDeliveryScreen = ({ navigation }: any) => {
                 style={styles.issueButton}
                 onPress={() => navigation.navigate('DeliveryFailure')}
               >
-                <ShieldAlert size={16} color="#ffb4ab" />
-                <Text style={styles.issueButtonText}>Report Customer Unreachable</Text>
+                <ShieldAlert size={16} color={theme.danger} />
+                <Text style={[styles.issueButtonText, { color: theme.danger }]}>Report Customer Unreachable</Text>
               </TouchableOpacity>
             </View>
 
@@ -385,8 +385,8 @@ export const ActiveDeliveryScreen = ({ navigation }: any) => {
           onPress={handleCloseActiveOrder}
           activeOpacity={0.7}
         >
-          <XCircle size={18} color="#ffb4ab" />
-          <Text style={styles.closeActiveDeliveryBtnText}>Close / Release This Active Order</Text>
+          <XCircle size={18} color={theme.danger} />
+          <Text style={[styles.closeActiveDeliveryBtnText, { color: theme.danger }]}>Close / Release This Active Order</Text>
         </TouchableOpacity>
       </ScrollView>
 
@@ -490,11 +490,10 @@ const createStyles = (theme: any) => StyleSheet.create({
     paddingVertical: 6,
     borderRadius: 16,
     borderWidth: 1,
-    borderColor: 'rgba(255, 180, 171, 0.4)',
-    backgroundColor: 'rgba(255, 180, 171, 0.15)',
+    borderColor: 'rgba(220, 38, 38, 0.4)',
+    backgroundColor: theme.dangerBg,
   },
   headerCloseBtnText: {
-    color: '#ffb4ab',
     fontSize: 12,
     fontWeight: '700',
   },
@@ -517,13 +516,12 @@ const createStyles = (theme: any) => StyleSheet.create({
     paddingHorizontal: 16,
     borderRadius: 14,
     borderWidth: 1,
-    borderColor: 'rgba(255, 180, 171, 0.35)',
-    backgroundColor: 'rgba(255, 180, 171, 0.1)',
+    borderColor: 'rgba(220, 38, 38, 0.35)',
+    backgroundColor: theme.dangerBg,
     marginTop: 16,
     marginBottom: 8,
   },
   closeActiveDeliveryBtnText: {
-    color: '#ffb4ab',
     fontSize: 13,
     fontWeight: '700',
     letterSpacing: 0.3,
@@ -639,7 +637,7 @@ const createStyles = (theme: any) => StyleSheet.create({
     borderRadius: 12,
     padding: 20,
     borderWidth: 1,
-    borderColor: '#4ae17650',
+    borderColor: theme.cardBorder,
   },
   customerHeader: {
     flexDirection: 'row',
@@ -684,17 +682,16 @@ const createStyles = (theme: any) => StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     gap: 4,
-    backgroundColor: '#4fdbc815',
+    backgroundColor: theme.secondaryBg,
     paddingHorizontal: 12,
     paddingVertical: 6,
     borderRadius: 16,
     borderWidth: 1,
-    borderColor: '#4fdbc830',
+    borderColor: theme.cardBorder,
   },
   paymentTagText: {
     fontSize: 12,
     fontWeight: '600',
-    color: theme.secondaryAccent,
   },
   addressBox: {
     flexDirection: 'row',
@@ -750,7 +747,7 @@ const createStyles = (theme: any) => StyleSheet.create({
     paddingVertical: 12,
     borderRadius: 8,
     borderWidth: 1,
-    borderColor: '#adc6ff50',
+    borderColor: theme.cardBorder,
     gap: 8,
   },
   actionBtnTextPrimary: {
@@ -851,7 +848,7 @@ const createStyles = (theme: any) => StyleSheet.create({
     borderRadius: 12,
     padding: 16,
     borderWidth: 1,
-    borderColor: '#4ae17650',
+    borderColor: theme.cardBorder,
     alignItems: 'center',
     gap: 6,
     marginBottom: 20,

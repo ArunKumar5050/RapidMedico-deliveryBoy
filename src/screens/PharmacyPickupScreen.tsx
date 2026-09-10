@@ -215,7 +215,7 @@ export const PharmacyPickupScreen = ({ navigation }: any) => {
              onPress={handleCloseActiveOrder}
              activeOpacity={0.7}
            >
-             <XCircle size={14} color="#ffb4ab" />
+             <XCircle size={14} color={theme.danger} />
              <Text style={styles.closeHeaderBtnText}>Close</Text>
            </TouchableOpacity>
         </View>
@@ -272,7 +272,7 @@ export const PharmacyPickupScreen = ({ navigation }: any) => {
             ]} />
             <View style={styles.verificationBannerContent}>
                <Animated.View style={{ transform: [{ rotate: pulseAnim.interpolate({ inputRange: [1, 1.5], outputRange: ['0deg', '180deg'] }) }] }}>
-                 <RefreshCcw size={16} color="#adc6ff" />
+                 <RefreshCcw size={16} color={theme.primary} />
                </Animated.View>
                <Text style={styles.verificationText}>Waiting for store owner to verify...</Text>
             </View>
@@ -370,11 +370,11 @@ const createStyles = (theme: any) => StyleSheet.create({
     paddingVertical: 6,
     borderRadius: 14,
     borderWidth: 1,
-    borderColor: 'rgba(255, 180, 171, 0.4)',
-    backgroundColor: 'rgba(255, 180, 171, 0.15)',
+    borderColor: 'rgba(220, 38, 38, 0.4)',
+    backgroundColor: theme.dangerBg,
   },
   closeHeaderBtnText: {
-    color: '#ffb4ab',
+    color: theme.danger,
     fontSize: 12,
     fontWeight: '700',
   },

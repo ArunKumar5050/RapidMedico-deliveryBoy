@@ -151,7 +151,7 @@ export const NewDeliveryAlertScreen: React.FC = () => {
           <View style={styles.header}>
             <View style={styles.bellIconContainer}>
                <Animated.View style={[styles.bellGlow, animatedGlowStyle]} />
-               <BellRing size={40} color="#4fdbc8" />
+               <BellRing size={40} color={theme.primaryGlow} />
             </View>
             <Text style={styles.title}>New Delivery Request!</Text>
 
@@ -162,7 +162,7 @@ export const NewDeliveryAlertScreen: React.FC = () => {
                     cx="50"
                     cy="50"
                     r={radius}
-                    stroke="#252a38"
+                    stroke={theme.cardBorder}
                     strokeWidth="6"
                     fill="none"
                   />
@@ -218,7 +218,7 @@ export const NewDeliveryAlertScreen: React.FC = () => {
                {/* Dropoff */}
                <View style={[styles.locationItem, { marginTop: 16 }]}>
                   <View style={styles.dropoffIconContainer}>
-                     <MapPin size={12} color="#4ae176" />
+                     <MapPin size={12} color={theme.success} />
                   </View>
                   <View style={styles.locationContent}>
                      <Text style={styles.labelMuted}>DROP-OFF</Text>
@@ -247,9 +247,9 @@ export const NewDeliveryAlertScreen: React.FC = () => {
         <View style={[styles.actionsContainer, { paddingBottom: Math.max(insets.bottom, 24), paddingTop: 16, paddingHorizontal: 16 }]}>
            <TouchableOpacity style={styles.acceptButtonContainer} onPress={handleAccept} disabled={accepting || rejecting}>
               <View
-                style={[styles.acceptButton, { backgroundColor: '#04b4a2' }]}
+                style={[styles.acceptButton, { backgroundColor: '#10B981' }]}
               >
-                <Text style={styles.acceptButtonText}>
+                <Text style={[styles.acceptButtonText, { color: '#FFFFFF' }]}>
                    {accepting ? 'ACCEPTING...' : 'ACCEPT DELIVERY'}
                 </Text>
               </View>
@@ -271,7 +271,7 @@ export const NewDeliveryAlertScreen: React.FC = () => {
 const createStyles = (theme: any) => StyleSheet.create({
   overlay: {
     flex: 1,
-    backgroundColor: 'rgba(9, 14, 27, 0.8)',
+    backgroundColor: 'rgba(10, 22, 40, 0.88)',
     justifyContent: 'center',
   },
   container: {
@@ -289,7 +289,7 @@ const createStyles = (theme: any) => StyleSheet.create({
     width: 80,
     height: 80,
     borderRadius: 40,
-    backgroundColor: 'rgba(4, 180, 162, 0.2)',
+    backgroundColor: theme.primaryBg,
     alignItems: 'center',
     justifyContent: 'center',
     marginBottom: 8,
@@ -297,7 +297,7 @@ const createStyles = (theme: any) => StyleSheet.create({
   bellGlow: {
     ...StyleSheet.absoluteFill,
     borderRadius: 40,
-    backgroundColor: 'rgba(4, 180, 162, 0.4)',
+    backgroundColor: 'rgba(0, 180, 216, 0.3)',
   },
   title: {
     fontFamily: 'Inter-Bold',
@@ -334,15 +334,15 @@ const createStyles = (theme: any) => StyleSheet.create({
   card: {
     width: '100%',
     maxWidth: 400,
-    backgroundColor: 'rgba(26, 31, 45, 0.9)',
+    backgroundColor: theme.cardBg,
     borderWidth: 1,
     borderColor: theme.cardBorder,
-    borderRadius: 16,
+    borderRadius: 20,
     padding: 24,
-    shadowColor: '#3b82f6',
-    shadowOffset: { width: 0, height: 8 },
+    shadowColor: '#0077B6',
+    shadowOffset: { width: 0, height: 6 },
     shadowOpacity: 0.15,
-    shadowRadius: 24,
+    shadowRadius: 20,
     elevation: 5,
     marginBottom: 20,
     marginTop: 20,
@@ -407,7 +407,7 @@ const createStyles = (theme: any) => StyleSheet.create({
     width: 24,
     height: 24,
     borderRadius: 12,
-    backgroundColor: 'rgba(173, 198, 255, 0.2)',
+    backgroundColor: theme.primaryBg,
     borderWidth: 1,
     borderColor: theme.primary,
     alignItems: 'center',
@@ -424,7 +424,7 @@ const createStyles = (theme: any) => StyleSheet.create({
     width: 24,
     height: 24,
     borderRadius: 12,
-    backgroundColor: 'rgba(74, 225, 118, 0.2)',
+    backgroundColor: theme.successBg,
     borderWidth: 1,
     borderColor: theme.success,
     alignItems: 'center',
@@ -478,12 +478,12 @@ const createStyles = (theme: any) => StyleSheet.create({
     gap: 16,
   },
   acceptButtonContainer: {
-    borderRadius: 8,
+    borderRadius: 14,
     overflow: 'hidden',
-    shadowColor: theme.success,
-    shadowOffset: { width: 0, height: 0 },
-    shadowOpacity: 0.3,
-    shadowRadius: 20,
+    shadowColor: '#10B981',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.35,
+    shadowRadius: 16,
     elevation: 8,
   },
   acceptButton: {
@@ -494,20 +494,19 @@ const createStyles = (theme: any) => StyleSheet.create({
   acceptButtonText: {
     fontSize: 18,
     fontWeight: '700',
-    color: '#003111',
     letterSpacing: 0.5,
   },
   skipButton: {
     height: 48,
-    borderRadius: 8,
+    borderRadius: 12,
     borderWidth: 1,
-    borderColor: theme.textMuted,
+    borderColor: theme.cardBorder,
     alignItems: 'center',
     justifyContent: 'center',
   },
   skipButtonText: {
     fontSize: 16,
     fontWeight: '500',
-    color: theme.textMuted,
+    color: theme.textSecondary,
   },
 });

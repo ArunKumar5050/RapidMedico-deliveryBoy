@@ -75,7 +75,7 @@ export const KYCUploadScreen = ({ navigation }: any) => {
     <View style={styles.container}>
       <View style={[styles.header, { paddingTop: Math.max(insets.top, 16) }]}>
         <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
-          <ArrowLeft size={24} color="#dee2f5" />
+          <ArrowLeft size={24} color={theme.textPrimary} />
         </TouchableOpacity>
         <Text style={styles.headerTitle}>RapidMedico</Text>
         <View style={styles.headerRight}>
@@ -97,7 +97,7 @@ export const KYCUploadScreen = ({ navigation }: any) => {
         {isUnderReview && (
           <View style={styles.reviewBanner}>
             <View style={styles.reviewIconBox}>
-              <ShieldAlert size={20} color="#4fdbc8" />
+              <ShieldAlert size={20} color={theme.secondaryAccent} />
             </View>
             <View style={styles.reviewTextCol}>
               <Text style={styles.reviewTitle}>Verification in Progress</Text>
@@ -155,10 +155,10 @@ export const KYCUploadScreen = ({ navigation }: any) => {
             disabled={isUnderReview}
           >
             <View
-              style={[styles.btnPrimary, { backgroundColor: theme.primaryGlow }]}
+              style={[styles.btnPrimary, { backgroundColor: theme.primary }]}
             >
               <Text style={styles.btnPrimaryText}>Submit KYC</Text>
-              <ArrowRight size={20} color="#0e1320" />
+              <ArrowRight size={20} color="#FFFFFF" />
             </View>
           </TouchableOpacity>
           <Text style={styles.footerText}>
@@ -183,8 +183,8 @@ const createStyles = (theme: any) => StyleSheet.create({
     paddingVertical: 16,
     backgroundColor: theme.bg,
     borderBottomWidth: 1,
-    borderBottomColor: 'rgba(255,255,255,0.1)',
-    shadowColor: '#3b82f6',
+    borderBottomColor: theme.cardBorder,
+    shadowColor: theme.primary,
     shadowOffset: { width: 0, height: 8 },
     shadowOpacity: 0.15,
     shadowRadius: 24,
@@ -214,7 +214,7 @@ const createStyles = (theme: any) => StyleSheet.create({
     height: 40,
     borderRadius: 20,
     borderWidth: 1,
-    borderColor: 'rgba(255,255,255,0.1)',
+    borderColor: theme.cardBorder,
     backgroundColor: theme.subtleBox,
     alignItems: 'center',
     justifyContent: 'center',
@@ -243,8 +243,8 @@ const createStyles = (theme: any) => StyleSheet.create({
     color: theme.textSecondary,
   },
   reviewBanner: {
-    backgroundColor: 'rgba(4, 180, 162, 0.1)',
-    borderColor: 'rgba(4, 180, 162, 0.5)',
+    backgroundColor: theme.primaryBg,
+    borderColor: theme.secondaryAccent,
     borderWidth: 1,
     borderRadius: 12,
     padding: 16,
@@ -257,7 +257,7 @@ const createStyles = (theme: any) => StyleSheet.create({
     width: 40,
     height: 40,
     borderRadius: 20,
-    backgroundColor: 'rgba(4, 180, 162, 0.2)',
+    backgroundColor: theme.subtleBox,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -285,7 +285,7 @@ const createStyles = (theme: any) => StyleSheet.create({
   btnPrimaryContainer: {
     borderRadius: 12,
     overflow: 'hidden',
-    shadowColor: theme.secondaryAccent,
+    shadowColor: theme.primaryGlow,
     shadowOffset: { width: 0, height: 0 },
     shadowOpacity: 0.3,
     shadowRadius: 20,
@@ -302,7 +302,7 @@ const createStyles = (theme: any) => StyleSheet.create({
     gap: 8,
   },
   btnPrimaryText: {
-    color: theme.bg,
+    color: '#FFFFFF',
     fontSize: 14,
     fontWeight: '600',
     letterSpacing: 0.6,

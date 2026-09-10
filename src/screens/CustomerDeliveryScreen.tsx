@@ -53,7 +53,7 @@ export const CustomerDeliveryScreen = ({ navigation }: any) => {
         {/* Success Header */}
         <View style={styles.successHeader}>
           <View style={styles.successIconWrap}>
-            <CheckCircle2 size={40} color="#4ae176" />
+            <CheckCircle2 size={40} color={theme.success} />
           </View>
           <Text style={styles.successTitle}>Parcel Collected</Text>
           <Text style={styles.successSubtitle}>Ready for customer delivery</Text>
@@ -82,7 +82,7 @@ export const CustomerDeliveryScreen = ({ navigation }: any) => {
                 style={styles.callButton}
                 onPress={() => handlePhoneCall(customer.phone)}
               >
-                <Phone size={20} color="#4fdbc8" />
+                <Phone size={20} color={theme.secondaryAccent} />
               </TouchableOpacity>
             )}
           </View>
@@ -164,7 +164,7 @@ const createStyles = (theme: any) => StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     borderWidth: 1,
-    borderColor: '#4ae17650',
+    borderColor: theme.successBg,
     marginBottom: 16,
     shadowColor: theme.success,
     shadowOffset: { width: 0, height: 0 },
@@ -244,9 +244,9 @@ const createStyles = (theme: any) => StyleSheet.create({
     width: 40,
     height: 40,
     borderRadius: 20,
-    backgroundColor: '#04b4a220',
+    backgroundColor: theme.secondaryBg,
     borderWidth: 1,
-    borderColor: '#4fdbc850',
+    borderColor: theme.cardBorder,
     alignItems: 'center',
     justifyContent: 'center',
   },

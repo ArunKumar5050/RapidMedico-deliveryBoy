@@ -70,12 +70,13 @@ export const DeliveryCard: React.FC<DeliveryCardProps> = ({ assignment, onPress 
 
 const styles = StyleSheet.create({
   card: {
-    borderRadius: 18,
-    padding: 18,
+    borderRadius: 24,
+    padding: 20,
     marginVertical: 8,
     borderWidth: 1,
+    shadowColor: '#0077B6',
     shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.1,
+    shadowOpacity: 0.12,
     shadowRadius: 10,
     elevation: 3,
   },
@@ -87,9 +88,9 @@ const styles = StyleSheet.create({
     gap: 8,
   },
   orderIdBadge: {
-    paddingHorizontal: 10,
-    paddingVertical: 4,
-    borderRadius: 8,
+    paddingHorizontal: 12,
+    paddingVertical: 5,
+    borderRadius: 10,
     borderWidth: 1,
     flexShrink: 1,
   },
@@ -155,3 +156,4 @@ const styles = StyleSheet.create({
     fontWeight: '900',
   },
 });
+

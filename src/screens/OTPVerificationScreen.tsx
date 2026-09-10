@@ -99,7 +99,7 @@ export const OTPVerificationScreen = ({ navigation }: any) => {
       <ScrollView contentContainerStyle={styles.scrollContent}>
         <View style={styles.titleSection}>
           <View style={styles.iconWrapper}>
-            <ShieldCheck size={40} color="#4fdbc8" />
+            <ShieldCheck size={40} color={theme.secondaryAccent} />
             <View style={styles.iconGlow} />
           </View>
           <Text style={styles.title}>Delivery OTP</Text>
@@ -152,7 +152,7 @@ export const OTPVerificationScreen = ({ navigation }: any) => {
             <Text style={styles.verifyBtnText}>
               {loading ? 'VERIFYING...' : 'VERIFY & COMPLETE'}
             </Text>
-            {!loading && <CheckCircle2 size={24} color="#00201c" />}
+            {!loading && <CheckCircle2 size={24} color="#FFFFFF" />}
           </TouchableOpacity>
         </View>
 
@@ -206,7 +206,7 @@ const createStyles = (theme: any) => StyleSheet.create({
     width: 80,
     height: 80,
     borderRadius: 40,
-    backgroundColor: '#4fdbc820',
+    backgroundColor: theme.secondaryBg,
     alignItems: 'center',
     justifyContent: 'center',
     marginBottom: 24,
@@ -217,7 +217,7 @@ const createStyles = (theme: any) => StyleSheet.create({
     width: 80,
     height: 80,
     borderRadius: 40,
-    backgroundColor: '#4fdbc820',
+    backgroundColor: theme.secondaryBg,
   },
   title: {
     fontSize: 36,
@@ -254,7 +254,7 @@ const createStyles = (theme: any) => StyleSheet.create({
     width: 160,
     height: 160,
     borderRadius: 80,
-    backgroundColor: '#adc6ff10',
+    backgroundColor: theme.primaryBg,
   },
   attemptsBadge: {
     backgroundColor: '#93000a30',
@@ -262,7 +262,7 @@ const createStyles = (theme: any) => StyleSheet.create({
     paddingVertical: 8,
     borderRadius: 20,
     borderWidth: 1,
-    borderColor: '#ffb4ab30',
+    borderColor: 'rgba(220, 38, 38, 0.3)',
     marginBottom: 32,
   },
   attemptsText: {
@@ -290,8 +290,8 @@ const createStyles = (theme: any) => StyleSheet.create({
     textAlign: 'center',
   },
   otpInputFilled: {
-    borderColor: '#adc6ff50',
-    backgroundColor: '#adc6ff05',
+    borderColor: theme.primary,
+    backgroundColor: theme.primaryBg,
   },
   otpInputError: {
     borderColor: theme.danger,
@@ -312,7 +312,7 @@ const createStyles = (theme: any) => StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: theme.success,
+    backgroundColor: theme.primary,
     paddingVertical: 16,
     borderRadius: 16,
     gap: 12,
@@ -321,7 +321,7 @@ const createStyles = (theme: any) => StyleSheet.create({
     opacity: 0.5,
   },
   verifyBtnText: {
-    color: '#00201c',
+    color: '#FFFFFF',
     fontSize: 18,
     fontWeight: '700',
     letterSpacing: 1,

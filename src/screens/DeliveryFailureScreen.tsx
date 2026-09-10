@@ -29,7 +29,7 @@ export const DeliveryFailureScreen = ({ navigation, route }: any) => {
           <View style={styles.pulseOuter} />
           <View style={styles.pulseInner} />
           <View style={styles.iconCircle}>
-            <AlertTriangle size={32} color="#ffb4ab" />
+            <AlertTriangle size={32} color={theme.danger} />
           </View>
         </View>
 
@@ -50,7 +50,7 @@ export const DeliveryFailureScreen = ({ navigation, route }: any) => {
           </View>
 
           <View style={styles.cardRow}>
-            <Info size={20} color="#ffb4ab" />
+            <Info size={20} color={theme.danger} />
             <View style={styles.cardTextContent}>
               <Text style={styles.cardLabel}>REASON RECORDED</Text>
               <Text style={styles.cardValue}>{reason}</Text>
@@ -67,7 +67,7 @@ export const DeliveryFailureScreen = ({ navigation, route }: any) => {
 
         <TouchableOpacity style={styles.dashboardBtn} onPress={handleReturnToDashboard}>
           <Text style={styles.dashboardBtnText}>Return to Dashboard</Text>
-          <ArrowRight size={18} color="#002e6a" />
+          <ArrowRight size={18} color="#FFFFFF" />
         </TouchableOpacity>
       </View>
     </View>
@@ -98,24 +98,24 @@ const createStyles = (theme: any) => StyleSheet.create({
     width: 96,
     height: 96,
     borderRadius: 48,
-    backgroundColor: 'rgba(255, 180, 171, 0.2)',
+    backgroundColor: 'rgba(220, 38, 38, 0.2)',
   },
   pulseInner: {
     position: 'absolute',
     width: 80,
     height: 80,
     borderRadius: 40,
-    backgroundColor: 'rgba(255, 180, 171, 0.3)',
+    backgroundColor: 'rgba(220, 38, 38, 0.3)',
   },
   iconCircle: {
     width: 64,
     height: 64,
     borderRadius: 32,
-    backgroundColor: '#93000a',
+    backgroundColor: theme.dangerBg,
     alignItems: 'center',
     justifyContent: 'center',
     borderWidth: 2,
-    borderColor: 'rgba(255, 180, 171, 0.5)',
+    borderColor: 'rgba(220, 38, 38, 0.5)',
     zIndex: 10,
   },
   textContainer: {
@@ -149,7 +149,7 @@ const createStyles = (theme: any) => StyleSheet.create({
     right: -40,
     width: 128,
     height: 128,
-    backgroundColor: 'rgba(255, 180, 171, 0.1)',
+    backgroundColor: theme.dangerBg,
     borderRadius: 64,
   },
   cardRow: {
@@ -202,7 +202,7 @@ const createStyles = (theme: any) => StyleSheet.create({
     width: '100%',
     height: 48,
     borderRadius: 8,
-    backgroundColor: theme.primaryGlow,
+    backgroundColor: theme.primary,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
@@ -211,7 +211,7 @@ const createStyles = (theme: any) => StyleSheet.create({
   dashboardBtnText: {
     fontSize: 12,
     fontWeight: '600',
-    color: '#002e6a',
+    color: '#FFFFFF',
     letterSpacing: 0.5,
   },
 });

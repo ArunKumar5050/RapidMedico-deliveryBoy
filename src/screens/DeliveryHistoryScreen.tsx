@@ -122,13 +122,13 @@ export const DeliveryHistoryScreen = () => {
         style={styles.scrollContainer}
         contentContainerStyle={{ paddingBottom: Math.max(insets.bottom, 24) + 80 }}
         refreshControl={
-          <RefreshControl refreshing={refreshing} onRefresh={handleRefresh} tintColor="#4ae176" />
+          <RefreshControl refreshing={refreshing} onRefresh={handleRefresh} tintColor={theme.primary} />
         }
         showsVerticalScrollIndicator={false}
       >
         <View style={styles.pageHeader}>
           <View style={styles.titleRow}>
-            <History size={24} color="#adc6ff" />
+            <History size={24} color={theme.primary} />
             <Text style={styles.pageTitle}>Delivery History</Text>
           </View>
           <TouchableOpacity
@@ -137,7 +137,7 @@ export const DeliveryHistoryScreen = () => {
             disabled={clearing}
             activeOpacity={0.7}
           >
-            <Trash2 size={15} color="#ffb4ab" />
+            <Trash2 size={15} color={theme.danger} />
             <Text style={styles.clearRecordsBtnText}>
               {clearing ? 'Clearing...' : 'Clear All'}
             </Text>
@@ -170,7 +170,7 @@ export const DeliveryHistoryScreen = () => {
         <View style={styles.listContainer}>
           {loading && history.length === 0 ? (
             <View style={styles.loadingBox}>
-              <ActivityIndicator size="small" color="#adc6ff" />
+              <ActivityIndicator size="small" color={theme.primary} />
               <Text style={styles.loadingText}>Loading history...</Text>
             </View>
           ) : filteredHistory.length === 0 ? (
@@ -194,7 +194,7 @@ export const DeliveryHistoryScreen = () => {
                     </View>
                     <View style={[styles.statusBadge, !isDelivered && styles.statusBadgeCancelled]}>
                       {isDelivered ? (
-                        <CheckCircle2 size={14} color="#4ae176" />
+                        <CheckCircle2 size={14} color={theme.success} />
                       ) : (
                         <XCircle size={14} color="#c2c6d6" />
                       )}
@@ -290,11 +290,11 @@ const createStyles = (theme: any) => StyleSheet.create({
     paddingVertical: 7,
     borderRadius: 16,
     borderWidth: 1,
-    borderColor: 'rgba(255, 180, 171, 0.4)',
-    backgroundColor: 'rgba(255, 180, 171, 0.15)',
+    borderColor: 'rgba(220, 38, 38, 0.4)',
+    backgroundColor: theme.dangerBg,
   },
   clearRecordsBtnText: {
-    color: '#ffb4ab',
+    color: theme.danger,
     fontSize: 12,
     fontWeight: '700',
   },

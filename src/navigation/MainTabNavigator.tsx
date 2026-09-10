@@ -43,7 +43,7 @@ export const MainTabNavigator = () => {
           paddingBottom: bottomInset,
           paddingTop: 8,
         },
-        tabBarActiveTintColor: theme.primaryGlow,
+        tabBarActiveTintColor: theme.primary,
         tabBarInactiveTintColor: theme.textMuted,
         tabBarLabelStyle: {
           fontSize: 11,
