@@ -4768,3 +4768,52 @@
 {"_e":"metro:client_log","_t":1789062849796,"level":"log","data":["Running application \"main\" with appParams:\n","{\"hydrate\": undefined, \"rootTag\": \"#root\"}","\nDevelopment-level warnings: ON.\nPerformance optimizations: OFF."]}
 {"_e":"metro:client_log","_t":1789062849902,"level":"warn","data":["props.pointerEvents is deprecated. Use style.pointerEvents"]}
 {"_e":"metro:client_log","_t":1789062849973,"level":"warn","data":["Animated: `useNativeDriver` is not supported because the native animated module is missing. Falling back to JS-based animation. To resolve this, add `RCTAnimation` module to this app, or remove `useNativeDriver`. Make sure to run `bundle exec pod install` first. Read more about autolinking: https://github.com/react-native-community/cli/blob/master/docs/autolinking.md"]}
+{"_e":"root:init","_t":1789063104819,"format":"v0-jsonl","version":"57.0.15"}
+{"_e":"env:mode","_t":1789063104821,"nodeEnv":"development","babelEnv":"development","mode":"development"}
+{"_e":"env:load","_t":1789063104828,"mode":"development","files":[],"env":{}}
+{"_e":"devserver:start","_t":1789063106168,"mode":"development","web":true,"baseUrl":"","asyncRoutes":false,"routerRoot":"../..\\..\\app","serverComponents":false,"serverActions":false,"serverRendering":false,"apiRoutes":false,"exporting":false}
+{"_e":"metro:config","_t":1789063107111,"serverRoot":"../..\\..","projectRoot":"../..\\..","exporting":false,"flags":{"autolinkingModuleResolution":false,"serverActions":false,"serverComponents":false,"reactCompiler":false,"optimizeGraph":false,"treeshaking":false,"logbox":false}}
+{"_e":"expo:dev-tools-plugin:load","_t":1789063108589,"plugins":[]}
+{"_e":"metro:instantiate","_t":1789063164787,"atlas":false,"workers":8,"host":"::","port":8081}
+{"_e":"metro:bundling:started","_t":1789063941410,"id":"1","platform":"web","environment":null,"entry":"node_modules\\expo\\AppEntry.js"}
+{"_e":"metro:bundling:progress","_t":1789063941417,"id":"1","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1789063941447,"id":"1","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1789063941553,"id":"1","progress":0.16000000000000003,"total":20,"current":8}
+{"_e":"metro:bundling:progress","_t":1789063941655,"id":"1","progress":0.16000000000000003,"total":51,"current":16}
+{"_e":"metro:bundling:progress","_t":1789063941756,"id":"1","progress":0.2055111111111111,"total":75,"current":34}
+{"_e":"metro:bundling:progress","_t":1789063941857,"id":"1","progress":0.2055111111111111,"total":117,"current":45}
+{"_e":"metro:bundling:progress","_t":1789063941958,"id":"1","progress":0.2055111111111111,"total":127,"current":57}
+{"_e":"metro:bundling:progress","_t":1789063942072,"id":"1","progress":0.2612345679012345,"total":135,"current":69}
+{"_e":"metro:bundling:progress","_t":1789063942180,"id":"1","progress":0.36888855433023454,"total":163,"current":99}
+{"_e":"metro:bundling:progress","_t":1789063942317,"id":"1","progress":0.36888855433023454,"total":208,"current":120}
+{"_e":"metro:bundling:progress","_t":1789063942652,"id":"1","progress":0.36888855433023454,"total":209,"current":120}
+{"_e":"metro:bundling:progress","_t":1789063942833,"id":"1","progress":0.36888855433023454,"total":1671,"current":120}
+{"_e":"metro:bundling:progress","_t":1789063943230,"id":"1","progress":0.36888855433023454,"total":1671,"current":121}
+{"_e":"metro:bundling:progress","_t":1789063943329,"id":"1","progress":0.36888855433023454,"total":1718,"current":147}
+{"_e":"metro:bundling:progress","_t":1789063943431,"id":"1","progress":0.36888855433023454,"total":1774,"current":191}
+{"_e":"metro:bundling:progress","_t":1789063943531,"id":"1","progress":0.36888855433023454,"total":1794,"current":329}
+{"_e":"metro:bundling:progress","_t":1789063943631,"id":"1","progress":0.36888855433023454,"total":1794,"current":849}
+{"_e":"metro:bundling:progress","_t":1789063943736,"id":"1","progress":0.40309050731473295,"total":1794,"current":1139}
+{"_e":"metro:bundling:progress","_t":1789063943836,"id":"1","progress":0.4571689478989174,"total":1794,"current":1213}
+{"_e":"metro:bundling:progress","_t":1789063943936,"id":"1","progress":0.5512690014653079,"total":1794,"current":1332}
+{"_e":"metro:bundling:progress","_t":1789063944036,"id":"1","progress":0.8124098164450061,"total":1794,"current":1617}
+{"_e":"metro:bundling:progress","_t":1789063944397,"id":"1","progress":0.864537363924861,"total":1795,"current":1669}
+{"_e":"metro:bundling:progress","_t":1789063944404,"id":"1","progress":0.8655736687331725,"total":1795,"current":1670}
+{"_e":"metro:bundling:progress","_t":1789063944504,"id":"1","progress":0.8926065416512592,"total":1829,"current":1728}
+{"_e":"metro:bundling:progress","_t":1789063944649,"id":"1","progress":0.9062064137322203,"total":1873,"current":1783}
+{"_e":"metro:bundling:progress","_t":1789063944750,"id":"1","progress":0.9151511329924474,"total":1914,"current":1831}
+{"_e":"metro:bundling:progress","_t":1789063944851,"id":"1","progress":0.9491954040647385,"total":1943,"current":1893}
+{"_e":"metro:bundling:progress","_t":1789063944951,"id":"1","progress":0.9609158587257618,"total":1976,"current":1937}
+{"_e":"metro:bundling:progress","_t":1789063945053,"id":"1","progress":0.9703427326550372,"total":2008,"current":1978}
+{"_e":"metro:bundling:progress","_t":1789063945166,"id":"1","progress":0.999,"total":2017,"current":2016}
+{"_e":"metro:bundling:progress","_t":1789063945339,"id":"1","progress":0.999,"total":2017,"current":2017}
+{"_e":"metro:bundling:progress","_t":1789063945437,"id":"1","progress":0.999,"total":2033,"current":2023}
+{"_e":"metro:bundling:progress","_t":1789063945539,"id":"1","progress":0.999,"total":2071,"current":2059}
+{"_e":"metro:bundling:done","_t":1789063945836,"id":"1","total":2071,"ms":4421.8859}
+{"_e":"metro:client_log","_t":1789063946488,"level":"info","data":["%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools","font-weight:bold"]}
+{"_e":"metro:client_log","_t":1789063946492,"level":"warn","data":["Error initializing firebase auth with persistence:","[TypeError: (0 , _firebaseAuth.getReactNativePersistence) is not a function]"]}
+{"_e":"metro:client_log","_t":1789063946493,"level":"warn","data":["\"shadow*\" style props are deprecated. Use \"boxShadow\"."]}
+{"_e":"metro:client_log","_t":1789063946504,"level":"log","data":["Running application \"main\" with appParams:\n","{\"hydrate\": undefined, \"rootTag\": \"#root\"}","\nDevelopment-level warnings: ON.\nPerformance optimizations: OFF."]}
+{"_e":"metro:client_log","_t":1789063946569,"level":"warn","data":["props.pointerEvents is deprecated. Use style.pointerEvents"]}
+{"_e":"metro:client_log","_t":1789063946594,"level":"warn","data":["Image: style.tintColor is deprecated. Please use props.tintColor."]}
+{"_e":"metro:client_log","_t":1789063946622,"level":"warn","data":["Animated: `useNativeDriver` is not supported because the native animated module is missing. Falling back to JS-based animation. To resolve this, add `RCTAnimation` module to this app, or remove `useNativeDriver`. Make sure to run `bundle exec pod install` first. Read more about autolinking: https://github.com/react-native-community/cli/blob/master/docs/autolinking.md"]}

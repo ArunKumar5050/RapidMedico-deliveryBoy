@@ -6,10 +6,16 @@ import { ActiveDeliveryScreen } from '../screens/ActiveDeliveryScreen';
 import { EarningsScreen } from '../screens/EarningsScreen';
 import { DeliveryHistoryScreen } from '../screens/DeliveryHistoryScreen';
 import { ProfileScreen } from '../screens/ProfileScreen';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, Image } from 'react-native';
 import { useThemeStore } from '../store/themeStore';
 
 const Tab = createBottomTabNavigator();
+
+const commandIcon = require('../../assets/command-icon.png');
+const activeOrderIcon = require('../../assets/active-order-icon.png');
+const earningsIcon = require('../../assets/earnings-icon.png');
+const historyIcon = require('../../assets/history-icon.png');
+const profileIcon = require('../../assets/profile-icon.png');
 
 export const MainTabNavigator = () => {
   const { theme } = useThemeStore();
@@ -52,23 +58,107 @@ export const MainTabNavigator = () => {
           marginBottom: 2,
         },
         tabBarIcon: ({ focused }) => {
-          let icon = '⚡';
-          if (route.name === 'Dashboard') icon = '⚡';
-          else if (route.name === 'Active') icon = '🎯';
-          else if (route.name === 'Earnings') icon = '💰';
-          else if (route.name === 'History') icon = '📦';
-          else if (route.name === 'Profile') icon = '👤';
+          if (route.name === 'Dashboard') {
+            return (
+              <View
+                style={[
+                  styles.iconContainer,
+                  focused && { backgroundColor: theme.primaryBg },
+                ]}
+              >
+                <Image
+                  source={commandIcon}
+                  style={[
+                    styles.tabIconImage,
+                    { tintColor: focused ? theme.primary : theme.textMuted },
+                  ]}
+                  resizeMode="contain"
+                />
+              </View>
+            );
+          }
 
-          return (
-            <View
-              style={[
-                styles.iconContainer,
-                focused && { backgroundColor: theme.primaryBg },
-              ]}
-            >
-              <Text style={styles.iconText}>{icon}</Text>
-            </View>
-          );
+          if (route.name === 'Active') {
+            return (
+              <View
+                style={[
+                  styles.iconContainer,
+                  focused && { backgroundColor: theme.primaryBg },
+                ]}
+              >
+                <Image
+                  source={activeOrderIcon}
+                  style={[
+                    styles.tabIconImage,
+                    { tintColor: focused ? theme.primary : theme.textMuted },
+                  ]}
+                  resizeMode="contain"
+                />
+              </View>
+            );
+          }
+
+          if (route.name === 'Earnings') {
+            return (
+              <View
+                style={[
+                  styles.iconContainer,
+                  focused && { backgroundColor: theme.primaryBg },
+                ]}
+              >
+                <Image
+                  source={earningsIcon}
+                  style={[
+                    styles.tabIconImage,
+                    { tintColor: focused ? theme.primary : theme.textMuted },
+                  ]}
+                  resizeMode="contain"
+                />
+              </View>
+            );
+          }
+
+          if (route.name === 'History') {
+            return (
+              <View
+                style={[
+                  styles.iconContainer,
+                  focused && { backgroundColor: theme.primaryBg },
+                ]}
+              >
+                <Image
+                  source={historyIcon}
+                  style={[
+                    styles.tabIconImage,
+                    { tintColor: focused ? theme.primary : theme.textMuted },
+                  ]}
+                  resizeMode="contain"
+                />
+              </View>
+            );
+          }
+
+          if (route.name === 'Profile') {
+            return (
+              <View
+                style={[
+                  styles.iconContainer,
+                  focused && { backgroundColor: theme.primaryBg },
+                ]}
+              >
+                <Image
+                  source={profileIcon}
+                  style={[
+                    styles.tabIconImage,
+                    { tintColor: focused ? theme.primary : theme.textMuted },
+                  ]}
+                  resizeMode="contain"
+                />
+              </View>
+            );
+          }
+
+          return null;
         },
       })}
     >
@@ -89,7 +179,13 @@ const styles = StyleSheet.create({
     height: 32,
     borderRadius: 16,
   },
+  tabIconImage: {
+    width: 20,
+    height: 20,
+  },
   iconText: {
     fontSize: 16,
   },
 });
+
+
